@@ -34,10 +34,9 @@ class _DashboardState extends State<Dashboard> {
     super.initState();
     apiController.backupAction();
 
-    ///ToDO with out API
+ 
     userStatus.readSessionData();
 
-    ///ToDO with out API
   }
 
   @override
