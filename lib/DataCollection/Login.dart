@@ -51,6 +51,7 @@ class _LoginState extends State<Login> {
         });
       }
     } else {
+      // ignore: use_build_context_synchronously
       showDialog(
           context: context,
           builder: (_) {
@@ -161,7 +162,7 @@ class _LoginState extends State<Login> {
                                           });
                                           return;
                                         }
-                                        if (isConnected || true) {
+                                        if (isConnected) {
                                           OverlayEntry loading =
                                               await loadingController
                                                   .overlayLoading();
@@ -173,7 +174,7 @@ class _LoginState extends State<Login> {
                                                       _passwordController.text,
                                                   email: _emailController.text);
                                           if (isLogged) {
-                                            userStatus.readSessionData();
+                                            // userStatus.readSessionData();
                                             loading.remove();
                                             userStatus.stopTimer(
                                                 runTimer: true);

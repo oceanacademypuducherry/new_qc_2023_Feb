@@ -1,10 +1,12 @@
 import 'package:SFM/Get_X_Controller/MissionController.dart';
+import 'package:SFM/Get_X_Controller/UserStatusController.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 MissionController _missionController = Get.find<MissionController>();
+UserStatusController userStatus = Get.find<UserStatusController>();
 
 class APIController extends GetxController {
   GetStorage storage = GetStorage();
@@ -68,6 +70,7 @@ class APIController extends GetxController {
 
       storage.write('userData', data);
       storage.write("isLogged", true);
+      userStatus.readSessionData();
       print(data);
       _missionController.loadMissionData();
       _missionController.checkDay();
