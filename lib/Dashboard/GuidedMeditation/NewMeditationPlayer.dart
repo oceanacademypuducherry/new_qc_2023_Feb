@@ -28,6 +28,7 @@ class _NewMeditationPlayerState extends State<NewMeditationPlayer> {
   bool isAmbient = false;
   int meditateDuration = 1;
   late Timer timer;
+
   dynamic timerFunction() {
     Timer.periodic(Duration(seconds: 1), (timer) {
       int totalSec = duration.inSeconds;
@@ -98,72 +99,6 @@ class _NewMeditationPlayerState extends State<NewMeditationPlayer> {
                 ),
               ),
             ),
-            // "Happiness"
-            //     .text
-            //     .size(sr.width / 15)
-            //     .color(Colors.white60)
-            //     .fontFamily("Gugi")
-            //     .make()
-            //     .positioned(top: isPlay ? sr.height / 20 : null),
-            // Positioned(
-            //   bottom: sr.height / 20,
-            //   left: 20,
-            //   child: HStack(
-            //     [
-            //       Opacity(
-            //         opacity: isPlay ? 0.2 : 1,
-            //         child: IconButton(
-            //           icon: const Icon(FontAwesomeIcons.minus),
-            //           iconSize: sr.width / 25,
-            //           padding: EdgeInsets.zero,
-            //           color: Colors.white60,
-            //           onPressed: !isPlay
-            //               ? () {
-            //                   int du = duration.inMinutes;
-            //                   if (du > 1) {
-            //                     du -= 1;
-            //                     setState(() {
-            //                       duration = Duration(minutes: du);
-            //                     });
-            //                   } else {
-            //                     VxToast.show(context, msg: "Minimum 1");
-            //                   }
-            //                 }
-            //               : null,
-            //         ),
-            //       ),
-            //       "${duration.inMinutes <= 9 ? "0" : ""}${duration.inMinutes}:${duration.inSeconds % 60 <= 9 ? "0" : ""}${duration.inSeconds % 60}"
-            //           .text
-            //           .size(18)
-            //           .color(Colors.white60)
-            //           .bold
-            //           .make(),
-            //       Opacity(
-            //         opacity: isPlay ? 0.2 : 1,
-            //         child: IconButton(
-            //           icon: const Icon(FontAwesomeIcons.plus),
-            //           padding: EdgeInsets.zero,
-            //           iconSize: sr.width / 25,
-            //           color: Colors.white60,
-            //           onPressed: !isPlay
-            //               ? () {
-            //                   int du = duration.inMinutes;
-            //                   if (du < 10) {
-            //                     du += 1;
-            //                     setState(() {
-            //                       duration = Duration(minutes: du);
-            //                     });
-            //                   } else {
-            //                     VxToast.show(context, msg: "Maximum 10");
-            //                   }
-            //                 }
-            //               : null,
-            //         ),
-            //       ),
-            //     ],
-            //     alignment: MainAxisAlignment.center,
-            //   ),
-            // )
           ],
         ),
       );
@@ -191,7 +126,7 @@ class _NewMeditationPlayerState extends State<NewMeditationPlayer> {
     Size sr = context.screenSize;
     return Scaffold(
       body: BackgroundContainer(
-        backButton: true,
+        isAppbar: true,
         darkMode: true,
         transparentOpacity: 0.8,
         child: GestureDetector(

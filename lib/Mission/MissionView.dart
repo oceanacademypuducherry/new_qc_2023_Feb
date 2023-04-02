@@ -8,36 +8,57 @@ import 'package:SFM/Get_X_Controller/MissionController.dart';
 import 'package:SFM/Journal/Journal/textfield.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-class MissionView extends StatelessWidget {
+class MissionView extends StatefulWidget {
   MissionView({Key? key, this.missionIndex = 0}) : super(key: key);
-  TextEditingController _comments = TextEditingController();
-  MissionController _missionController = Get.find<MissionController>();
-
   int missionIndex;
 
+  @override
+  State<MissionView> createState() => _MissionViewState();
+}
+
+class _MissionViewState extends State<MissionView> {
+  late TextEditingController _comments;
+
+  MissionController _missionController = Get.find<MissionController>();
+
   dynamic arguments = Get.arguments;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _comments = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
     double sw = context.screenWidth;
     double sh = context.screenHeight;
-    _comments.text = arguments['comments'];
+
+    if (arguments['comments'] != null && arguments['comments'].trim() != "") {
+      print(arguments['comments']);
+      _comments.text = arguments['comments'];
+      print('========');
+    }
 
     return Scaffold(
-
       body: BackgroundContainer(
-        backButton: true,
-        title: "Mission-$missionIndex",
+        isAppbar: true,
+        title: "Mission-${widget.missionIndex}",
         action: Container(
           margin: EdgeInsets.only(right: 20),
-          child: InkWell(onTap: (){
-            Get.snackbar("Why I'm Do this", "description");
-          },child: const Icon(Icons.question_mark,color: Colors.black38),),
+          child: InkWell(
+            onTap: () {
+              Get.snackbar("Why I'm Do this", "description");
+            },
+            child: const Icon(Icons.question_mark, color: Colors.black38),
+          ),
         ),
-        child: SizedBox(
+        child: Container(
           height: context.screenHeight,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: ListView(
+            // mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               SizedBox(height: sh / 8),
               Container(
@@ -51,7 +72,7 @@ class MissionView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Hero(
-                      tag: "mission_$missionIndex",
+                      tag: "mission_${widget.missionIndex}",
                       child: Image(
                         image: Svg(arguments['missionVector'],
                             size: Size(
@@ -115,7 +136,7 @@ class MissionView extends StatelessWidget {
                           {"isComplete": true, "comments": _comments.text});
                       print(missionData);
                       _missionController.missionUpdate(
-                          missionIndex - 1, missionData);
+                          widget.missionIndex - 1, missionData);
 
                       Get.back();
                     }),

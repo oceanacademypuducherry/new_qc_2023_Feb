@@ -7,6 +7,7 @@ import 'package:velocity_x/velocity_x.dart';
 class CravingsSlider extends StatelessWidget {
   CravingsSlider({Key? key}) : super(key: key);
   final CravingsController _cravingsController = Get.find<CravingsController>();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -18,13 +19,14 @@ class CravingsSlider extends StatelessWidget {
             children: [
               Obx(
                 () => Slider(
-                    divisions: 5,
+                    divisions: 10,
                     min: 1,
                     max: 10,
                     activeColor: QCColors.chipSelectedBg,
                     inactiveColor: Vx.gray400,
                     value: _cravingsController.cravingStrong.value,
                     onChanged: (val) {
+                      print(val);
                       _cravingsController.cravingStrong(val);
                     }),
               ),

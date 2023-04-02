@@ -1,6 +1,7 @@
+import 'package:SFM/Get_X_Controller/API_Controller.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-
+APIController _apiController = Get.find<APIController>();
 class CravingsController extends GetxController {
   GetStorage storage = GetStorage();
   final userData = {}.obs;
@@ -21,25 +22,48 @@ class CravingsController extends GetxController {
     whoWithYou("");
   }
 
-  addCraving(newCraving) async {
+  addCraving(Map newCraving) async {
     int dataLength = cravingsData.length;
 
-    if (cravingsData.isNotEmpty) {
-      if (cravingsData[dataLength - 1]['day'] != newCraving['day']) {
-        cravingsData.add(newCraving);
-      } else {
-        cravingsData[dataLength - 1] = newCraving;
-      }
-    } else {
-      cravingsData.add(newCraving);
-    }
+    // if (cravingsData.isNotEmpty) {
+    //   if (cravingsData[dataLength - 1]['day'] != newCraving['day']) {
+    //     cravingsData.add(newCraving);
+    //   } else {
+    //     cravingsData[dataLength - 1] = newCraving;
+    //   }
+    // } else {
+    //   cravingsData.add(newCraving);
+    // }
+
+    cravingsData.add(newCraving);
     userData["cravings"] = cravingsData;
     await storage.write('userData', userData.value);
+    await storage.write('cravings', cravingsData);
+    try{
+      print(cravingsData);
+      _apiController.addCravings(cravingsData);
+    }catch(e){
+      print(e);
+      print('craving error for while add to db');
+    }
     print(newCraving);
-
     clearData();
   }
 
+void resetCravings() async{
+    cravingsData([]);
+    userData["cravings"] = cravingsData;
+    await storage.write('userData', userData.value);
+    await storage.write('cravings', cravingsData);
+    try{
+      print(cravingsData);
+      _apiController.addCravings(cravingsData);
+    }catch(e){
+      print(e);
+      print('craving error for while add to db');
+    }
+
+}
   loadCravings() async {
     dynamic uData = await storage.read('userData');
     userData(uData);

@@ -16,7 +16,8 @@ class MeditationView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BackgroundContainer(
-          backButton: true,
+          title: "Meditation Musics",
+          isAppbar: true,
           child: Container(
             width: context.screenWidth,
             child: Column(

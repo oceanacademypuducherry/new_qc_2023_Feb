@@ -16,7 +16,7 @@ class AffirmationView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BackgroundContainer(
-          backButton: true,
+          isAppbar: true,
           action: Icon(
             FontAwesomeIcons.ellipsisVertical,
             color: Colors.black.withOpacity(0.5),

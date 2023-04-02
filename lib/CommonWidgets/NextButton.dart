@@ -1,5 +1,8 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class NextButton extends StatelessWidget {
   NextButton({
     required this.child,
@@ -22,6 +25,7 @@ class NextButton extends StatelessWidget {
     return InkWell(
       onTap: onPressed ??
           () {
+            // ignore: avoid_print
             print("OnPressed not called");
           },
       child: Container(

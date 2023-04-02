@@ -1,3 +1,5 @@
+import 'package:SFM/Get_X_Controller/API_Controller.dart';
+import 'package:SFM/Get_X_Controller/cravings_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:get/get.dart';
@@ -13,14 +15,16 @@ import 'package:velocity_x/velocity_x.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class More extends StatelessWidget {
-  More({Key? key}) : super(key: key);
+   More({Key? key}) : super(key: key);
 
-  GetStorage storage = GetStorage();
-  UserStatusController userStatus = Get.find<UserStatusController>();
+  final GetStorage storage = GetStorage();
+  final UserStatusController userStatus = Get.find<UserStatusController>();
   final BottomNavController _bottomNavController =
       Get.find<BottomNavController>();
   final DataCollectionController _dataCollectionController =
       Get.find<DataCollectionController>();
+
+  final CravingsController _cravingsController = Get.find<CravingsController>();
 
   _backup() {
     Get.to(GetBackup(), transition: Transition.size);
@@ -34,23 +38,23 @@ class More extends StatelessWidget {
     _bottomNavController.startPage();
   }
 
-  _relapse() async {
+  relapse() async {
     userStatus.stopTimer(runTimer: false);
     List dates = userStatus.userData["quiteDate"];
-
     _dataCollectionController.setQuitDate(dates);
     _bottomNavController.startPage();
-
     await storage.write('isPending', true);
-
+_cravingsController.resetCravings();
     Get.to(QuitDatePicker(), transition: Transition.rightToLeft);
   }
 
   _profile() {
-    print(userStatus.userData);
-    for (var i in userStatus.userData.keys) {
-      print(i);
-    }
+    dynamic test = storage.getKeys();
+
+   for(dynamic t in test){
+     print(t);
+   }
+   print(test.runtimeType);
   }
   Future<bool> _onWillPop() async {
     print('could not close');
@@ -96,7 +100,7 @@ class More extends StatelessWidget {
                     SizedBox(
                       height: 100,
                       width: (context.screenWidth / 1.05) - 105,
-                      child: Column(
+                      child: Obx(()=>Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -114,7 +118,7 @@ class More extends StatelessWidget {
                               .size(15)
                               .make()
                         ],
-                      ),
+                      )),
                     )
                   ],
                 ),
@@ -124,7 +128,7 @@ class More extends StatelessWidget {
               ProfileItem(label: "Backup", onPressed: _backup),
               ProfileItem(
                 label: "Relapse",
-                onPressed: _relapse,
+                onPressed: relapse,
               ),
               ProfileItem(label: "Feedback"),
               ProfileItem(label: "About"),

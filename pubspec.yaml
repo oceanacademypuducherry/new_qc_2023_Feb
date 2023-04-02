@@ -99,8 +99,9 @@ flutter:
     - assets/images/mission/
     - assets/images/badges/
     - assets/images/affirmation/
-    - assets/images/achievement/
+    #    - assets/images/achievement/
     - assets/images/wisdom/
+    - assets/images/health_tips/
     - assets/Rive/
     - assets/Rive/breath_animation/
   #   - images/a_dot_ham.jpeg

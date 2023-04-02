@@ -40,7 +40,7 @@ class _SmokeFreeTimeViewState extends State<SmokeFreeTimeView> {
       // SMIInput<double>? inputs = controller.findInput<double>("day");
       inputs = controller.findInput<double>("day");
       setState(() {
-        inputs!.value = 0.0 + userstatus.totalSmokeFreeTime['days']! / 1 ?? 1;
+        inputs!.value =  1 ;
         updateValue();
       });
     }
@@ -122,7 +122,7 @@ class _SmokeFreeTimeViewState extends State<SmokeFreeTimeView> {
 
   Visibility timing(BuildContext context, {time}) {
     bool isStarted = userstatus.smokeFreeTime['isStarted'] != 0;
-    print('^^^^^^^^^${isStarted}');
+
     return Visibility(
       visible: isStarted,
       child: Container(

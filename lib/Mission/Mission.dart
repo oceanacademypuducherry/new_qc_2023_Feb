@@ -13,11 +13,11 @@ class Missions extends StatelessWidget {
   Missions({Key? key}) : super(key: key);
 
   MissionController _missionController = Get.find<MissionController>();
+
   Future<bool> _onWillPop() async {
     print('could not close');
     return false; //<-- SEE HERE
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +29,9 @@ class Missions extends StatelessWidget {
       onWillPop: _onWillPop,
       child: Scaffold(
         body: BackgroundContainer(
+          title: "Missions",
+          isAppbar: true,
+          withBackButton: false,
           isDashboard: true,
           padding: EdgeInsets.symmetric(vertical: 0),
           child: SingleChildScrollView(
@@ -51,7 +54,8 @@ class Missions extends StatelessWidget {
                       return MissionTail(
                         missionData: data[index],
                         missionIndex: index + 1,
-                        currentDayCount: _missionController.missionDay.value + 1,
+                        currentDayCount:
+                            _missionController.missionDay.value + 1,
                       );
                     }),
                     SizedBox(height: 80),
@@ -71,6 +75,7 @@ class MissionTail extends StatelessWidget {
     this.missionIndex = 0,
     this.currentDayCount = 0,
   }) : super(key: key);
+
   // UserStatusController _userStatus = Get.find<UserStatusController>();
   Map? missionData;
   int currentDayCount;

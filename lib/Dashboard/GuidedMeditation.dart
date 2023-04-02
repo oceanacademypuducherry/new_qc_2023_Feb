@@ -4,7 +4,6 @@ import 'package:SFM/CommonWidgets/DashboardWidgets/DashboardTitle.dart';
 import 'package:SFM/CommonWidgets/QC_Colors.dart';
 import 'package:SFM/Dashboard/GuidedMeditation/MeditationView.dart';
 
-
 class GuidedMeditation extends StatelessWidget {
   const GuidedMeditation({Key? key}) : super(key: key);
 
@@ -23,7 +22,7 @@ class GuidedMeditation extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            DashboardTitle(title: "Guided Meditation"),
+            DashboardTitle(title: "Meditation Music"),
             const SizedBox(height: 8),
             SizedBox(
               height: 200,

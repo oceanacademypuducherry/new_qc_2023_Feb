@@ -1,3 +1,4 @@
+import 'package:SFM/Dashboard/HealthAndWellness/yogainfo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:SFM/CommonWidgets/BackgroundContainer.dart';
@@ -12,67 +13,31 @@ class YogaTypes extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: BackgroundContainer(
-          backButton: true,
+          title: "Yoga",
+          isAppbar: true,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Expanded(
-                flex: 1,
-                child: SizedBox(
-                  height: context.screenHeight / 10,
-                ),
-              ),
-              Expanded(
-                flex: 7,
                 child: Container(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            YogaCard(
-                              src: "assets/images/yoga/y (1).png",
-                              yogaName: "Seated Cat Cow",
-                              description:
-                                  "Hold for 1 minute then exhale your torso down so you can place your hands on the floor on each side of your right foot. Turn your toes back under and, with another exhale, lift your left knee off of the floor and step back to Downward-Facing Dog. Repeat Anjaneyasana for the same amount of time with your left foot forward.",
-                            ),
-                            YogaCard(
-                              src: "assets/images/yoga/y (6).png",
-                              yogaName: "Crescent Low Lunge",
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            YogaCard(
-                              src: "assets/images/yoga/y (5).png",
-                              yogaName: "Reclining Hero Pose",
-                            ),
-                            YogaCard(
-                              src: "assets/images/yoga/y (4).png",
-                              yogaName: "CHalf Locust Pose",
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            YogaCard(
-                              src: "assets/images/yoga/y (3).png",
-                              yogaName: "Seated Cat Cow",
-                            ),
-                            YogaCard(
-                              src: "assets/images/yoga/y (2).png",
-                              yogaName: "Crescent Low Lunge ",
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
-                      ],
-                    ),
+                  margin: EdgeInsets.only(top: context.screenHeight / 10),
+                  child: GridView.count(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 10 / 13,
+
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                    children: allYoga.map((e) {
+                      return YogaCard(
+                        src: e['src'],
+                        yogaName: e['yogaName'],
+                        description: e['description'],
+                      );
+                    }).toList(),
+                    // [
+                    //   YogaCard(),
+                    // ],
                   ),
                 ),
               ),
@@ -90,6 +55,7 @@ class YogaCard extends StatelessWidget {
   String? src;
   String yogaName;
   String? description;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -105,15 +71,14 @@ class YogaCard extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(8),
         child: Container(
-          color: Colors.white,
+          color: Colors.white.withOpacity(0.5),
           height: context.screenWidth / 1.8,
           width: context.screenWidth / 2.3,
           child: Column(
             children: [
-              Expanded(
-                flex: 3,
+              Hero(
+                tag: yogaName,
                 child: Container(
-                    color: Colors.white,
                     child: src != null
                         ? Image.asset(
                             src!,
@@ -121,17 +86,17 @@ class YogaCard extends StatelessWidget {
                           )
                         : const SizedBox()),
               ),
-              Expanded(
-                  flex: 1,
-                  child: yogaName.text.center
-                      .color(Vx.gray400)
-                      .make()
-                      .box
-                      .p8
-                      .green50
-                      .height(20)
-                      .alignCenter
-                      .make())
+              yogaName.text.center
+                  .color(Vx.gray500)
+                  .maxFontSize(25)
+                  .ellipsis
+                  .size(20)
+                  .fontWeight(FontWeight.w700)
+                  .make()
+                  .box
+                  .p8
+                  .alignCenter
+                  .make()
             ],
           ),
         ),

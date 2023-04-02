@@ -42,11 +42,10 @@ class AchievementController extends GetxController {
   }
 
   loadAchievement() async {
-    dynamic userData = await storage.read('userData');
+    dynamic cigInfo = await storage.read('cigaretteInfo');
 
     print('achievement loaded start ========>');
-    if (userData != null) {
-      Map cigInfo = userData['cigaretteInfo'];
+    if (cigInfo != null) {
       cigaretteInfo(cigInfo);
       int boxOfCost = cigaretteInfo['boxOfCost'];
       int packOfCigarettes = cigaretteInfo['packOfCigarettes'];

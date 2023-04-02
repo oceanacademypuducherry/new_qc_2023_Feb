@@ -41,7 +41,6 @@ class _SmokeFreeTimeState extends State<SmokeFreeTime> {
 
       setState(() {
         inputs!.value = 1;
-
         updateValue();
       });
     }
@@ -84,6 +83,7 @@ class _SmokeFreeTimeState extends State<SmokeFreeTime> {
                     // width: context.screenWidth,
                     child: Rive(
                       artboard: artboard!,
+
                       fit: BoxFit.cover,
                     ))
                 : Image.asset('assets/images/hill.png'),

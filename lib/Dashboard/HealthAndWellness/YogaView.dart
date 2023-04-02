@@ -20,34 +20,49 @@ class YogaView extends StatelessWidget {
       body: SafeArea(
         child: BackgroundContainer(
             title: "Yoga Practice",
-            backButton: true,
+            isAppbar: true,
             child: Container(
-              padding: EdgeInsets.only(top: 100),
-              child: Column(
-                children: [
-                  Container(
-                    // alignment: Alignment.center,
-                    width: context.screenWidth,
-                    height: context.screenWidth,
-                    color: Colors.grey[100],
-                    child: src != null
-                        ? Image.asset(
-                            src!,
-                            fit: BoxFit.cover,
-                          )
-                        : "No source".text.make(),
-                  ),
-                  const SizedBox(height: 20),
-                  title.text.size(25).color(Color(0xff216D97)).bold.make(),
-                  const SizedBox(height: 20),
-                  Container(
-                    width: context.screenWidth,
-                    padding: EdgeInsets.symmetric(horizontal: 15),
-                    child: description.text.justify.normal.normal
-                        .color(Vx.gray500)
-                        .make(),
-                  )
-                ],
+              padding: EdgeInsets.only(
+                  top: context.screenHeight / 8,
+                  left: 20,
+                  right: 20,
+                  bottom: 40),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Hero(
+                      tag: title,
+                      child: Container(
+                        // alignment: Alignment.center,
+                        width: context.screenWidth,
+                        height: context.screenWidth / 1.2,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white.withOpacity(0.5)),
+                        child: src != null
+                            ? Image.asset(
+                                src!,
+                                fit: BoxFit.cover,
+                              )
+                            : "No source".text.make(),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    title.text.size(25).color(Color(0xff216D97)).bold.make(),
+                    const SizedBox(height: 20),
+                    Container(
+                      width: context.screenWidth,
+                      decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(10)),
+                      padding: EdgeInsets.all(15),
+                      child: description.text.justify.normal.medium
+                          .size(18)
+                          .color(Vx.gray600)
+                          .make(),
+                    )
+                  ],
+                ),
               ),
             )),
       ),

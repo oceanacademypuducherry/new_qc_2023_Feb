@@ -32,7 +32,7 @@ class AddCravings extends StatelessWidget {
     );
     return Scaffold(
       body: BackgroundContainer(
-        backButton: true,
+        isAppbar: true,
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(

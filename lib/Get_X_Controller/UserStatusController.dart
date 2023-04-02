@@ -12,6 +12,9 @@ class UserStatusController extends GetxController {
   GetStorage storage = GetStorage();
   final timer = true.obs;
   final userData = {}.obs;
+
+  // final username = ''.obs;
+  // final email = ''.obs;
   final smokeFreeTime = {}.obs;
   final totalSmokeFreeTime = <String, int>{
     'years': 0,
@@ -103,6 +106,8 @@ class UserStatusController extends GetxController {
 
       startTimer(dateList[dateList.length - 1]);
       userData(data);
+      print(data["username"]);
+      print(storage.read('username'));
     }
   }
 
@@ -154,7 +159,6 @@ class UserStatusController extends GetxController {
         'isFinish': 20 < totalMinutes,
         'description': '20 Minutes',
         "colorData": "0xffF8889C",
-        "imagePath": "assets/images/dashboard/heart.png",
       },
       {
         'title': 'Oxygen Level',
@@ -163,7 +167,6 @@ class UserStatusController extends GetxController {
         'isFinish': 480 < totalMinutes,
         'description': '8 Hours',
         "colorData": "0xff01CFFF",
-        "imagePath": "assets/images/dashboard/oxygen.png",
       },
       {
         'title': 'Carbon monoxide level',
@@ -172,7 +175,6 @@ class UserStatusController extends GetxController {
         'isFinish': 1440 < totalMinutes,
         'description': '24 Hours',
         "colorData": "0xff717171",
-        "imagePath": "assets/images/dashboard/carbon.png",
       },
       {
         'title': 'Nicotine expelled from body',
@@ -181,7 +183,6 @@ class UserStatusController extends GetxController {
         'isFinish': 2520 < totalMinutes,
         'description': '42 Hours',
         "colorData": "0xff717171",
-        "imagePath": "assets/images/dashboard/carbon.png",
       },
       {
         'title': 'Taste and smell',
@@ -190,7 +191,6 @@ class UserStatusController extends GetxController {
         'isFinish': 14400 < totalMinutes,
         'description': '10 Days',
         "colorData": "0xff717171",
-        "imagePath": "assets/images/dashboard/carbon.png",
       },
       {
         'title': 'Breathing',
@@ -199,7 +199,6 @@ class UserStatusController extends GetxController {
         'isFinish': 120960 < totalMinutes,
         'description': '12 Weeks',
         "colorData": "0xff717171",
-        "imagePath": "assets/images/dashboard/carbon.png",
       },
       {
         'title': 'Energy levels',
@@ -208,7 +207,6 @@ class UserStatusController extends GetxController {
         'isFinish': 273 < totalDays,
         'description': '9 Months',
         "colorData": "0xff717171",
-        "imagePath": "assets/images/dashboard/carbon.png",
       },
       {
         'title': 'Bed Breath',
@@ -217,7 +215,6 @@ class UserStatusController extends GetxController {
         'isFinish': 365 < totalDays,
         'description': '1 Years',
         "colorData": "0xff717171",
-        "imagePath": "assets/images/dashboard/carbon.png",
       },
       {
         'title': 'Tooth Stationing',
@@ -226,7 +223,6 @@ class UserStatusController extends GetxController {
         'isFinish': 1825 < totalDays,
         'description': '5 Years',
         "colorData": "0xff717171",
-        "imagePath": "assets/images/dashboard/carbon.png",
       },
       {
         'title': 'Cums and Teeth',
@@ -235,7 +231,6 @@ class UserStatusController extends GetxController {
         'isFinish': 3650 < totalDays,
         'description': '10 Years',
         "colorData": "0xff717171",
-        "imagePath": "assets/images/dashboard/carbon.png",
       },
       {
         'title': 'Circulation',
@@ -244,7 +239,6 @@ class UserStatusController extends GetxController {
         'isFinish': 5475 < totalDays,
         'description': '15 Years',
         "colorData": "0xff717171",
-        "imagePath": "assets/images/dashboard/carbon.png",
       },
       {
         'title': 'Gum texture',
@@ -253,7 +247,6 @@ class UserStatusController extends GetxController {
         'isFinish': 7300 < totalDays,
         'description': '20 Years',
         "colorData": "0xff717171",
-        "imagePath": "assets/images/dashboard/carbon.png",
       },
     ];
 

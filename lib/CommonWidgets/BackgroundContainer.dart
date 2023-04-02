@@ -27,10 +27,12 @@ class BackgroundContainer extends StatelessWidget {
       this.transparentOpacity = 0.4,
       this.backButtonChild,
       this.isDashboard = false,
-      this.backButton = false,
+      this.isAppbar = false,
       this.darkMode = false,
       this.padding,
       this.title = "",
+      this.withBackButton = true,
+      this.topPadding = 50,
       this.action})
       : super(key: key);
 
@@ -40,12 +42,14 @@ class BackgroundContainer extends StatelessWidget {
   UserStatusController userStatus = Get.find<UserStatusController>();
   GetStorage storage = GetStorage();
   bool isDashboard = false;
-  bool backButton = false;
+  bool isAppbar = false;
   Widget? backButtonChild;
   Widget? action;
   EdgeInsets? padding;
   String title;
   bool darkMode = false;
+  double topPadding;
+  bool withBackButton = true;
 
   BottomNavController bottomNavController = Get.find<BottomNavController>();
 
@@ -146,9 +150,9 @@ class BackgroundContainer extends StatelessWidget {
                       ],
                     ),
                   ))),
-        if (backButton)
+        if (isAppbar)
           Positioned(
-              top: context.screenHeight / 18,
+              top: topPadding,
               left: 0,
               child: Container(
                 width: context.screenWidth,
@@ -156,10 +160,11 @@ class BackgroundContainer extends StatelessWidget {
                   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   alignment: Alignment.center,
                   children: [
-                    Positioned(
-                      left: 0,
-                      child: backButtonChild ?? QCBackButton(),
-                    ),
+                    if (withBackButton)
+                      Positioned(
+                        left: 0,
+                        child: backButtonChild ?? QCBackButton(),
+                      ),
                     title.text
                         .size(20)
                         .fontWeight(FontWeight.w500)

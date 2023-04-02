@@ -15,33 +15,57 @@ class HealthImprovementView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BackgroundContainer(
+          title: "Health Improvements",
           isDashboard: false,
-          backButton: true,
+          isAppbar: true,
           child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 8),
             width: context.screenWidth,
-            color: QCDashColor.odd,
-            child: Obx(() => SingleChildScrollView(
-                  child: Column(children: [
-                    const SizedBox(
-                      height: 60,
-                    ),
-                    ...userStatus.healthImprovements.map((data) {
-                      String prog = ((100 * data["totalMinutesOrDays"]) /
-                              data["calculationTime"])
-                          .toStringAsFixed(1);
+            alignment: Alignment.topCenter,
+            // color: QCDashColor.odd,
+            child: Obx(() => GridView.count(
+                  crossAxisCount: 2,
+                  childAspectRatio: 6 / 7,
+                  crossAxisSpacing: 5,
+                  mainAxisSpacing: 5,
+                  padding: EdgeInsets.only(top: 100),
+                  children: userStatus.healthImprovements.map((data) {
+                    String prog = ((100 * data["totalMinutesOrDays"]) /
+                            data["calculationTime"])
+                        .toStringAsFixed(1);
 
-                      return HealthImprovementBigCard(
-                        title: data['title'],
-                        description: data['description'],
-                        progress: data['isFinish'] ? 100 : double.parse(prog),
-                        isCompleted: data['isFinish'],
-                        colorData: data['colorData'],
-                        imagePath: data['imagePath'],
-                      );
-                    }).toList(),
-                  ]),
+                    return HealthImprovementBigCard(
+                      title: data['title'],
+                      description: data['description'],
+                      progress: data['isFinish'] ? 100 : double.parse(prog),
+                      isCompleted: data['isFinish'],
+                      colorData: data['colorData'],
+                      imagePath: data['imagePath'],
+                    );
+                  }).toList(),
                 )),
           )),
     );
   }
 }
+
+//
+// [
+// const SizedBox(
+// height: 60,
+// ),
+// ...userStatus.healthImprovements.map((data) {
+// String prog = ((100 * data["totalMinutesOrDays"]) /
+// data["calculationTime"])
+//     .toStringAsFixed(1);
+//
+// return HealthImprovementBigCard(
+// title: data['title'],
+// description: data['description'],
+// progress: data['isFinish'] ? 100 : double.parse(prog),
+// isCompleted: data['isFinish'],
+// colorData: data['colorData'],
+// imagePath: data['imagePath'],
+// );
+// }).toList(),
+// ]

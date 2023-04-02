@@ -27,39 +27,38 @@ class _HealthImprovementState extends State<HealthImprovement> {
     return Container(
       color: QCDashColor.even,
       padding: EdgeInsets.symmetric(vertical: 20),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          GestureDetector(
-            onTap: () {
-              Get.to(() => HealthImprovementView(),
-
-                  // HealthImprovementCards(),
-                  transition: Transition.cupertino);
-            },
-            child: DashboardTitle(
+      child: GestureDetector(
+        onTap: () {
+          Get.to(() => HealthImprovementView(),
+              // HealthImprovementCards(),
+              transition: Transition.cupertino);
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            DashboardTitle(
               title: 'Health Improvement',
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Obx(() => Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: List.generate(
-                  userStatus.healthWidget.length >= 3
-                      ? 3
-                      : userStatus.healthWidget.length, (index) {
-                Map data = userStatus.healthWidget[index];
-                return HealthImporovementItem(
-                    imagePath: data['imagePath'],
-                    title: data['title'],
-                    // colorData: data['colorData'],
-                    progress: ((100 * data["totalMinutesOrDays"]) /
-                        data["calculationTime"]));
-              })))
-        ],
+            const SizedBox(
+              height: 20,
+            ),
+            Obx(() => Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: List.generate(
+                    userStatus.healthWidget.length >= 3
+                        ? 3
+                        : userStatus.healthWidget.length, (index) {
+                  Map data = userStatus.healthWidget[index];
+                  return HealthImporovementItem(
+                      imagePath: data['imagePath'],
+                      title: data['title'],
+                      // colorData: data['colorData'],
+                      progress: ((100 * data["totalMinutesOrDays"]) /
+                          data["calculationTime"]));
+                })))
+          ],
+        ),
       ),
     );
   }

@@ -1,18 +1,17 @@
-import 'dart:async';
-import 'dart:ui';
+// ignore_for_file: file_names
 
-import 'package:flutter/cupertino.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as ml;
 import 'package:flutter/services.dart';
-import 'package:get_storage/get_storage.dart';
+
 import 'package:SFM/CommonWidgets/BackgroundContainer.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:SFM/CommonWidgets/QC_Colors.dart';
+
 import 'package:numberpicker/numberpicker.dart';
 import 'package:rive/rive.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+// ignore: must_be_immutable
 class BreathPlayer extends StatefulWidget {
   BreathPlayer({
     Key? key,
@@ -43,12 +42,10 @@ class _BreathPlayerState extends State<BreathPlayer> {
     artboard = file.mainArtboard;
 
     final controller = StateMachineController.fromArtboard(artboard!, "state");
-    print(controller);
+
     if (controller != null) {
       artboard!.addController(controller);
       input = controller.findInput<bool>('start');
-
-      print(input!.value);
 
       input!.value = false;
     }
@@ -60,19 +57,19 @@ class _BreathPlayerState extends State<BreathPlayer> {
   //   super.initState();
   //   animationInit();
   // }
- Timer? timerM;
+  Timer? timerM;
 
   int _setTimerValue = 1;
   int timerValue = 0;
 
   timerFunction() {
-    if(timerM != null){
+    if (timerM != null) {
       timerM!.cancel();
     }
     setState(() {
       timerValue = _setTimerValue * 60;
     });
-    Timer.periodic(Duration(seconds: 1), (timer) {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
       timerM = timer;
 
       if (isPlay == true && timerValue > 0 && mounted) {
@@ -101,7 +98,9 @@ class _BreathPlayerState extends State<BreathPlayer> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    timerM!.cancel();
+    if (timerM != null) {
+      timerM!.cancel();
+    }
   }
 
   @override
@@ -110,7 +109,7 @@ class _BreathPlayerState extends State<BreathPlayer> {
       body: SafeArea(
         child: BackgroundContainer(
           transparentOpacity: 0.4,
-          backButton: true,
+          isAppbar: true,
           darkMode: false,
           child: Container(
             decoration: BoxDecoration(
@@ -131,7 +130,7 @@ class _BreathPlayerState extends State<BreathPlayer> {
                           .color(Colors.white)
                           .fontFamily('Montserrat')
                           .make(),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       widget.subtitle.text
                           .size(15)
                           .color(Colors.white)
@@ -144,15 +143,15 @@ class _BreathPlayerState extends State<BreathPlayer> {
                     ],
                   ),
                   artboard != null
-                      ? Container(
+                      ? SizedBox(
                           // decoration: BoxDecoration(
                           //     color: Colors.white24,
                           //     borderRadius: BorderRadius.circular(10)),
                           width: context.screenWidth / 1,
                           height: context.screenWidth / 1,
                           child: Rive(artboard: artboard!))
-                      : SizedBox(),
-                  Container(
+                      : const SizedBox(),
+                  SizedBox(
                     // color: Colors.red,
                     height: 200,
                     child: Column(
@@ -160,14 +159,11 @@ class _BreathPlayerState extends State<BreathPlayer> {
                       // crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         GestureDetector(
-
                           onTap: () {
-
                             // timerAlert(context);
                             setState(() {
                               input!.value = !input!.value;
                               isPlay = !isPlay;
-
 
                               timerFunction();
                             });
@@ -236,7 +232,6 @@ class _BreathPlayerState extends State<BreathPlayer> {
                                       onChanged: (value) {
                                         setState(() {
                                           _setTimerValue = value;
-                                          print(value);
                                         });
                                       }),
                                   GestureDetector(

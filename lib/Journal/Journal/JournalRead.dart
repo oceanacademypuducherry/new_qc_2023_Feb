@@ -19,7 +19,7 @@ class JournalRead extends StatelessWidget {
     // bgColor = Colors.white;
     return Scaffold(
       body: BackgroundContainer(
-        backButton: true,
+        isAppbar: true,
         child: Container(
           child: Column(
             children: [

@@ -45,7 +45,7 @@ class GetBackup extends StatelessWidget {
                 OverlayEntry loading = await loadingController.overlayLoading();
                 Overlay.of(context).insert(loading);
                 try{
-                  await apiController.updateMissionData();
+                  await apiController.backupAction(manualBackup: true);
                 }catch(e){
                   print(e);
                 }

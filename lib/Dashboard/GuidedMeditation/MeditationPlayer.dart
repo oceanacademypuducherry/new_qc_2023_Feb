@@ -40,6 +40,7 @@ class _MeditationPlayerState extends State<MeditationPlayer>
   bool isAmbient = false;
   int meditateDuration = 1;
   late Timer timer;
+
   dynamic timerFunction() {
     Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
@@ -82,7 +83,7 @@ class _MeditationPlayerState extends State<MeditationPlayer>
     double width = context.screenWidth;
     return Scaffold(
       body: BackgroundContainer(
-          backButton: true,
+          isAppbar: true,
           // backButtonChild: QCBackButton(
           //   onPressed: () {
           //     audioPlayer.stop();
@@ -148,11 +149,13 @@ class _MeditationPlayerState extends State<MeditationPlayer>
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       GestureDetector(
                         child: Container(
-                          width: 90,
-                          padding: EdgeInsets.symmetric(horizontal: 5),
+                          constraints: const BoxConstraints(
+                              minWidth: 120, minHeight: 40),
+                          padding: EdgeInsets.symmetric(horizontal: 10),
                           decoration: BoxDecoration(
                             border: Border.all(color: widget.color, width: 2),
                             borderRadius: BorderRadius.circular(3),
@@ -162,6 +165,7 @@ class _MeditationPlayerState extends State<MeditationPlayer>
                             children: [
                               "${duration.inMinutes <= 9 ? "0" : ""}${duration.inMinutes}:${duration.inSeconds <= 9 ? "0" : ""}${duration.inSeconds % 60}"
                                   .text
+                                  .size(18)
                                   .color(widget.color)
                                   .bold
                                   .make(),
@@ -192,6 +196,8 @@ class _MeditationPlayerState extends State<MeditationPlayer>
                       ),
                       GestureDetector(
                         child: Container(
+                          constraints: const BoxConstraints(
+                              minWidth: 120, minHeight: 40),
                           margin:
                               EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                           padding: EdgeInsets.symmetric(horizontal: 5),
@@ -208,6 +214,7 @@ class _MeditationPlayerState extends State<MeditationPlayer>
                               ),
                               "Add Ambient"
                                   .text
+                                  .size(17)
                                   .color(widget.color)
                                   .bold
                                   .make(),

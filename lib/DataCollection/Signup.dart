@@ -47,6 +47,7 @@ class _SignupState extends State<Signup> {
         });
       }
     } else {
+      // ignore: use_build_context_synchronously
       showDialog(
           context: context,
           builder: (_) {
@@ -164,6 +165,7 @@ class _SignupState extends State<Signup> {
                                       if (isSigned) {
                                         loading.remove();
                                         Get.to(() => QuitDatePicker(),
+                                            arguments: "isRegister",
                                             transition: Transition.rightToLeft,
                                             curve: Curves.easeInOut);
                                       } else {

@@ -8,13 +8,14 @@ import 'package:velocity_x/velocity_x.dart';
 class AffirmationCards extends StatelessWidget {
   AffirmationCards({Key? key}) : super(key: key);
   String BgImage = 'assets/images/img.jpg';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BackgroundContainer(
         padding: EdgeInsets.zero,
         title: "Affirmations",
-        backButton: true,
+        isAppbar: true,
         child: Container(
           child: SingleChildScrollView(
             child: Column(

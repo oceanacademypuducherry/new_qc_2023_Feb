@@ -7,22 +7,31 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 class CravingsChart extends StatelessWidget {
   final CravingsController _cravingsController = Get.find<CravingsController>();
 
+  CravingsChart({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Obx(() => SfCartesianChart(
+          onZooming: (val) {
+            print(val);
+          },
           series: <ChartSeries>[
             // Renders spline chart
 
             SplineSeries(
-                xAxisName: "Day",
-                yAxisName: "Strong",
-                legendItemText: "Cravings",
-                initialSelectedDataIndexes: const [0],
-                isVisibleInLegend: true,
-                splineType: SplineType.monotonic,
-                dataSource: _cravingsController.cravingsData.value,
-                xValueMapper: (data, _) => data['day'],
-                yValueMapper: (data, _) => data['strong'])
+              xAxisName: "Times",
+              yAxisName: "Strong",
+              legendItemText: "Cravings",
+              initialSelectedDataIndexes: const [0],
+              isVisibleInLegend: true,
+              splineType: SplineType.monotonic,
+              dataSource: [
+                const {"strong": 0},
+                ..._cravingsController.cravingsData
+              ],
+              xValueMapper: (data, index) => index,
+              yValueMapper: (data, _) => data['strong'],
+            )
           ],
         ));
   }

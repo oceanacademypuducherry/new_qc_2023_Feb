@@ -11,7 +11,7 @@ class MusicView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BackgroundContainer(
-        backButton: true,
+        isAppbar: true,
         child: Container(
           child: Column(
             children: [

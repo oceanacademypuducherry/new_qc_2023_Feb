@@ -178,9 +178,10 @@ class _LoginState extends State<Login> {
                                             loading.remove();
                                             userStatus.stopTimer(
                                                 runTimer: true);
-                                            Get.to(() => Dashboard(),
+                                            Get.to(() => const Dashboard(),
                                                 transition:
                                                     Transition.rightToLeft,
+                                                arguments: "isLogged",
                                                 curve: Curves.easeInOut);
                                           } else {
                                             loading.remove();
@@ -202,22 +203,20 @@ class _LoginState extends State<Login> {
                           ),
                           Expanded(
                             flex: 10,
-                            child: Container(
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Container(
-                                    height: 10,
-                                    width:
-                                        MediaQuery.of(context).size.width - 50,
-                                    decoration: const BoxDecoration(
-                                        gradient: LinearGradient(colors: [
-                                      Colors.white10,
-                                      Colors.white70,
-                                      Colors.white10
-                                    ])),
-                                  ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Container(
+                                  height: 10,
+                                  width: MediaQuery.of(context).size.width - 50,
+                                  decoration: const BoxDecoration(
+                                      gradient: LinearGradient(colors: [
+                                    Colors.white10,
+                                    Colors.white70,
+                                    Colors.white10
+                                  ])),
+                                ),
+                                if (true)
                                   Container(
                                     margin: EdgeInsets.symmetric(vertical: 10),
                                     child: Row(
@@ -250,38 +249,38 @@ class _LoginState extends State<Login> {
                                       ],
                                     ),
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      MaterialButton(
-                                        onPressed: () {
-                                          Get.to(() => Signup(),
-                                              transition:
-                                                  Transition.leftToRight,
-                                              curve: Curves.easeInOut);
-                                        },
-                                        splashColor: Colors.white30,
-                                        colorBrightness: Brightness.light,
-                                        child: RichText(
-                                          text: TextSpan(children: [
-                                            TextSpan(
-                                                text: "Not a Member?   ",
-                                                style: TextStyle(
-                                                    color: QCColors
-                                                        .secondaryTexColor)),
-                                            TextSpan(
-                                              text: 'Register Now',
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    MaterialButton(
+                                      onPressed: () {
+                                        Get.to(() => Signup(),
+                                            transition: Transition.leftToRight,
+                                            curve: Curves.easeInOut);
+                                      },
+                                      splashColor: Colors.white30,
+                                      colorBrightness: Brightness.light,
+                                      child: RichText(
+                                        strutStyle: StrutStyle(fontSize: 18),
+                                        text: TextSpan(children: [
+                                          TextSpan(
+                                              text: "Not a Member?   ",
                                               style: TextStyle(
-                                                  color:
-                                                      QCColors.inputTextColor),
-                                            )
-                                          ]),
-                                        ),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
+                                                  color: QCColors
+                                                      .secondaryTexColor,
+                                                  fontSize: 18)),
+                                          TextSpan(
+                                            text: 'Register Now',
+                                            style: TextStyle(
+                                                color: QCColors.inputTextColor,
+                                                fontSize: 18),
+                                          )
+                                        ]),
+                                      ),
+                                    )
+                                  ],
+                                )
+                              ],
                             ),
                           ),
                         ],

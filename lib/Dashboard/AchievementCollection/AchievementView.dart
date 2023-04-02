@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:math' as math;
 
-
 import 'package:SFM/Get_X_Controller/AchievementController.dart';
 import 'package:blur/blur.dart';
 import 'package:confetti/confetti.dart';
@@ -45,7 +44,8 @@ class _AchievementViewState extends State<AchievementView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BackgroundContainer(
-        backButton: true,
+        title: "Achievements",
+        isAppbar: true,
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
@@ -791,7 +791,7 @@ class AchievementCompleteCardList extends StatelessWidget {
 //                       mainAxisAlignment: MainAxisAlignment.center,
 //                       children: [
 //                         Image(
-//                             image: Svg('assets/images/cup.svg',
+//                             image:
 //                                 size: Size(sw / 2.2, sw / 2.2))),
 //                         SizedBox(height: 10),
 //                         Text(

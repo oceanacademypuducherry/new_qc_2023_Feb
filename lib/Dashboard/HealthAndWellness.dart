@@ -1,3 +1,4 @@
+import 'package:SFM/Dashboard/HealthAndWellness/health_tips.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:SFM/CommonWidgets/DashboardWidgets/DashboardTitle.dart';
@@ -21,7 +22,7 @@ class HealthAndWellness extends StatelessWidget {
             height: 20,
           ),
           DashboardTitle(
-            title: 'HealthAndWellness',
+            title: 'Health & Wellness',
           ),
           const SizedBox(
             height: 15,
@@ -32,7 +33,7 @@ class HealthAndWellness extends StatelessWidget {
               children: [
                 WellnessCard(
                   title: "Yoga",
-                  path: 'assets/images/haw/yoga.png',
+                  path: 'assets/images/yoga/bow.png',
                   onPressed: () {
                     Get.to(YogaTypes(), transition: Transition.cupertino);
                   },
@@ -55,6 +56,9 @@ class HealthAndWellness extends StatelessWidget {
                 WellnessCard(
                   title: "Health Tips",
                   path: 'assets/images/haw/ht.png',
+                  onPressed: () {
+                    Get.to(() => HealthTips());
+                  },
                 ),
                 WellnessCard(
                   title: "Wisdom",

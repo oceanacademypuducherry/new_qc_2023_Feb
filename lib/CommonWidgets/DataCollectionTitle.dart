@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class DataCollectionTitle extends StatelessWidget {
   DataCollectionTitle(
       {Key? key,
@@ -34,7 +35,7 @@ class DataCollectionTitle extends StatelessWidget {
         ),
         if (hasSubtitle)
           Container(
-              margin: EdgeInsets.symmetric(vertical: 20),
+              margin: const EdgeInsets.symmetric(vertical: 20),
               child: Text(
                 subtitle,
                 style: TextStyle(fontSize: fontSize(context) / 23),

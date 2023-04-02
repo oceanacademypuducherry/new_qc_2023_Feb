@@ -1,3 +1,4 @@
+import 'package:SFM/Get_X_Controller/API_Controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -25,17 +26,16 @@ class JournalFormWidget extends StatefulWidget {
 }
 
 class _JournalFormWidgetState extends State<JournalFormWidget> {
-  late TextEditingController controller1 ;
+  late TextEditingController controller1;
 
-  late TextEditingController controller2 ;
+  late TextEditingController controller2;
 
-  late TextEditingController controller3 ;
-
-
+  late TextEditingController controller3;
 
   final getStorage = GetStorage();
 
   JournalController _journalController = Get.find<JournalController>();
+  APIController _apiController = Get.find<APIController>();
 
   clearField() {
     controller1.clear();
@@ -43,18 +43,16 @@ class _JournalFormWidgetState extends State<JournalFormWidget> {
     controller3.clear();
   }
 
-@override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
-controller1 = TextEditingController();
+    controller1 = TextEditingController();
 
     controller2 = TextEditingController();
 
-  controller3 = TextEditingController();
-
+    controller3 = TextEditingController();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -62,10 +60,9 @@ controller1 = TextEditingController();
       padding: EdgeInsets.symmetric(horizontal: 10),
       child: Container(
         height: context.screenHeight,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: ListView(
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-
             CustomTextField(
               label: widget.title1,
               hintText: 'Write here',
@@ -74,6 +71,7 @@ controller1 = TextEditingController();
               autofocus: false,
               maxLines: 3,
             ),
+            const SizedBox(height: 20),
             CustomTextField(
               label: widget.title2,
               hintText: 'Write here',
@@ -82,6 +80,7 @@ controller1 = TextEditingController();
               autofocus: false,
               maxLines: 3,
             ),
+            const SizedBox(height: 20),
             CustomTextField(
               label: widget.title3,
               hintText: 'Write here',
@@ -90,6 +89,7 @@ controller1 = TextEditingController();
               autofocus: false,
               maxLines: 3,
             ),
+            const SizedBox(height: 20),
             SizedBox(
               width: context.screenWidth,
               child: ClipRRect(

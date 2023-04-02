@@ -1,10 +1,12 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:get/get.dart';
 import 'package:SFM/CommonWidgets/BackgroundContainer.dart';
 import 'package:SFM/Dashboard/HealthAndWellness/BreathPlayer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+// ignore: must_be_immutable
 class BreathCards extends StatelessWidget {
   BreathCards({Key? key}) : super(key: key);
 
@@ -16,7 +18,7 @@ class BreathCards extends StatelessWidget {
     return Scaffold(
       body: BackgroundContainer(
         title: "Breath and Realex",
-        backButton: true,
+        isAppbar: true,
         //  bg: Container(
         // decoration: BoxDecoration(
         //   gradient: LinearGradient(colors: [
@@ -36,7 +38,7 @@ class BreathCards extends StatelessWidget {
               //       fontWeight: FontWeight.w500,
               //       color: Color(0xff525252)),
               // ),
-              SizedBox(height: 15),
+              const SizedBox(height: 15),
               aboutBreath.text.gray600
                   .fontFamily("Montserrat")
                   .justify
@@ -45,10 +47,10 @@ class BreathCards extends StatelessWidget {
                   .box
                   .p16
                   .color(Colors.white.withOpacity(0.8))
-                  .margin(EdgeInsets.symmetric(horizontal: 10))
+                  .margin(const EdgeInsets.symmetric(horizontal: 10))
                   .roundedSM
                   .makeCentered(),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -56,8 +58,8 @@ class BreathCards extends StatelessWidget {
                     src: 'assets/images/breath/equal_breath.png',
                     title: "Equal Breathing",
                     subtitle: "Equal Breathing helps you to relax and focus.",
-                    color: Color(0xffEA9444),
-                    bgColor: Color(0xffEDFFF4),
+                    color: const Color(0xffEA9444),
+                    bgColor: const Color(0xffEDFFF4),
                     animationSrc:
                         "assets/Rive/breath_animation/equal_breath.riv",
                   ),
@@ -65,13 +67,13 @@ class BreathCards extends StatelessWidget {
                     src: 'assets/images/breath/box_breath.png',
                     title: "Box Breathing",
                     subtitle: "Box Breathing is a powerfull stress reliver.",
-                    color: Color(0xff0A9999),
-                    bgColor: Color(0xffE4FDFF),
+                    color: const Color(0xff0A9999),
+                    bgColor: const Color(0xffE4FDFF),
                     animationSrc: "assets/Rive/breath_animation/box_breath.riv",
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -79,8 +81,8 @@ class BreathCards extends StatelessWidget {
                     src: 'assets/images/breath/fse_breath.png',
                     title: "4-7-8 Breathing",
                     subtitle: "4-7-8  Breathing promotes better sleep.",
-                    color: Color(0xffF33182),
-                    bgColor: Color(0xffFFF4E4),
+                    color: const Color(0xffF33182),
+                    bgColor: const Color(0xffFFF4E4),
                     animationSrc:
                         "assets/Rive/breath_animation/4-7-8_breath.riv",
                   ),
@@ -88,8 +90,8 @@ class BreathCards extends StatelessWidget {
                     src: 'assets/images/breath/breath_test.png',
                     title: "Breath Hoalding Test",
                     subtitle: "Test your breath-holding capacity",
-                    color: Color(0xff0A9999),
-                    bgColor: Color(0xffFBDBDB),
+                    color: const Color(0xff0A9999),
+                    bgColor: const Color(0xffFBDBDB),
                     animationSrc: "assets/Rive/breath_animation/box_breath.riv",
                   ),
                 ],
@@ -102,6 +104,7 @@ class BreathCards extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class BreathCard extends StatelessWidget {
   BreathCard(
       {Key? key,
@@ -158,7 +161,7 @@ class BreathCard extends StatelessWidget {
               image: AssetImage(src),
               width: context.screenWidth / 6,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               title,
               style: TextStyle(

@@ -13,13 +13,15 @@ class MoneySavedInfo extends StatelessWidget {
   AchievementController achievementController =
       Get.find<AchievementController>();
   UserStatusController userStatus = Get.find<UserStatusController>();
+
   @override
   Widget build(BuildContext context) {
     Size s = context.screenSize;
     Color textColor = Color(0xff06845E);
     return Scaffold(
       body: BackgroundContainer(
-        backButton: true,
+        title: "Money Saved",
+        isAppbar: true,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -49,7 +51,9 @@ class MoneySavedInfo extends StatelessWidget {
                 Obx(() {
                   double totalAmount = achievementController.dayOfCost *
                       userStatus.totalSmokeFreeTime['days']!;
-                  return "₹$totalAmount"
+                  return (totalAmount.toString().lowerCamelCase != 'nan'
+                          ? "₹$totalAmount"
+                          : "0.0")
                       .text
                       .fontFamily('Ubuntu')
                       .color(textColor)

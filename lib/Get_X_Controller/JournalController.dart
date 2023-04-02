@@ -1,8 +1,11 @@
+import 'package:SFM/Get_X_Controller/API_Controller.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+APIController _apiController = Get.find<APIController>();
 class JournalController extends GetxController {
+
   bool isDataConnection = false;
   final allJournal = [].obs;
   GetStorage storage = GetStorage();
@@ -39,9 +42,22 @@ class JournalController extends GetxController {
     Map userData = await storage.read("userData");
     userData["journals"] = allJournal;
     storage.write("userData", userData);
+    storage.write("journals", allJournal);
+    // _apiController.addJournal(allJournal);
+    try{
+      print(allJournal);
+      _apiController.addJournal(allJournal);
+    }catch(e){
+print(e);
+      print('journal error for while add to db');
+    }
+
   }
 
   getAllJournal() async {
+    print('getAllJournal calledggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg');
+    // dynamic allJour = await _apiController.getJournals();
+
     dynamic userdata = await storage.read('userData');
 
     if (userdata != null) {

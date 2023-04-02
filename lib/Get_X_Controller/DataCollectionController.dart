@@ -36,6 +36,7 @@ class DataCollectionController extends GetxController {
 
   void addQuitDate(String pickedDate) {
     quiteDate.add(pickedDate);
+    storage.write('quiteDate', quiteDate);
   }
 
   void addCigaretteInfo(info) {
