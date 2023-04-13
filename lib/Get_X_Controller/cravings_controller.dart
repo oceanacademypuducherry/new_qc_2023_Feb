@@ -1,7 +1,9 @@
 import 'package:SFM/Get_X_Controller/API_Controller.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+
 APIController _apiController = Get.find<APIController>();
+
 class CravingsController extends GetxController {
   GetStorage storage = GetStorage();
   final userData = {}.obs;
@@ -39,10 +41,10 @@ class CravingsController extends GetxController {
     userData["cravings"] = cravingsData;
     await storage.write('userData', userData.value);
     await storage.write('cravings', cravingsData);
-    try{
+    try {
       print(cravingsData);
       _apiController.addCravings(cravingsData);
-    }catch(e){
+    } catch (e) {
       print(e);
       print('craving error for while add to db');
     }
@@ -50,20 +52,20 @@ class CravingsController extends GetxController {
     clearData();
   }
 
-void resetCravings() async{
+  void resetCravings() async {
     cravingsData([]);
     userData["cravings"] = cravingsData;
     await storage.write('userData', userData.value);
     await storage.write('cravings', cravingsData);
-    try{
+    try {
       print(cravingsData);
       _apiController.addCravings(cravingsData);
-    }catch(e){
+    } catch (e) {
       print(e);
       print('craving error for while add to db');
     }
+  }
 
-}
   loadCravings() async {
     dynamic uData = await storage.read('userData');
     userData(uData);
@@ -72,16 +74,16 @@ void resetCravings() async{
       if (oldCravingData != null) {
         cravingsData(oldCravingData);
       } else {
-        cravingsData([
-          {
-            'strong': 0,
-            'feeling': 'no',
-            'doing': 'no',
-            'whoWithYou': 'no',
-            'comment': 'no',
-            'day': 0
-          }
-        ]);
+        // cravingsData([
+        //   {
+        //     'strong': 0,
+        //     'feeling': 'no',
+        //     'doing': 'no',
+        //     'whoWithYou': 'no',
+        //     'comment': 'no',
+        //     'day': 0
+        //   }
+        // ]);
       }
     }
   }

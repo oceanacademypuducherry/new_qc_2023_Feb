@@ -1,5 +1,8 @@
+import 'package:SFM/Dashboard/Dashboard.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:SFM/CommonWidgets/BackgroundContainer.dart';
 import 'package:SFM/CommonWidgets/NextButton.dart';
@@ -36,6 +39,51 @@ class _SignupState extends State<Signup> {
   bool _passwordValidate = true;
 
   bool isConnected = true;
+
+  Future<String> googleOAuth() async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    try {
+      final data = await googleSignIn.signIn();
+      if (data == null) return '';
+      final gAuth = await data.authentication;
+
+      final gaCredintial = GoogleAuthProvider.credential(
+          accessToken: gAuth.accessToken, idToken: gAuth.idToken);
+      await FirebaseAuth.instance.signInWithCredential(gaCredintial);
+      print("${data.email}${data.displayName}");
+      String userType =
+          await apiController.oauth(email: data.email, uname: data.displayName);
+      return userType;
+    } catch (e) {
+      Get.snackbar('Google', "Something went wrong for google");
+      print(e);
+      return "Error";
+    }
+  }
+
+  void oauthFunction() async {
+    if (isConnected) {
+      OverlayEntry loading = await loadingController.overlayLoading();
+      Overlay.of(context).insert(loading);
+      String page = await googleOAuth();
+      if (page == "newUser") {
+        Get.to(() => QuitDatePicker(),
+            arguments: "isRegister",
+            transition: Transition.rightToLeft,
+            curve: Curves.easeInOut);
+      } else if (page == "OldUser") {
+        userStatus.stopTimer(runTimer: true);
+        Get.to(() => const Dashboard(),
+            transition: Transition.rightToLeft,
+            arguments: "isLogged",
+            curve: Curves.easeInOut);
+      }
+      loading.remove();
+    } else {
+      print("oauth else working");
+      checkInternetConnection();
+    }
+  }
 
   checkInternetConnection() async {
     bool result = await InternetConnectionChecker().hasConnection;
@@ -207,26 +255,27 @@ class _SignupState extends State<Signup> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   NextButton(
+                                    onPressed: oauthFunction,
                                     child: Image.asset(
                                       'assets/images/oauth/g.png',
-                                      height: screenHeight / 25,
-                                      width: screenHeight / 25,
+                                      height: 25,
+                                      width: 25,
                                     ),
                                   ),
                                   const SizedBox(width: 20),
                                   NextButton(
                                     child: Image.asset(
                                       'assets/images/oauth/apple.png',
-                                      height: screenHeight / 25,
-                                      width: screenHeight / 25,
+                                      height: 25,
+                                      width: 25,
                                     ),
                                   ),
                                   const SizedBox(width: 20),
                                   NextButton(
                                     child: Image.asset(
                                       'assets/images/oauth/fb.png',
-                                      height: screenHeight / 25,
-                                      width: screenHeight / 25,
+                                      height: 25,
+                                      width: 25,
                                     ),
                                   )
                                 ],

@@ -1,5 +1,7 @@
 import 'package:SFM/Get_X_Controller/AchievementController.dart';
 import 'package:SFM/Get_X_Controller/BottomNavController.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -20,6 +22,8 @@ import 'package:SFM/practice/particuls.dart';
 
 void main() async {
   await GetStorage.init();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   Get.put(BottomNavController());
   Get.put(APIController());
   Get.put(DataCollectionController());
@@ -49,7 +53,7 @@ class MainRun extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print(storage.getKeys());
-    print('&&&&&&&&&&&&&&&');
+
     bool isPending = storage.read('isPending') ?? false;
     print("isPending  $isPending");
     return GetMaterialApp(
@@ -57,10 +61,10 @@ class MainRun extends StatelessWidget {
         theme: ThemeData(fontFamily: 'Montserrat'),
         home: storage.read('isLogged') != null
             ? storage.read('isLogged')
-            ? isPending
-            ? QuitDatePicker()
-            : Dashboard()
-            : Login()
+                ? isPending
+                    ? QuitDatePicker()
+                    : Dashboard()
+                : Login()
             : Login());
   }
 }

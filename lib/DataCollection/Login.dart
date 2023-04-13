@@ -1,8 +1,10 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:SFM/CommonWidgets/BackgroundContainer.dart';
 import 'package:SFM/CommonWidgets/NextButton.dart';
@@ -24,9 +26,9 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  TextEditingController _emailController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
 
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   APIController apiController = Get.find<APIController>();
   UserStatusController userStatus = Get.find<UserStatusController>();
@@ -39,6 +41,51 @@ class _LoginState extends State<Login> {
   GetStorage storage = GetStorage();
   ScrollController scrollController = ScrollController();
   bool isConnected = true;
+
+  Future<String> googleOAuth() async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    try {
+      final data = await googleSignIn.signIn();
+      if (data == null) return '';
+      final gAuth = await data.authentication;
+
+      final gaCredintial = GoogleAuthProvider.credential(
+          accessToken: gAuth.accessToken, idToken: gAuth.idToken);
+      await FirebaseAuth.instance.signInWithCredential(gaCredintial);
+      print("${data.email}${data.displayName}");
+      String userType =
+          await apiController.oauth(email: data.email, uname: data.displayName);
+      return userType;
+    } catch (e) {
+      Get.snackbar('Google', "Something went wrong for google");
+      print(e);
+      return "Error";
+    }
+  }
+
+  void oauthFunction() async {
+    if (isConnected) {
+      OverlayEntry loading = await loadingController.overlayLoading();
+      Overlay.of(context).insert(loading);
+      String page = await googleOAuth();
+      if (page == "newUser") {
+        Get.to(() => QuitDatePicker(),
+            arguments: "isRegister",
+            transition: Transition.rightToLeft,
+            curve: Curves.easeInOut);
+      } else if (page == "OldUser") {
+        userStatus.stopTimer(runTimer: true);
+        Get.to(() => const Dashboard(),
+            transition: Transition.rightToLeft,
+            arguments: "isLogged",
+            curve: Curves.easeInOut);
+      }
+      loading.remove();
+    } else {
+      print("oauth else working");
+      checkInternetConnection();
+    }
+  }
 
   checkInternetConnection() async {
     bool result = await InternetConnectionChecker().hasConnection;
@@ -224,6 +271,7 @@ class _LoginState extends State<Login> {
                                           MainAxisAlignment.center,
                                       children: [
                                         NextButton(
+                                          onPressed: oauthFunction,
                                           child: Image.asset(
                                             'assets/images/oauth/g.png',
                                             height: 25,

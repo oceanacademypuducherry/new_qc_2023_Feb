@@ -27,10 +27,10 @@ class YogaView extends StatelessWidget {
                   left: 20,
                   right: 20,
                   bottom: 40),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Hero(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Hero(
                       tag: title,
                       child: Container(
                         // alignment: Alignment.center,
@@ -47,22 +47,29 @@ class YogaView extends StatelessWidget {
                             : "No source".text.make(),
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    title.text.size(25).color(Color(0xff216D97)).bold.make(),
-                    const SizedBox(height: 20),
-                    Container(
-                      width: context.screenWidth,
-                      decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(10)),
-                      padding: EdgeInsets.all(15),
-                      child: description.text.justify.normal.medium
-                          .size(18)
-                          .color(Vx.gray600)
-                          .make(),
-                    )
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 20),
+                  title.text.size(25).color(Color(0xff216D97)).bold.make(),
+                  const SizedBox(height: 20),
+                  Expanded(
+                    child: Container(
+                        width: context.screenWidth,
+                        decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(10)),
+                        padding: EdgeInsets.all(15),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              description.text.justify.normal.medium
+                                  .size(18)
+                                  .color(Vx.gray600)
+                                  .make(),
+                            ],
+                          ),
+                        )),
+                  )
+                ],
               ),
             )),
       ),

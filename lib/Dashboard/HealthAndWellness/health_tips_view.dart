@@ -92,29 +92,31 @@ class _HealthTipsViewState extends State<HealthTipsView> {
               child: PageView(
                   controller: pageController,
                   onPageChanged: (val) {
-                    print(val);
                     setState(() {
                       tipsIndex = val;
                     });
                   },
                   children: widget.data.tips
                       .map(<String>(e) {
-                        print(e);
-                        return SingleChildScrollView(
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 10),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 10),
-                            decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.3),
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Text(
-                              e.toString(),
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.grey[600],
-                                  fontWeight: FontWeight.w500),
+                        return Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                          decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.3),
+                              borderRadius: BorderRadius.circular(10)),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                Text(
+                                  e.toString(),
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.grey[600],
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ],
                             ),
                           ),
                         );

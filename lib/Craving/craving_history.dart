@@ -15,15 +15,18 @@ class CravingsHistory extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BackgroundContainer(
+        title: "Cravings History",
         isAppbar: true,
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: ListView(
             padding: EdgeInsets.only(top: context.screenHeight / 8, bottom: 50),
             children: _cravingsController.cravingsData
-                .map((craving) => HistoryTail(
-                      cravingData: craving,
-                    ))
+
+                .map((craving) =>
+                HistoryTail(
+                  cravingData: craving,
+                ))
                 .toList()
                 .reversed
                 .toList(),
@@ -84,7 +87,7 @@ class HistoryTail extends StatelessWidget {
             margin: const EdgeInsets.only(right: 10),
             decoration: BoxDecoration(
 
-                ///dynamic color
+              ///dynamic color
                 color: const Color(0xffffdcdc), //Color(0xffE4FFF9),
                 borderRadius: BorderRadius.circular(5)),
             child: Column(
@@ -102,40 +105,40 @@ class HistoryTail extends StatelessWidget {
           ),
           Expanded(
               child: Container(
-            padding: const EdgeInsets.only(left: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  '${cravingData!['whoWithYou']}, ${cravingData!['doing']}, ${cravingData!['feeling']}',
-                  style: const TextStyle(
-                      fontSize: 15,
-                      color: Color(0xff656565),
-                      fontWeight: FontWeight.bold),
+                padding: const EdgeInsets.only(left: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '${cravingData!['whoWithYou']}, ${cravingData!['doing']}, ${cravingData!['feeling']}',
+                      style: const TextStyle(
+                          fontSize: 15,
+                          color: Color(0xff656565),
+                          fontWeight: FontWeight.bold),
+                    ),
+
+                    Container(
+                      margin: const EdgeInsets.only(top: 5),
+                      width: context.screenWidth / (10 - colorIndex),
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: strongColor[colorIndex],
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    )
+
+                    // Text(
+                    //   '${cravingData!['comment']}',
+                    //   style: const TextStyle(
+                    //     fontSize: 15,
+                    //     color: Colors.grey,
+                    //   ),
+                    //   overflow: TextOverflow.ellipsis,
+                    // )
+                  ],
                 ),
-
-                Container(
-                  margin: const EdgeInsets.only(top: 5),
-                  width: context.screenWidth / (10 - colorIndex),
-                  height: 10,
-                  decoration: BoxDecoration(
-                    color: strongColor[colorIndex],
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                )
-
-                // Text(
-                //   '${cravingData!['comment']}',
-                //   style: const TextStyle(
-                //     fontSize: 15,
-                //     color: Colors.grey,
-                //   ),
-                //   overflow: TextOverflow.ellipsis,
-                // )
-              ],
-            ),
-          ))
+              ))
         ],
       ),
     );
