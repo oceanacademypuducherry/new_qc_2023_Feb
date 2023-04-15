@@ -59,6 +59,7 @@ dependencies:
   google_sign_in: ^6.1.0
   firebase_auth: ^4.4.0
   firebase_core: ^2.9.0
+  flutter_platform_widgets: ^3.3.1
 
 
 

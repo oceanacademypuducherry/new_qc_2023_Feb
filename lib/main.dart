@@ -1,5 +1,10 @@
+
+
+import 'dart:io';
+
 import 'package:SFM/Get_X_Controller/AchievementController.dart';
 import 'package:SFM/Get_X_Controller/BottomNavController.dart';
+import 'package:SFM/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
@@ -23,7 +28,13 @@ import 'package:SFM/practice/particuls.dart';
 void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
+
+if(Platform.isIOS){
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+}else{
   await Firebase.initializeApp();
+}
+
   Get.put(BottomNavController());
   Get.put(APIController());
   Get.put(DataCollectionController());
