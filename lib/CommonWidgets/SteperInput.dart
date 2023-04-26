@@ -21,16 +21,15 @@ class SteperInput extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               IconButton(
-                  padding: EdgeInsets.zero,
                   onPressed: () {
-                    if (int.parse(textEditingController!.text) >= 0) {
+                    if (int.parse(textEditingController!.text) > 0) {
                       textEditingController!.text =
-                          "${int.parse(textEditingController!.text) + 1}";
+                      "${int.parse(textEditingController!.text) - 1}";
                     }
                   },
-                  splashColor: Colors.red,
+                  splashRadius: 20,
                   iconSize: 15,
-                  icon: Icon(FontAwesomeIcons.plus)),
+                  icon: Icon(FontAwesomeIcons.minus)),
               // SizedBox(width: 10),
               Container(
                 width: 50,
@@ -43,16 +42,18 @@ class SteperInput extends StatelessWidget {
                 ),
               ),
 
+
               IconButton(
+                  padding: EdgeInsets.zero,
                   onPressed: () {
-                    if (int.parse(textEditingController!.text) > 0) {
+                    if (int.parse(textEditingController!.text) >= 0) {
                       textEditingController!.text =
-                          "${int.parse(textEditingController!.text) - 1}";
+                      "${int.parse(textEditingController!.text) + 1}";
                     }
                   },
-                  splashRadius: 20,
+                  splashColor: Colors.red,
                   iconSize: 15,
-                  icon: Icon(FontAwesomeIcons.minus)),
+                  icon: Icon(FontAwesomeIcons.plus)),
             ],
           ),
         ));

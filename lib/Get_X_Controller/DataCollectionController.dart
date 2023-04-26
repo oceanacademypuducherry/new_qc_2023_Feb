@@ -12,6 +12,7 @@ class DataCollectionController extends GetxController {
   GetStorage storage = GetStorage();
   final userInfo = {}.obs;
   final tempQuitDate = "".obs;
+
   // final quiteDate = "${DateTime.now()}".obs;
   final quiteDate = [].obs;
   final cigaretteInfo = {
@@ -45,5 +46,22 @@ class DataCollectionController extends GetxController {
 
   void addReasonList(List<String> reasons) {
     reasonList(reasons);
+  }
+
+  loadCigaretteInfo() async {
+    dynamic data = await storage.read('userData') ?? {};
+
+    Map cigInfo = data['cigaretteInfo'];
+    print(cigInfo);
+    if (cigInfo != null) {
+      cigaretteInfo(cigInfo.cast<String, int>());
+    }
+  }
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    loadCigaretteInfo();
   }
 }

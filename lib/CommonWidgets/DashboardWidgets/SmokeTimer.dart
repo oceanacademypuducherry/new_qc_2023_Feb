@@ -8,6 +8,7 @@ class SmokeTimer extends StatelessWidget {
     Key? key,
   }) : super(key: key);
   UserStatusController timerData = Get.find<UserStatusController>();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,6 +23,9 @@ class SmokeTimer extends StatelessWidget {
         if (timerData.smokeFreeTime['isStarted'] == 0) {
           List quitDate = timerData.userData['quiteDate'];
           String date = quitDate[quitDate.length - 1];
+          int day = DateTime.parse(date.toString()).day;
+          int month = DateTime.parse(date.toString()).month;
+          int year = DateTime.parse(date.toString()).year;
           return Column(
             children: [
               const Text('Your Journey will start at')
@@ -29,7 +33,8 @@ class SmokeTimer extends StatelessWidget {
                   .white
                   .size(15)
                   .make(),
-              Text(date).text.white.size(20).make(),
+              SizedBox(height: 5),
+              Text("${day}-${month}-${year}").text.white.size(20).make(),
             ],
           );
         } else {

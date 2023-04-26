@@ -9,10 +9,17 @@ import 'package:SFM/Get_X_Controller/UserStatusController.dart';
 import 'package:SFM/Mission/MissionView.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-class Missions extends StatelessWidget {
+class Missions extends StatefulWidget {
   Missions({Key? key}) : super(key: key);
 
+  @override
+  State<Missions> createState() => _MissionsState();
+}
+
+class _MissionsState extends State<Missions> {
   MissionController _missionController = Get.find<MissionController>();
+
+  ScrollController scrollController = ScrollController();
 
   Future<bool> _onWillPop() async {
     print('could not close');
@@ -28,40 +35,36 @@ class Missions extends StatelessWidget {
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
-        body: BackgroundContainer(
-          title: "Missions",
-          isAppbar: true,
-          withBackButton: false,
-          isDashboard: true,
-          padding: EdgeInsets.symmetric(vertical: 0),
-          child: SingleChildScrollView(
-            child: Obx(() => Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 80),
-                    // if (_missionController.missionDay.value <= 0)
-                    //   const SizedBox(
-                    //     height: 50,
-                    //     child: Center(
-                    //       child: Text("your mission will start Tomorrow"),
-                    //     ),
-                    //   ),
-                    ...List.generate(_missionController.missionData.length,
-                        (index) {
-                      final data = _missionController.missionData;
-                      print(data);
-
-                      return MissionTail(
-                        missionData: data[index],
-                        missionIndex: index + 1,
-                        currentDayCount:
-                            _missionController.missionDay.value + 1,
-                      );
-                    }),
-                    SizedBox(height: 80),
-                  ],
-                )),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          title: Text(
+            "Missions",
+            style: TextStyle(color: Colors.grey[600]),
           ),
+          centerTitle: true,
+        ),
+        body: BackgroundContainer(
+          isDashboard: true,
+          padding: EdgeInsets.symmetric(horizontal: 15),
+          child: Obx(() => ListView(
+                padding: EdgeInsets.only(top: context.screenHeight / 30),
+                controller: scrollController,
+                children: [
+                  ...List.generate(_missionController.missionData.length,
+                      (index) {
+                    final data = _missionController.missionData;
+                    print(data);
+
+                    return MissionTail(
+                      missionData: data[index],
+                      missionIndex: index + 1,
+                      currentDayCount: _missionController.missionDay.value + 1,
+                    );
+                  }),
+                  SizedBox(height: 80),
+                ],
+              )),
         ),
       ),
     );
@@ -123,25 +126,32 @@ class MissionTail extends StatelessWidget {
               child: Row(
                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Hero(
-                    tag: "mission_$missionIndex",
-                    child: Image(
-                      image: Svg(missionData!['missionVector'] ??
-                          'assets/images/mission/plant.svg'),
+                  Container(
+                    height: context.screenHeight / 10,
+                    child: Hero(
+                      tag: "mission_$missionIndex",
+                      child: Image(
+                        image: Svg(missionData!['missionVector'] ??
+                            'assets/images/mission/plant.svg'),
+                      ),
                     ),
                   ),
-                  const SizedBox(width: 5),
-                  "Mission-$missionIndex"
-                      .text
-                      .bold
-                      .fontFamily('Roboto')
-                      .color(const Color(0xff515151))
-                      .size(context.screenHeight / 40)
-                      .make(),
-                  const Spacer(),
-                  buildIcon(context,
-                      isComplete: missionData!['isComplete'],
-                      missionOpenDay: missionData!['openDay'])
+                  Expanded(
+                    child: "${missionData!['title']}"
+                        .text
+                        .bold
+                        .ellipsis
+                        .fontFamily('Roboto')
+                        .color(const Color(0xff515151))
+                        .size(context.screenHeight / 40)
+                        .make(),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(left: 10, right: 10),
+                    child: buildIcon(context,
+                        isComplete: missionData!['isComplete'],
+                        missionOpenDay: missionData!['openDay']),
+                  )
                 ],
               ),
             ),

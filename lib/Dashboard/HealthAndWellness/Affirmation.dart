@@ -3,14 +3,16 @@ import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:SFM/CommonWidgets/BackButton.dart';
 import 'package:SFM/CommonWidgets/BackgroundContainer.dart';
-import 'dart:ui';
 
 import 'package:velocity_x/velocity_x.dart';
 
+// ignore: must_be_immutable
 class AffirmationView extends StatelessWidget {
   AffirmationView({Key? key, this.dataList}) : super(key: key);
 
   List<String>? dataList;
+
+  final controller = PageController(initialPage: 55);
 
   @override
   Widget build(BuildContext context) {
@@ -26,17 +28,17 @@ class AffirmationView extends StatelessWidget {
           ),
           child: Container(
             alignment: Alignment.center,
-            child: PageView(
-              children: dataList != null
-                  ? dataList!
-                      .map(
-                        (affirmation) =>
-                            textContent(context, quotes: affirmation),
-                      )
-                      .toList()
-                  : [
-                      textContent(context, quotes: 'No affirmation'),
-                    ],
+            child: PageView.builder(
+              controller: controller,
+              onPageChanged: (ind) {},
+              // itemCount: dataList != null ? dataList!.length : 0,
+              itemBuilder: (context, index) {
+                int ind = index % dataList!.length;
+                if (dataList == null) {
+                  return textContent(context, quotes: "no quotes");
+                }
+                return textContent(context, quotes: dataList![ind]);
+              },
             ),
           )),
     );

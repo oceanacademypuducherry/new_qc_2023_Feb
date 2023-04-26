@@ -1,9 +1,8 @@
-
-
 import 'dart:io';
 
 import 'package:SFM/Get_X_Controller/AchievementController.dart';
 import 'package:SFM/Get_X_Controller/BottomNavController.dart';
+import 'package:SFM/Get_X_Controller/app_info_controller.dart';
 import 'package:SFM/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -29,11 +28,12 @@ void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
 
-if(Platform.isIOS){
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-}else{
-  await Firebase.initializeApp();
-}
+  if (Platform.isIOS) {
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
+  } else {
+    await Firebase.initializeApp();
+  }
 
   Get.put(BottomNavController());
   Get.put(APIController());
@@ -45,6 +45,7 @@ if(Platform.isIOS){
   Get.put(MissionController());
   Get.put(LoadingController());
   Get.put(AchievementController());
+  Get.put(AppInfoController());
 
   runApp(
     MainRun(),

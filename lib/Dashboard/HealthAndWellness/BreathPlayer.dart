@@ -122,7 +122,9 @@ class _BreathPlayerState extends State<BreathPlayer> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(height: context.screenHeight / 15),
+                  SizedBox(
+                    height: context.screenHeight / 10,
+                  ),
                   Column(
                     children: [
                       widget.title.text.bold
@@ -142,21 +144,24 @@ class _BreathPlayerState extends State<BreathPlayer> {
                           .makeCentered(),
                     ],
                   ),
-                  artboard != null
-                      ? SizedBox(
-                          // decoration: BoxDecoration(
-                          //     color: Colors.white24,
-                          //     borderRadius: BorderRadius.circular(10)),
-                          width: context.screenWidth / 1,
-                          height: context.screenWidth / 1,
-                          child: Rive(artboard: artboard!))
-                      : const SizedBox(),
-                  SizedBox(
+                  Expanded(
+                    flex: 1,
+                    child: artboard != null
+                        ? SizedBox(
+                            // decoration: BoxDecoration(
+                            //     color: Colors.white24,
+                            //     borderRadius: BorderRadius.circular(10)),
+                            width: context.screenWidth / 1,
+                            height: context.screenWidth / 1,
+                            child: Rive(artboard: artboard!))
+                        : const SizedBox(),
+                  ),
+                  Expanded(
                     // color: Colors.red,
-                    height: 200,
+
                     child: Column(
-                      // mainAxisAlignment: MainAxisAlignment.end,
-                      // crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         GestureDetector(
                           onTap: () {
@@ -256,11 +261,11 @@ class _BreathPlayerState extends State<BreathPlayer> {
                                   .make(),
                             ],
                           ),
-                        )
+                        ),
+                        const SizedBox(height: 50),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 1),
                 ],
               ),
             ),

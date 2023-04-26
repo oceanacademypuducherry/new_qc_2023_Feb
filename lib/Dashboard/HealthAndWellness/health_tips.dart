@@ -79,7 +79,7 @@ class CategoryTail extends StatelessWidget {
                     height: 100,
                     decoration: BoxDecoration(
                         color: Colors.white.withOpacity(0.5),
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(10),
                           bottomLeft: Radius.circular(10),
                         )),
@@ -109,7 +109,7 @@ class CategoryTail extends StatelessWidget {
                 height: 100,
                 decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.5),
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topRight: Radius.circular(10),
                       bottomRight: Radius.circular(10),
                     )),

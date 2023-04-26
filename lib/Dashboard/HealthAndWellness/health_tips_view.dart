@@ -112,9 +112,11 @@ class _HealthTipsViewState extends State<HealthTipsView> {
                                 Text(
                                   e.toString(),
                                   style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.grey[600],
-                                      fontWeight: FontWeight.w500),
+                                    fontSize: 20,
+                                    color: Colors.grey[600],
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  textAlign: TextAlign.justify,
                                 ),
                               ],
                             ),

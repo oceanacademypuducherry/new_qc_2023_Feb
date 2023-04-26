@@ -1,5 +1,4 @@
-import 'dart:ui';
-
+import 'package:SFM/Dashboard/HealthAndWellness/wisdom_data.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:SFM/CommonWidgets/BackButton.dart';
@@ -43,17 +42,11 @@ class _WisdomViewState extends State<WisdomView> {
               });
             });
           },
-          children: [
-            wisdomView(context,
-                quotes:
-                    "All our dreams can come true if we have the courage to pursue them."),
-            wisdomView(context,
-                quotes:
-                    "All our dreams can come true if we have the courage to pursue them."),
-            wisdomView(context,
-                quotes:
-                    "All our dreams can come true if we have the courage to pursue them."),
-          ],
+          children: wisdomData
+              .map(
+                (wisdom) => wisdomView(context, quotes: wisdom),
+              )
+              .toList(),
         ),
       ),
     ));
@@ -61,7 +54,7 @@ class _WisdomViewState extends State<WisdomView> {
 
   Container wisdomView(BuildContext context, {quotes}) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
       width: context.screenWidth / 1.01,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -91,7 +84,6 @@ class _WisdomViewState extends State<WisdomView> {
                 width: context.screenWidth / 3,
                 child: Image.asset('assets/images/logo_text.png'),
               ),
-
             ],
           ),
           // TextButton(

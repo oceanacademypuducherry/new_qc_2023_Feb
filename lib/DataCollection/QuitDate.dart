@@ -49,16 +49,20 @@ class QuitDatePicker extends StatelessWidget {
                             selectionColor: QCColors.inputTextColor,
                             backgroundColor: Colors.white38,
                             onSelectionChanged: (val) {
+                              print(val.value);
                               DateTime dd =
                                   DateTime.parse(val.value.toString());
                               DateTime timing = DateTime.now();
+                              final def = timing.difference(
+                                  DateTime.parse(val.value.toString()));
+                              print(def.inSeconds);
                               DateTime quiteDate = DateTime(
                                   dd.year,
                                   dd.month,
                                   dd.day,
-                                  timing.hour,
-                                  timing.minute,
-                                  timing.second);
+                                  def.inSeconds <= 0 ? 0 : timing.hour,
+                                  def.inSeconds <= 0 ? 0 : timing.minute,
+                                  def.inSeconds <= 0 ? 0 : timing.second);
 
                               _dcc.tempQuitDate(quiteDate.toString());
                             },

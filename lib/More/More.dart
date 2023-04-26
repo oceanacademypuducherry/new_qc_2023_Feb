@@ -1,5 +1,9 @@
 import 'package:SFM/Get_X_Controller/API_Controller.dart';
 import 'package:SFM/Get_X_Controller/cravings_controller.dart';
+import 'package:SFM/More/about_sfm.dart';
+import 'package:SFM/More/feedback_page.dart';
+import 'package:SFM/More/profile_view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:get/get.dart';
@@ -10,7 +14,7 @@ import 'package:SFM/DataCollection/QuitDate.dart';
 import 'package:SFM/Get_X_Controller/BottomNavController.dart';
 import 'package:SFM/Get_X_Controller/DataCollectionController.dart';
 import 'package:SFM/Get_X_Controller/UserStatusController.dart';
-import 'package:SFM/More/GetBackup.dart';
+
 import 'package:velocity_x/velocity_x.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -26,31 +30,63 @@ class More extends StatelessWidget {
 
   final CravingsController _cravingsController = Get.find<CravingsController>();
 
-  _backup() {
-    Get.to(GetBackup(), transition: Transition.size);
-  }
-
-  _logout() {
-    // return;
-    storage.erase();
-    userStatus.stopTimer(runTimer: false);
-    Get.to(Login(), transition: Transition.rightToLeft);
-    _bottomNavController.startPage();
+  _logout(context) {
+    Get.defaultDialog(
+        title: "Are you sure want logout?",
+        middleText: "Your current data will be erased",
+        textConfirm: "Logout",
+        textCancel: "Cancel",
+        // cancelTextColor: Colors.black
+        confirmTextColor: Colors.red,
+        buttonColor: Colors.white,
+        barrierDismissible: false,
+        contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
+        titlePadding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+        // onCancel: (){},
+        onConfirm: () {
+          storage.erase();
+          userStatus.stopTimer(runTimer: false);
+          Get.to(Login(), transition: Transition.rightToLeft);
+          _bottomNavController.startPage();
+        });
   }
 
   relapse() async {
-    userStatus.stopTimer(runTimer: false);
-    List dates = userStatus.userData["quiteDate"];
-    _dataCollectionController.setQuitDate(dates);
-    _bottomNavController.startPage();
+    Get.defaultDialog(
+        title: "Are you sure want relapse?",
+        middleText: "You may start your journey from beginning",
+        textConfirm: "Sure",
+        textCancel: "No",
+        // cancelTextColor: Colors.black
+        confirmTextColor: Colors.red,
+        buttonColor: Colors.white,
+        barrierDismissible: false,
+        contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
+        titlePadding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
 
-    _cravingsController.resetCravings();
-    Get.to(QuitDatePicker(), transition: Transition.rightToLeft);
+        // onCancel: (){},
+        onConfirm: () {
+          userStatus.stopTimer(runTimer: false);
+          List dates = userStatus.userData["quiteDate"];
+          _dataCollectionController.setQuitDate(dates);
+          _bottomNavController.startPage();
+          _cravingsController.resetCravings();
+          Get.to(QuitDatePicker(), transition: Transition.rightToLeft);
+        });
+  }
+
+  _about() {
+    Get.to(() => AboutSFM(), transition: Transition.cupertino);
+  }
+
+  _feedback() {
+    Get.to(() => FeedbackPage(), transition: Transition.cupertino);
   }
 
   _profile() {
+    Get.to(() => ProfileView(), transition: Transition.cupertino);
+    return;
     dynamic test = storage.getKeys();
-
     for (dynamic t in test) {
       print(t);
     }
@@ -80,7 +116,7 @@ class More extends StatelessWidget {
                   height: 100,
                   alignment: Alignment.centerRight,
                   decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.7),
+                      color: Colors.white.withOpacity(0.5),
                       borderRadius: BorderRadius.circular(5)),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -130,29 +166,60 @@ class More extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        ProfileItem(
-                          label: "Profile",
-                          onPressed: _profile,
-                          child: Container(
-                            height: 100,
-                            color: Colors.yellow.withOpacity(0.3),
+                  child: true
+                      ? GridView.count(
+                          crossAxisCount: 1,
+                          crossAxisSpacing: 8,
+                          mainAxisSpacing: 5,
+                          childAspectRatio: 7 / 1,
+                          children: [
+                            ProfileItem(
+                              label: "Profile",
+                              onPressed: _profile,
+                            ),
+                            ProfileItem(
+                              label: "Relapse",
+                              onPressed: relapse,
+                            ),
+                            ProfileItem(
+                                label: "Feedback", onPressed: _feedback),
+                            ProfileItem(
+                              label: "About",
+                              onPressed: _about,
+                            ),
+                            ProfileItem(
+                                label: "Logout",
+                                onPressed: () {
+                                  _logout(context);
+                                }),
+                            const SizedBox(height: 80)
+                          ],
+                        )
+                      : SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              ProfileItem(
+                                label: "Profile",
+                                onPressed: _profile,
+                              ),
+                              ProfileItem(
+                                label: "Relapse",
+                                onPressed: relapse,
+                              ),
+                              ProfileItem(label: "Feedback"),
+                              ProfileItem(
+                                label: "About",
+                                onPressed: _about,
+                              ),
+                              ProfileItem(
+                                  label: "Logout",
+                                  onPressed: () {
+                                    _logout(context);
+                                  }),
+                              const SizedBox(height: 80)
+                            ],
                           ),
                         ),
-                        ProfileItem(label: "Backup", onPressed: _backup),
-                        ProfileItem(
-                          label: "Relapse",
-                          onPressed: relapse,
-                        ),
-                        ProfileItem(label: "Feedback"),
-                        ProfileItem(label: "About"),
-                        ProfileItem(label: "Logout", onPressed: _logout),
-                        const SizedBox(height: 80)
-                      ],
-                    ),
-                  ),
                 )
               ],
             ),
@@ -163,19 +230,16 @@ class More extends StatelessWidget {
   }
 }
 
-class ProfileItem extends StatefulWidget {
-  ProfileItem({Key? key, this.label = 'label', this.onPressed, this.child})
-      : super(key: key);
+class ProfileItem extends StatelessWidget {
+  ProfileItem({
+    Key? key,
+    this.label = 'label',
+    this.onPressed,
+  }) : super(key: key);
 
   String label;
   VoidCallback? onPressed;
-  Widget? child;
 
-  @override
-  State<ProfileItem> createState() => _ProfileItemState();
-}
-
-class _ProfileItemState extends State<ProfileItem> {
   bool isOpen = false;
 
   @override
@@ -184,61 +248,36 @@ class _ProfileItemState extends State<ProfileItem> {
       elevation: 0,
       color: Colors.transparent,
       child: InkWell(
-        onTap: () {
-          setState(() {
-            isOpen = !isOpen;
-
-            if (widget.onPressed != null) {
-              widget.onPressed!();
-            }
-          });
-        },
-        child: Container(
-          // padding: EdgeInsets.symmetric(horizontal: 10),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 50,
-                width: context.screenWidth,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(5),
-                  child: Container(
-                    color: Colors.white.withOpacity(0.7),
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        widget.label.text
-                            .size(18)
-                            .fontWeight(FontWeight.w500)
-                            .fontFamily('Roboto')
-                            .color(Color(0xff686868))
-                            .make(),
-                        Icon(
-                          isOpen
-                              ? FontAwesomeIcons.angleDown
-                              : FontAwesomeIcons.angleRight,
-                          size: 18,
-                          color: Color(0xff686868),
-                        )
-                      ],
-                    ),
-                  ),
-                ).marginSymmetric(vertical: 1),
+        onTap: onPressed,
+        child: SizedBox(
+          width: context.screenWidth,
+          height: 100,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(5),
+            child: Container(
+              color: Colors.white.withOpacity(0.5),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  label.text
+                      .size(18)
+                      .fontWeight(FontWeight.w500)
+                      .fontFamily('Roboto')
+                      .color(Color(0xff686868))
+                      .make(),
+                  Icon(
+                    isOpen
+                        ? FontAwesomeIcons.angleDown
+                        : FontAwesomeIcons.angleRight,
+                    size: 18,
+                    color: Color(0xff686868),
+                  )
+                ],
               ),
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                margin: EdgeInsets.only(
-                    bottom: isOpen ? 10 : 0, top: isOpen ? 2 : 0),
-                height: isOpen ? context.screenHeight : 0,
-                constraints: BoxConstraints(maxHeight: 300),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.7),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              )
-            ],
-          ),
+            ),
+          ).marginSymmetric(vertical: 1),
         ),
       ),
     );

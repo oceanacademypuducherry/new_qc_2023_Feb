@@ -11,7 +11,7 @@ class BreathCards extends StatelessWidget {
   BreathCards({Key? key}) : super(key: key);
 
   String aboutBreath =
-      "publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without placeholder text commonly used to demonstrate the visual form of a document or a typeface without";
+      "Breathing and relaxation techniques are practices that can help individuals manage stress, anxiety, and other negative emotions. These techniques involve taking deep, slow breaths and focusing on relaxing the body and calming the mind. Here are some common breathing and relaxation techniques";
 
   @override
   Widget build(BuildContext context) {
@@ -46,18 +46,19 @@ class BreathCards extends StatelessWidget {
                   .makeCentered()
                   .box
                   .p16
-                  .color(Colors.white.withOpacity(0.8))
+                  .color(Colors.white.withOpacity(0.3))
                   .margin(const EdgeInsets.symmetric(horizontal: 10))
                   .roundedSM
                   .makeCentered(),
               const SizedBox(height: 30),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   BreathCard(
                     src: 'assets/images/breath/equal_breath.png',
                     title: "Equal Breathing",
-                    subtitle: "Equal Breathing helps you to relax and focus.",
+                    subtitle:
+                        "Equal breathing can help reduce stress , helps improve focus and concentration by calming the mind and reducing distractions. It  can help balance the nervous system by promoting relaxation. And it  can help improve respiratory function by increasing oxygen intake and reducing carbon dioxide levels in the body. Also help lower blood pressure by promoting relaxation.",
                     color: const Color(0xffEA9444),
                     bgColor: const Color(0xffEDFFF4),
                     animationSrc:
@@ -66,7 +67,8 @@ class BreathCards extends StatelessWidget {
                   BreathCard(
                     src: 'assets/images/breath/box_breath.png',
                     title: "Box Breathing",
-                    subtitle: "Box Breathing is a powerfull stress reliver.",
+                    subtitle:
+                        "Box breathing, also known as four-square breathing.Box breathing can help improve focus and concentration by calming the mind and reducing distractions, lower blood pressure by promoting relaxation and reducing stress.",
                     color: const Color(0xff0A9999),
                     bgColor: const Color(0xffE4FDFF),
                     animationSrc: "assets/Rive/breath_animation/box_breath.riv",
@@ -75,12 +77,13 @@ class BreathCards extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   BreathCard(
                     src: 'assets/images/breath/fse_breath.png',
                     title: "4-7-8 Breathing",
-                    subtitle: "4-7-8  Breathing promotes better sleep.",
+                    subtitle:
+                        "The 4-7-8 breathing technique is a simple breathing technique. It can help relieve stress ,Lowers blood pressure,helps manage food cravings,Improves sleep,and helps control emotional responses. It Should not be advised by those who are pregnant.  First , consult your doctor before beginning.",
                     color: const Color(0xffF33182),
                     bgColor: const Color(0xffFFF4E4),
                     animationSrc:
@@ -89,7 +92,8 @@ class BreathCards extends StatelessWidget {
                   BreathCard(
                     src: 'assets/images/breath/breath_test.png',
                     title: "Breath Hoalding Test",
-                    subtitle: "Test your breath-holding capacity",
+                    subtitle:
+                        "It has lots of benefits of holding your breath temporarily. It can help  reduce levels of stress and anxiety,  brain cell protection, improved lung capacity, and strengthen diaphragm. it's safe to hold your breath for a minute or two.",
                     color: const Color(0xff0A9999),
                     bgColor: const Color(0xffFBDBDB),
                     animationSrc: "assets/Rive/breath_animation/box_breath.riv",
@@ -144,7 +148,7 @@ class BreathCard extends StatelessWidget {
         height: context.screenWidth / 2,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Colors.white.withOpacity(0.8),
+            color: Colors.white.withOpacity(0.5),
             boxShadow: [
               BoxShadow(
                   color: Colors.black.withOpacity(
