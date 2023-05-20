@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:SFM/CommonWidgets/QC_Colors.dart';
+import 'package:SFM/Get_X_Controller/API_Controller.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
@@ -17,6 +19,7 @@ class HealthImprovementBigCard extends StatefulWidget {
     this.imagePath,
     this.colorData = "0xff717171",
     this.progress = 0,
+    this.isUnlocked = false,
   }) : super(key: key);
   String title;
   String? imagePath;
@@ -24,6 +27,7 @@ class HealthImprovementBigCard extends StatefulWidget {
   bool isCompleted;
   String colorData;
   double progress;
+  bool isUnlocked;
 
   @override
   State<HealthImprovementBigCard> createState() =>
@@ -59,6 +63,10 @@ class _HealthImprovementBigCardState extends State<HealthImprovementBigCard> {
         });
       }
     });
+  }
+
+  makePurchase() {
+    Get.snackbar("Service Locked", "Unlock Premium Service");
   }
 
   @override
@@ -114,19 +122,28 @@ class _HealthImprovementBigCardState extends State<HealthImprovementBigCard> {
               alignment: Alignment.center,
               children: [
                 Container(
-                  // color: Colors.yellow,
-                  child: Center(
-                      child: artboard != null
-                          ? Rive(artboard: artboard!)
-                          : SizedBox()),
-                ),
-                widget.isCompleted
-                    ? const Icon(
-                        Icons.done,
-                        color: Colors.white,
-                        size: 35,
-                      )
-                    : '${widget.progress}%'.text.bold.size(18).white.make()
+                    // color: Colors.yellow,
+                    child: widget.isUnlocked
+                        ? Center(
+                            child: artboard != null
+                                ? Rive(artboard: artboard!)
+                                : const SizedBox(),
+                          )
+                        : GestureDetector(
+                            onTap: makePurchase,
+                            child: Opacity(
+                                opacity: 0.7,
+                                child:
+                                    Image.asset('assets/images/lock_hi4.png')),
+                          )),
+                if (widget.isUnlocked)
+                  widget.isCompleted
+                      ? const Icon(
+                          Icons.health_and_safety,
+                          color: Colors.white,
+                          size: 35,
+                        )
+                      : '${widget.progress}%'.text.bold.size(18).white.make()
               ],
             ),
           )
@@ -135,120 +152,3 @@ class _HealthImprovementBigCardState extends State<HealthImprovementBigCard> {
     );
   }
 }
-
-///old widget
-//
-// Container(
-// margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-// decoration: BoxDecoration(
-// borderRadius: BorderRadius.circular(10),
-// color: Colors.white,
-// boxShadow: [
-// BoxShadow(
-// color: Colors.black.withOpacity(0.10),
-// spreadRadius: 0,
-// blurRadius: 50,
-// inset: false,
-// ),
-// ]),
-// child: ClipRRect(
-// borderRadius: BorderRadius.circular(10),
-// child: Container(
-// decoration: BoxDecoration(
-// borderRadius: BorderRadius.circular(100),
-// ),
-// child: Stack(
-// children: [
-// Positioned(
-// right: -10,
-// top: -10,
-// child: Container(height: 80, width: 80, color: colorValue),
-// ),
-// BackdropFilter(
-// filter: ui.ImageFilter.blur(sigmaY: 40, sigmaX: 40),
-// child: Container(
-// decoration: BoxDecoration(
-// border: Border.all(color: colorValue, width: 3),
-// borderRadius: BorderRadius.circular(10),
-// boxShadow: [
-// BoxShadow(
-// color: Colors.black.withOpacity(0.4),
-// spreadRadius: 2,
-// blurRadius: 5,
-// offset: Offset(6, 6),
-// inset: true,
-// ),
-// ]),
-// child: Column(
-// mainAxisAlignment: MainAxisAlignment.spaceBetween,
-// children: [
-// Container(
-// padding:
-// EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-// child: Row(
-// mainAxisAlignment: MainAxisAlignment.spaceBetween,
-// crossAxisAlignment: CrossAxisAlignment.start,
-// children: [
-// Expanded(
-// flex: 8,
-// child: Container(
-// child: Column(
-// crossAxisAlignment: CrossAxisAlignment.start,
-// children: [
-// Text(
-// widget.title,
-// style: TextStyle(
-// fontWeight: FontWeight.w600,
-// color: colorValue,
-// fontSize: 15),
-// ),
-// Text(
-// widget.description,
-// style:
-// TextStyle(color: Color(0xff9B9B9B)),
-// ),
-// Text('${widget.progress}%')
-// ],
-// ),
-// ),
-// ),
-// if (widget.isCompleted)
-// Expanded(
-// child:
-// CircleAvatar(backgroundColor: colorValue),
-// )
-// ],
-// ),
-// ),
-// // Container(
-// //   width: context.screenWidth / 2.9,
-// //   child: widget.imagePath != null
-// //       ? Image.asset(
-// //           widget
-// //               .imagePath!, //'assets/images/dashboard/oxygen.png'
-// //           fit: BoxFit.contain,
-// //         )
-// //       : CircleAvatar(
-// //           backgroundColor: Color(0xff9B9B9B),
-// //           radius: 50,
-// //         ),
-// // ),
-// if (artboard != null)
-// Container(
-// width: context.screenWidth / 2.9,
-// height: 100,
-// // child: Rive(artboard: artboard!),
-// child: Rive(artboard: artboard!),
-// ),
-// const SizedBox(
-// height: 10,
-// )
-// ],
-// ),
-// ),
-// ),
-// ],
-// ),
-// ),
-// ),
-// )

@@ -10,7 +10,7 @@ class FeedbackPage extends StatelessWidget {
       body: BackgroundContainer(
         isAppbar: true,
         title: "Feedback",
-        withBackButton: true,
+        isBackButton: true,
         child: Center(
           child: Text('Feedback'),
         ),

@@ -26,7 +26,7 @@ class Craving extends StatelessWidget {
           title: "Craving",
           isDashboard: true,
           isAppbar: true,
-          withBackButton: false,
+          isBackButton: false,
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: ListView(

@@ -9,9 +9,11 @@ import 'package:SFM/Dashboard/GuidedMeditation/MisicView.dart';
 import 'package:SFM/Dashboard/GuidedMeditation/NewMeditationPlayer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../Get_X_Controller/API_Controller.dart';
+
 class MeditationView extends StatelessWidget {
   MeditationView({Key? key}) : super(key: key);
-
+  final APIController _api = Get.find<APIController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,6 +66,7 @@ class MeditationView extends StatelessWidget {
                       imagePath: 'assets/images/meditation/sleep.svg',
                       title: "Sleep",
                       color: Color(0xffE788D7),
+                      isUnlock: _api.isSubscribed.value,
                       onPressed: () {
                         Get.to(
                             MeditationPlayer(
@@ -78,6 +81,7 @@ class MeditationView extends StatelessWidget {
                     MeditationCard(
                       imagePath: 'assets/images/meditation/happy.svg',
                       title: "Relax",
+                      isUnlock: _api.isSubscribed.value,
                       color: Color(0xffBC7BF2),
                       onPressed: () {
                         Get.to(
@@ -109,35 +113,41 @@ class MeditationView extends StatelessWidget {
 }
 
 class MeditationCard extends StatelessWidget {
-  MeditationCard({
-    Key? key,
-    this.imagePath = 'assets/images/meditation/focus.svg',
-    this.title = "Title",
-    this.color = Colors.black26,
-    this.isVertical = false,
-    this.onPressed,
-  }) : super(key: key);
+  MeditationCard(
+      {Key? key,
+      this.imagePath = 'assets/images/meditation/focus.svg',
+      this.title = "Title",
+      this.color = Colors.black26,
+      this.isVertical = false,
+      this.onPressed,
+      this.isUnlock = true})
+      : super(key: key);
 
   String imagePath;
   Color color;
   String title;
   bool isVertical = false;
   VoidCallback? onPressed;
+  bool isUnlock;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onPressed,
+      onTap: isUnlock
+          ? onPressed
+          : () {
+              Get.snackbar("Service Locked", "Unlock Premium Service");
+            },
       child: Container(
         height:
             isVertical ? context.screenWidth / 2.3 : context.screenWidth / 1.8,
         width: isVertical ? context.screenWidth : context.screenWidth / 2.3,
         padding: isVertical
-            ? EdgeInsets.symmetric(horizontal: 15)
-            : EdgeInsets.only(bottom: 15),
+            ? const EdgeInsets.symmetric(horizontal: 15)
+            : const EdgeInsets.only(bottom: 15),
         margin: isVertical
-            ? EdgeInsets.symmetric(horizontal: 15)
-            : EdgeInsets.symmetric(horizontal: 8),
+            ? const EdgeInsets.symmetric(horizontal: 15)
+            : const EdgeInsets.symmetric(horizontal: 8),
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10),
@@ -152,7 +162,7 @@ class MeditationCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Image(image: Svg(imagePath)),
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   ),
                   title.text.color(color).size(20).fontFamily('Gugi').make()
@@ -162,8 +172,19 @@ class MeditationCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(),
-                  Image(image: Svg(imagePath)),
-                  title.text.color(color).size(20).fontFamily('Gugi').make()
+                  if (isUnlock)
+                    Image(image: Svg(imagePath))
+                  else
+                    Icon(
+                      Icons.lock,
+                      size: context.screenWidth / 10,
+                      color: Colors.black26,
+                    ),
+                  title.text
+                      .color(isUnlock ? color : Colors.black26)
+                      .size(20)
+                      .fontFamily('Gugi')
+                      .make()
                 ],
               ),
       ),

@@ -18,6 +18,8 @@ import 'package:SFM/Get_X_Controller/UserStatusController.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../CommonWidgets/PurchaseMadel.dart';
+
 class More extends StatelessWidget {
   More({Key? key}) : super(key: key);
 
@@ -191,6 +193,19 @@ class More extends StatelessWidget {
                                 label: "Logout",
                                 onPressed: () {
                                   _logout(context);
+                                }),
+                            ProfileItem(
+                                label: "Unlock Premium",
+                                onPressed: () {
+                                  showModalBottomSheet<void>(
+                                      context: context,
+                                      constraints: BoxConstraints(
+                                          minHeight: 200,
+                                          maxHeight:
+                                              context.screenHeight / 1.2),
+                                      builder: (BuildContext context) {
+                                        return PurchaseMadel();
+                                      });
                                 }),
                             const SizedBox(height: 80)
                           ],

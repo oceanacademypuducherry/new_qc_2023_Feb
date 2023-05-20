@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math' as math;
 
+import 'package:SFM/CommonWidgets/QC_Colors.dart';
 import 'package:SFM/Get_X_Controller/AchievementController.dart';
 import 'package:blur/blur.dart';
 import 'package:confetti/confetti.dart';
@@ -26,15 +27,7 @@ class AchievementView extends StatefulWidget {
 }
 
 class _AchievementViewState extends State<AchievementView> {
-  List<Map> achievementData = [
-    {"title": "You saved 1500 rupees", "cat": 'money', "isOpen": true},
-    {"title": "You saved 1500 rupees health", "cat": 'health', "isOpen": false},
-    {"title": "You saved 1500 rupees time", "cat": 'time', "isOpen": false},
-    {"title": "You saved 1500 rupees time", "cat": 'time', "isOpen": true},
-    {"title": "You saved 1500 rupees time", "cat": 'time', "isOpen": false},
-    {"title": "You saved 1500 rupees time", "cat": 'time', "isOpen": false},
-    {"title": "You saved 1500 rupees mission", "cat": 'mission', "isOpen": true}
-  ];
+  List<Map> achievementData = [];
 
   UserStatusController userController = Get.find<UserStatusController>();
   AchievementController achievementController =
@@ -45,6 +38,8 @@ class _AchievementViewState extends State<AchievementView> {
     return Scaffold(
       body: BackgroundContainer(
         title: "Achievements",
+        appbarColor: QCDashColor.even,
+        padding: EdgeInsets.symmetric(vertical: 20),
         isAppbar: true,
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -61,11 +56,8 @@ class _AchievementViewState extends State<AchievementView> {
                     shrinkWrap: true,
                     scrollDirection: Axis.vertical,
                     controller: ScrollController(keepScrollOffset: false),
-                    // children: userContoller.userData['achievements']
-                    children:
-                        // userContoller.healthImprovements.map<Widget>((element)
-                        achievementController.achievementData
-                            .map<Widget>((element) {
+                    children: achievementController.achievementData
+                        .map<Widget>((element) {
                       IconData iconData = Icons.ac_unit_outlined;
                       Color color = Colors.green;
                       bool unlockValue = false;

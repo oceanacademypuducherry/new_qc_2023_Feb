@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:SFM/Get_X_Controller/API_Controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -21,6 +22,7 @@ class HealthImprovement extends StatefulWidget {
 
 class _HealthImprovementState extends State<HealthImprovement> {
   UserStatusController userStatus = Get.find<UserStatusController>();
+  final APIController _api = Get.find<APIController>();
 
   @override
   Widget build(BuildContext context) {
@@ -43,20 +45,50 @@ class _HealthImprovementState extends State<HealthImprovement> {
               height: 20,
             ),
             Obx(() => Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                    userStatus.healthWidget.length >= 3
-                        ? 3
-                        : userStatus.healthWidget.length, (index) {
-                  Map data = userStatus.healthWidget[index];
-                  return HealthImporovementItem(
-                      imagePath: data['imagePath'],
-                      title: data['title'],
-                      // colorData: data['colorData'],
-                      progress: ((100 * data["totalMinutesOrDays"]) /
-                          data["calculationTime"]));
-                })))
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: (userStatus.healthWidget.length >
+                              userStatus.healthImprovements.length - 3 ||
+                          _api.isSubscribed.value)
+                      ? List.generate(
+                          userStatus.healthWidget.length >= 3
+                              ? 3
+                              : userStatus.healthWidget.length, (index) {
+                          Map data = userStatus.healthWidget[index];
+
+                          return HealthImporovementItem(
+                            imagePath: data['imagePath'],
+                            title: data['title'],
+                            // colorData: data['colorData'],
+                            progress: ((100 * data["totalMinutesOrDays"]) /
+                                data["calculationTime"]),
+                          );
+                        })
+                      : [
+                          if (userStatus.healthImprovements.isNotEmpty)
+                            for (int i = 3; i <= 5; i++)
+                              HealthImporovementItem(
+                                imagePath: userStatus.healthImprovements[i]
+                                    ['imagePath'],
+                                title: userStatus.healthImprovements[i]
+                                    ['title'],
+                                isLocked: i == 5,
+                                // colorData: data['colorData'],
+                                progress: ((100 *
+                                                userStatus.healthImprovements[i]
+                                                    ["totalMinutesOrDays"]) /
+                                            userStatus.healthImprovements[i]
+                                                ["calculationTime"]) >
+                                        100
+                                    ? 100
+                                    : ((100 *
+                                            userStatus.healthImprovements[i]
+                                                ["totalMinutesOrDays"]) /
+                                        userStatus.healthImprovements[i]
+                                            ["calculationTime"]),
+                              ),
+                        ],
+                ))
           ],
         ),
       ),
@@ -69,6 +101,7 @@ class HealthImporovementItem extends StatefulWidget {
       {Key? key,
       this.imagePath,
       this.title = "Title",
+      this.isLocked = false,
       this.progress = 0,
       this.colorData = "0xff717171"})
       : super(key: key);
@@ -76,6 +109,7 @@ class HealthImporovementItem extends StatefulWidget {
   String title;
   String colorData;
   double progress;
+  bool isLocked;
 
   @override
   State<HealthImporovementItem> createState() => _HealthImporovementItemState();
@@ -127,26 +161,39 @@ class _HealthImporovementItemState extends State<HealthImporovementItem> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              Container(
-                height: 70,
-                width: 70,
-                child: artboard != null
-                    ? Rive(
-                        artboard: artboard!,
-                      )
-                    : const SizedBox(),
+          if (widget.isLocked)
+            Container(
+              height: 70,
+              width: 70,
+              child: Image.asset('assets/images/lock_hi4.png'),
+            )
+          else
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  height: 70,
+                  width: 70,
+                  child: artboard != null
+                      ? Rive(
+                          artboard: artboard!,
+                        )
+                      : const SizedBox(),
 
-                // Image.asset(
-                //   imagePath!,
-                //   fit: BoxFit.contain,
-                // ),
-              ),
-              ("${widget.progress.toStringAsFixed(1)}%").text.white.bold.make(),
-            ],
-          ),
+                  // Image.asset(
+                  //   imagePath!,
+                  //   fit: BoxFit.contain,
+                  // ),
+                ),
+                ("${widget.progress.toStringAsFixed(1)}%")
+                    .text
+                    .white
+                    .bold
+                    .make(),
+              ],
+            ),
+          //Image.asset('assets/images/lock_hi.png'),
+          // Image.asset('assets/images/lock_health_improvement.png'),
           const SizedBox(
             height: 10,
           ),

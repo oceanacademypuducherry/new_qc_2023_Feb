@@ -11,9 +11,9 @@ class AchievementController extends GetxController {
   final dayOfCost = 0.0.obs;
 
   double getDayOfCost(int totalDay) {
-    int boxOfCost = cigaretteInfo['boxOfCost']??0;
-    int packOfCigarettes = cigaretteInfo['packOfCigarettes']??0;
-    int dayOfCigarettes = cigaretteInfo['dayOfCigarettes']??0;
+    int boxOfCost = cigaretteInfo['boxOfCost'] ?? 0;
+    int packOfCigarettes = cigaretteInfo['packOfCigarettes'] ?? 0;
+    int dayOfCigarettes = cigaretteInfo['dayOfCigarettes'] ?? 0;
 
     double dayCost = (boxOfCost / packOfCigarettes) * dayOfCigarettes;
     dayOfCost(dayCost);
@@ -62,6 +62,7 @@ class AchievementController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+
     loadAchievement();
   }
 }

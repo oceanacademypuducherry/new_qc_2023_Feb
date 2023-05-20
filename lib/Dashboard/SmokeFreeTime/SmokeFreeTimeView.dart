@@ -40,7 +40,7 @@ class _SmokeFreeTimeViewState extends State<SmokeFreeTimeView> {
       // SMIInput<double>? inputs = controller.findInput<double>("day");
       inputs = controller.findInput<double>("day");
       setState(() {
-        inputs!.value =  1 ;
+        inputs!.value = 1;
         updateValue();
       });
     }
@@ -90,7 +90,7 @@ class _SmokeFreeTimeViewState extends State<SmokeFreeTimeView> {
                       child: Transform(
                         transform: Matrix4.translationValues(-180, 20, 0),
                         child: Transform.scale(
-                          scale:0.9,
+                          scale: 0.9,
                           child: Rive(
                             artboard: artboard!,
                             useArtboardSize: true,
@@ -101,18 +101,16 @@ class _SmokeFreeTimeViewState extends State<SmokeFreeTimeView> {
           Positioned(
             top: 20,
             right: 20,
-            child: Container(
-              child: Obx(() => Column(
-                    children: [
-                      timing(context, time: "years"),
-                      timing(context, time: "months"),
-                      timing(context, time: "days"),
-                      timing(context, time: "hours"),
-                      timing(context, time: "minutes"),
-                      timing(context, time: "seconds"),
-                    ],
-                  )),
-            ),
+            child: Obx(() => Column(
+                  children: [
+                    timing(context, time: "years"),
+                    timing(context, time: "months"),
+                    timing(context, time: "days"),
+                    timing(context, time: "hours"),
+                    timing(context, time: "minutes"),
+                    timing(context, time: "seconds"),
+                  ],
+                )),
           ),
           Positioned(child: QCBackButton())
         ],

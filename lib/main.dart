@@ -34,7 +34,7 @@ void main() async {
   } else {
     await Firebase.initializeApp();
   }
-
+  Get.put(AppInfoController());
   Get.put(BottomNavController());
   Get.put(APIController());
   Get.put(DataCollectionController());
@@ -45,7 +45,6 @@ void main() async {
   Get.put(MissionController());
   Get.put(LoadingController());
   Get.put(AchievementController());
-  Get.put(AppInfoController());
 
   runApp(
     MainRun(),

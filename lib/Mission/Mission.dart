@@ -1,3 +1,6 @@
+import 'package:SFM/CommonWidgets/PurchaseMadel.dart';
+import 'package:SFM/CommonWidgets/QC_Colors.dart';
+import 'package:SFM/Get_X_Controller/API_Controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -35,20 +38,15 @@ class _MissionsState extends State<Missions> {
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          title: Text(
-            "Missions",
-            style: TextStyle(color: Colors.grey[600]),
-          ),
-          centerTitle: true,
-        ),
         body: BackgroundContainer(
           isDashboard: true,
+          isBackButton: false,
+          title: "Missions",
           padding: EdgeInsets.symmetric(horizontal: 15),
+          isAppbar: true,
+          appbarColor: QCDashColor.odd,
           child: Obx(() => ListView(
-                padding: EdgeInsets.only(top: context.screenHeight / 30),
+                padding: EdgeInsets.only(top: context.screenHeight / 8),
                 controller: scrollController,
                 children: [
                   ...List.generate(_missionController.missionData.length,
@@ -71,6 +69,7 @@ class _MissionsState extends State<Missions> {
   }
 }
 
+// ignore: must_be_immutable
 class MissionTail extends StatelessWidget {
   MissionTail({
     Key? key,
@@ -79,7 +78,7 @@ class MissionTail extends StatelessWidget {
     this.currentDayCount = 0,
   }) : super(key: key);
 
-  // UserStatusController _userStatus = Get.find<UserStatusController>();
+  final APIController _api = Get.find<APIController>();
   Map? missionData;
   int currentDayCount;
   int missionIndex;
@@ -93,7 +92,8 @@ class MissionTail extends StatelessWidget {
         color: Colors.green,
       );
     } else {
-      if (missionOpenDay <= currentDayCount) {
+      if (missionOpenDay <= currentDayCount &&
+          (_api.isSubscribed.value || missionIndex <= 7)) {
         return Icon(
           FontAwesomeIcons.lockOpen,
           size: context.screenHeight / 40,
@@ -118,53 +118,65 @@ class MissionTail extends StatelessWidget {
         child: Material(
           child: InkWell(
             splashColor: Colors.grey,
-            child: Container(
-              width: context.screenWidth / 1.1,
-              height: context.screenHeight / 10,
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              color: Colors.white60,
-              child: Row(
-                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    height: context.screenHeight / 10,
-                    child: Hero(
-                      tag: "mission_$missionIndex",
-                      child: Image(
-                        image: Svg(missionData!['missionVector'] ??
-                            'assets/images/mission/plant.svg'),
+            child: Stack(
+              children: [
+                Container(
+                  width: context.screenWidth,
+                  height: context.screenHeight / 10,
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  color: Colors.white60,
+                  child: Row(
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        height: context.screenHeight / 10,
+                        child: Hero(
+                          tag: "mission_$missionIndex",
+                          child: Image(
+                            image: Svg(missionData!['missionVector'] ??
+                                'assets/images/mission/plant.svg'),
+                          ),
+                        ),
                       ),
-                    ),
+                      Expanded(
+                        child: "${missionData!['title']}"
+                            .text
+                            .bold
+                            .ellipsis
+                            .fontFamily('Roboto')
+                            .color(const Color(0xff515151))
+                            .size(context.screenHeight / 40)
+                            .make(),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 10, right: 10),
+                        child: Obx(() => buildIcon(context,
+                            isComplete: missionData!['isComplete'],
+                            missionOpenDay: missionData!['openDay'])),
+                      )
+                    ],
                   ),
-                  Expanded(
-                    child: "${missionData!['title']}"
-                        .text
-                        .bold
-                        .ellipsis
-                        .fontFamily('Roboto')
-                        .color(const Color(0xff515151))
-                        .size(context.screenHeight / 40)
-                        .make(),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 10, right: 10),
-                    child: buildIcon(context,
-                        isComplete: missionData!['isComplete'],
-                        missionOpenDay: missionData!['openDay']),
-                  )
-                ],
-              ),
+                ),
+                Container(
+                  width: context.screenWidth,
+                  height: context.screenHeight / 10,
+                  color: _api.isSubscribed.value || missionIndex <= 7
+                      ? Colors.transparent
+                      : Colors.white.withOpacity(0.6),
+                ),
+              ],
             ),
             onTap: () async {
-              print(missionData!['openDay']);
-              print(currentDayCount);
               if (missionData!['openDay'] > currentDayCount) {
-                ///TODO remove false for Day start
                 Get.snackbar(
                   'Mission Locked',
                   "Mission Unlocked soon",
                   isDismissible: true,
                 );
+                return;
+              } else if (!_api.isSubscribed.value && missionIndex > 7) {
+                Get.snackbar("Service Locked", "Unlock Premium Service");
+
                 return;
               }
               Get.to(

@@ -51,7 +51,7 @@ class DataCollectionController extends GetxController {
   loadCigaretteInfo() async {
     dynamic data = await storage.read('userData') ?? {};
 
-    Map cigInfo = data['cigaretteInfo'];
+    dynamic cigInfo = data['cigaretteInfo'];
     print(cigInfo);
     if (cigInfo != null) {
       cigaretteInfo(cigInfo.cast<String, int>());

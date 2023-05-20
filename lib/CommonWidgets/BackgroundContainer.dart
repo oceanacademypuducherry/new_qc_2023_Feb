@@ -31,8 +31,9 @@ class BackgroundContainer extends StatelessWidget {
       this.darkMode = false,
       this.padding,
       this.title = "",
-      this.withBackButton = true,
-      this.topPadding = 50,
+      this.isBackButton = true,
+      this.topPadding,
+      this.appbarColor,
       this.action})
       : super(key: key);
 
@@ -48,8 +49,9 @@ class BackgroundContainer extends StatelessWidget {
   EdgeInsets? padding;
   String title;
   bool darkMode = false;
-  double topPadding;
-  bool withBackButton = true;
+  double? topPadding;
+  bool isBackButton = true;
+  Color? appbarColor;
 
   BottomNavController bottomNavController = Get.find<BottomNavController>();
 
@@ -152,15 +154,19 @@ class BackgroundContainer extends StatelessWidget {
                   ))),
         if (isAppbar)
           Positioned(
-              top: topPadding,
+              top: topPadding ?? 0,
               left: 0,
               child: Container(
                 width: context.screenWidth,
+                alignment: Alignment.bottomCenter,
+                height: context.screenHeight / 9,
+                color: appbarColor,
+                padding: EdgeInsets.symmetric(vertical: 10),
                 child: Stack(
                   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   alignment: Alignment.center,
                   children: [
-                    if (withBackButton)
+                    if (isBackButton)
                       Positioned(
                         left: 0,
                         child: backButtonChild ?? QCBackButton(),
@@ -171,6 +177,9 @@ class BackgroundContainer extends StatelessWidget {
                         .color(Vx.gray600)
                         .make(),
                     if (action != null) Positioned(right: 10, child: action!),
+                    SizedBox(
+                      width: context.screenWidth,
+                    )
                   ],
                 ),
               ))

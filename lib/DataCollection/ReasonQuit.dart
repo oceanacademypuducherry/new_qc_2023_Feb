@@ -39,6 +39,7 @@ class ReasonQuit extends StatelessWidget {
     "Appearance",
     "Accountability"
   ];
+
   List<Widget> reasonsChips() {
     List<Widget> reasonList = [];
     for (String i in reasons) {
@@ -101,7 +102,7 @@ class ReasonQuit extends StatelessWidget {
                         await apiController.addDatacollection(data: {
                           "quiteDate": _dcc.quiteDate.value,
                           "cigaretteInfo": _dcc.cigaretteInfo.value,
-                          "reasonList": _dcc.reasonList.value
+                          "reasonList": _dcc.reasonList.value,
                         });
 
                         userStatus.readSessionData();

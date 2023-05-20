@@ -20,6 +20,7 @@ class APIController extends GetxController {
   final username = "".obs;
   final userInfo = {}.obs;
   final isBackup = true.obs;
+  final isSubscribed = false.obs;
 
   /// Login user
 
@@ -28,6 +29,47 @@ class APIController extends GetxController {
 
   String apiUrl =
       "https://us-central1-quit-smoking-ffce6.cloudfunctions.net/app";
+
+  Future<bool> checkSubscribe() async {
+    bool isSbu = false;
+    String email = storage.read('email') ?? "";
+    if (email.isEmpty) {
+      return false;
+    }
+    bool localSub = storage.read('isSubscribed') ?? false;
+
+    isSubscribed(localSub);
+
+    // try {
+    //   var res = await Dio()
+    //       .post('$apiUrl/user/get/subscribed', data: {"email": email});
+    //   isSbu = res.data["isSubscribed"] ?? false;
+    //   print('/////////////////// isSubscribed ///$isSbu/////////////////////');
+    //   isSubscribed(isSbu);
+    // } catch (e) {
+    //   print(e);
+    // }
+    return isSbu;
+  }
+
+  Future<bool> makeSubscribe() async {
+    String email = storage.read('email') ?? "";
+    if (email.isEmpty) {
+      return false;
+    }
+
+    Dio().post('$apiUrl/user/make/subscribed', data: {"email": email}).then(
+        (value) {
+      isSubscribed(true);
+      storage.write('isSubscribed', true);
+      return true;
+    }).catchError((error) {
+      storage.write('isSubscribed', false);
+      return false;
+    });
+
+    return false;
+  }
 
   Future<bool> signUp({email, password, uname}) async {
     try {
@@ -73,7 +115,6 @@ class APIController extends GetxController {
         "username": uname.toString(),
       });
       print("=================oAuth===Success==================");
-
 
       Map data = res.data;
       if (data['isNewUser']) {
@@ -134,8 +175,9 @@ class APIController extends GetxController {
       userInfo(data);
       userEmail(data['email']);
       username(data['username']);
-
-      storage.write('userData', data);
+      isSubscribed(data['isSubscribed'] ?? false);
+      await storage.write('userData', data);
+      await storage.write('isSubscribed', isSubscribed.value);
       data.forEach((key, value) {
         storage.write(key.toString(), value);
       });
@@ -172,7 +214,7 @@ class APIController extends GetxController {
 
       var res = await Dio().post('$apiUrl/user/set/data_collection', data: {
         "email": userData['email'],
-        "data": {...userData, ...data}
+        "data": {...userData, ...data, "isSubscribed": isSubscribed ?? false}
       });
       print("================Success==================");
       Map resData = res.data;
@@ -201,13 +243,7 @@ class APIController extends GetxController {
   backupAction({manualBackup = false}) async {
     dynamic checkBackup = await storage.read('isBackup');
     DateTime currentDate =
-    DateTime(DateTime
-        .now()
-        .year, DateTime
-        .now()
-        .month, DateTime
-        .now()
-        .day);
+        DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
     if (checkBackup != null) {
       DateTime lastBackupDate = DateTime.parse(checkBackup);
       print(lastBackupDate);
@@ -287,5 +323,11 @@ class APIController extends GetxController {
     print('llllllllllllllll-----------------llllllllllllll');
 
     return res.data;
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    checkSubscribe();
   }
 }

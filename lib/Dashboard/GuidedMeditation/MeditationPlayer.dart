@@ -42,7 +42,7 @@ class _MeditationPlayerState extends State<MeditationPlayer>
   late Timer timer;
 
   dynamic timerFunction() {
-    Timer.periodic(Duration(seconds: 1), (timer) {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         if (isPlay &&
             int.parse(seek.toStringAsFixed(0)) < meditateDuration * 60) {
