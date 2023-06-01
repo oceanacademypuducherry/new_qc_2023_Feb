@@ -44,7 +44,7 @@ class _DashboardState extends State<Dashboard> {
     _bottomNavController.startPage();
     await storage.write('isPending', true);
     _cravingsController.resetCravings();
-    Get.to(QuitDatePicker(), transition: Transition.rightToLeft);
+    Get.to(() => QuitDatePicker(), transition: Transition.rightToLeft);
   }
 
   GetStorage storage = GetStorage();

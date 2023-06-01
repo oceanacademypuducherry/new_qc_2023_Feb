@@ -35,14 +35,14 @@ class HealthAndWellness extends StatelessWidget {
                   title: "Yoga",
                   path: 'assets/images/yoga/bow.png',
                   onPressed: () {
-                    Get.to(YogaTypes(), transition: Transition.cupertino);
+                    Get.to(() => YogaTypes(), transition: Transition.cupertino);
                   },
                 ),
                 WellnessCard(
                   title: "Affirmation ",
                   path: 'assets/images/haw/aff.png',
                   onPressed: () {
-                    Get.to(AffirmationCards(),
+                    Get.to(() => AffirmationCards(),
                         transition: Transition.cupertino);
                   },
                 ),
@@ -50,7 +50,8 @@ class HealthAndWellness extends StatelessWidget {
                   title: "Breath",
                   path: 'assets/images/haw/br.png',
                   onPressed: () {
-                    Get.to(BreathCards(), transition: Transition.cupertino);
+                    Get.to(() => BreathCards(),
+                        transition: Transition.cupertino);
                   },
                 ),
                 WellnessCard(
@@ -64,7 +65,8 @@ class HealthAndWellness extends StatelessWidget {
                   title: "Wisdom",
                   path: 'assets/images/haw/wi.png',
                   onPressed: () {
-                    Get.to(WisdomView(), transition: Transition.cupertino);
+                    Get.to(() => WisdomView(),
+                        transition: Transition.cupertino);
                   },
                 ),
               ],

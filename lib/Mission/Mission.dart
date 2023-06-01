@@ -150,9 +150,9 @@ class MissionTail extends StatelessWidget {
                       ),
                       Container(
                         margin: EdgeInsets.only(left: 10, right: 10),
-                        child: Obx(() => buildIcon(context,
+                        child: buildIcon(context,
                             isComplete: missionData!['isComplete'],
-                            missionOpenDay: missionData!['openDay'])),
+                            missionOpenDay: missionData!['openDay']),
                       )
                     ],
                   ),

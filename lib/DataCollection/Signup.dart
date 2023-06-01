@@ -286,7 +286,7 @@ class _SignupState extends State<Signup> {
                               children: [
                                 MaterialButton(
                                   onPressed: () {
-                                    Get.to(Login(),
+                                    Get.to(() => Login(),
                                         transition: Transition.rightToLeft,
                                         curve: Curves.easeInOut);
                                   },

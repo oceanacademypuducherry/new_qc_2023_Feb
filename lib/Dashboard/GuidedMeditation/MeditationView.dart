@@ -14,6 +14,7 @@ import '../../Get_X_Controller/API_Controller.dart';
 class MeditationView extends StatelessWidget {
   MeditationView({Key? key}) : super(key: key);
   final APIController _api = Get.find<APIController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,6 +68,7 @@ class MeditationView extends StatelessWidget {
                       title: "Sleep",
                       color: Color(0xffE788D7),
                       isUnlock: _api.isSubscribed.value,
+                      lockImage: 'assets/images/meditation/sleep_g.png',
                       onPressed: () {
                         Get.to(
                             MeditationPlayer(
@@ -79,15 +81,16 @@ class MeditationView extends StatelessWidget {
                       },
                     ),
                     MeditationCard(
-                      imagePath: 'assets/images/meditation/happy.svg',
+                      imagePath: 'assets/images/meditation/relax.svg',
                       title: "Relax",
                       isUnlock: _api.isSubscribed.value,
-                      color: Color(0xffBC7BF2),
+                      color: Color(0xff33c577),
+                      lockImage: 'assets/images/meditation/relax_g.png',
                       onPressed: () {
                         Get.to(
                             MeditationPlayer(
                               color: Color(0xffBC7BF2),
-                              imagePath: 'assets/images/meditation/happy_b.svg',
+                              imagePath: 'assets/images/meditation/relax_b.svg',
                               title: "Relax",
                               musicPath: "sounds/happy.mp3",
                             ),
@@ -100,7 +103,8 @@ class MeditationView extends StatelessWidget {
                       color: Color(0xff81C5EB),
                       isVertical: true,
                       onPressed: () {
-                        Get.to(MusicView(), transition: Transition.cupertino);
+                        Get.to(() => MusicView(),
+                            transition: Transition.cupertino);
                       },
                     ),
                   ],
@@ -116,6 +120,7 @@ class MeditationCard extends StatelessWidget {
   MeditationCard(
       {Key? key,
       this.imagePath = 'assets/images/meditation/focus.svg',
+      this.lockImage = 'assets/images/meditation/relax_g.png',
       this.title = "Title",
       this.color = Colors.black26,
       this.isVertical = false,
@@ -124,6 +129,7 @@ class MeditationCard extends StatelessWidget {
       : super(key: key);
 
   String imagePath;
+  String lockImage;
   Color color;
   String title;
   bool isVertical = false;
@@ -175,11 +181,7 @@ class MeditationCard extends StatelessWidget {
                   if (isUnlock)
                     Image(image: Svg(imagePath))
                   else
-                    Icon(
-                      Icons.lock,
-                      size: context.screenWidth / 10,
-                      color: Colors.black26,
-                    ),
+                    Image.asset(lockImage),
                   title.text
                       .color(isUnlock ? color : Colors.black26)
                       .size(20)

@@ -3,6 +3,8 @@ import 'package:SFM/Get_X_Controller/cravings_controller.dart';
 import 'package:SFM/More/about_sfm.dart';
 import 'package:SFM/More/feedback_page.dart';
 import 'package:SFM/More/profile_view.dart';
+import 'package:SFM/Payment/payment.dart';
+import 'package:SFM/practice/payment_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
@@ -48,7 +50,7 @@ class More extends StatelessWidget {
         onConfirm: () {
           storage.erase();
           userStatus.stopTimer(runTimer: false);
-          Get.to(Login(), transition: Transition.rightToLeft);
+          Get.to(() => Login(), transition: Transition.rightToLeft);
           _bottomNavController.startPage();
         });
   }
@@ -73,7 +75,7 @@ class More extends StatelessWidget {
           _dataCollectionController.setQuitDate(dates);
           _bottomNavController.startPage();
           _cravingsController.resetCravings();
-          Get.to(QuitDatePicker(), transition: Transition.rightToLeft);
+          Get.to(() => QuitDatePicker(), transition: Transition.rightToLeft);
         });
   }
 
@@ -197,14 +199,25 @@ class More extends StatelessWidget {
                             ProfileItem(
                                 label: "Unlock Premium",
                                 onPressed: () {
+                                  // Get.to(() => PaymentModel());
+                                  // return;
+                                  BorderRadius br = const BorderRadius.only(
+                                      topLeft: Radius.circular(30),
+                                      topRight: Radius.circular(30));
                                   showModalBottomSheet<void>(
                                       context: context,
-                                      constraints: BoxConstraints(
-                                          minHeight: 200,
-                                          maxHeight:
-                                              context.screenHeight / 1.2),
+                                      // constraints: BoxConstraints(
+                                      //     minHeight: 200,
+                                      //     maxHeight:
+                                      //         context.screenHeight / 1.2),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: br,
+                                      ),
                                       builder: (BuildContext context) {
-                                        return PurchaseMadel();
+                                        return ClipRRect(
+                                          borderRadius: br,
+                                          child: Payment(),
+                                        );
                                       });
                                 }),
                             const SizedBox(height: 80)

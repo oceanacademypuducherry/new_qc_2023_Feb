@@ -12,7 +12,7 @@ class GuidedMeditation extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         // Get.to(MusicView(), transition: Transition.cupertino);
-        Get.to(MeditationView(), transition: Transition.cupertino);
+        Get.to(() => MeditationView(), transition: Transition.cupertino);
       },
       child: Container(
         color: QCDashColor.odd,

@@ -133,6 +133,7 @@ class _HealthTipsViewState extends State<HealthTipsView> {
   }
 }
 
+// ignore: must_be_immutable
 class CategoryFlash extends StatelessWidget {
   CategoryFlash({
     this.src = 'assets/images/health_tips/water.png',

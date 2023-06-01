@@ -20,7 +20,7 @@ class Achievements extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(AchievementView(), transition: Transition.cupertino);
+        Get.to(() => AchievementView(), transition: Transition.cupertino);
         // Get.to(Practice(), transition: Transition.cupertino);
       },
       child: Container(

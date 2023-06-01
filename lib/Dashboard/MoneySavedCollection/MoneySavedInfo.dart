@@ -52,7 +52,7 @@ class MoneySavedInfo extends StatelessWidget {
                   double totalAmount = achievementController.dayOfCost *
                       userStatus.totalSmokeFreeTime['days']!;
                   return (totalAmount.toString().lowerCamelCase != 'nan'
-                          ? "₹$totalAmount"
+                          ? "₹${totalAmount.toStringAsFixed(2)}"
                           : "0.0")
                       .text
                       .fontFamily('Ubuntu')
@@ -88,7 +88,7 @@ class MoneySavedInfo extends StatelessWidget {
                             .fontFamily('Montserrat')
                             .color(textColor)
                             .make(),
-                        '₹$monthly'
+                        '₹${monthly.toStringAsFixed(2)}'
                             .text
                             .size(18)
                             .fontFamily('Montserrat')
@@ -108,7 +108,11 @@ class MoneySavedInfo extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         'Yearly Savings'.text.size(18).color(textColor).make(),
-                        '₹$yearly'.text.size(18).color(textColor).make(),
+                        '₹${yearly.toStringAsFixed(2)}'
+                            .text
+                            .size(18)
+                            .color(textColor)
+                            .make(),
                       ],
                     ),
                   ),

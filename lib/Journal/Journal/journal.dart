@@ -21,7 +21,6 @@ class _JournalState extends State<Journal> with SingleTickerProviderStateMixin {
     return false; //<-- SEE HERE
   }
 
-
   @override
   void initState() {
     // TODO: implement initState
@@ -86,7 +85,7 @@ class _JournalState extends State<Journal> with SingleTickerProviderStateMixin {
               ),
               IconButton(
                 onPressed: () async {
-                  Get.to(SeeAllJournal());
+                  Get.to(() => SeeAllJournal());
                 },
                 splashRadius: 20,
                 color: Colors.white,

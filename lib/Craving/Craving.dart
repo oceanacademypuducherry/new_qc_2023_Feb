@@ -61,7 +61,8 @@ class Craving extends StatelessWidget {
                               .make()
                         ],
                       ).box.height(50).makeCentered().onInkTap(() {
-                        Get.to(AddCravings(), transition: Transition.cupertino);
+                        Get.to(() => AddCravings(),
+                            transition: Transition.cupertino);
                       }),
                     ),
                   ),
@@ -91,7 +92,7 @@ class Craving extends StatelessWidget {
                         ],
                       ).box.height(50).makeCentered().onInkTap(() {
                         Get.to(
-                          CravingsHistory(),
+                          () => CravingsHistory(),
                           transition: Transition.cupertino,
                         );
                       }),

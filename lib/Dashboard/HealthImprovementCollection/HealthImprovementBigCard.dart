@@ -138,11 +138,12 @@ class _HealthImprovementBigCardState extends State<HealthImprovementBigCard> {
                           )),
                 if (widget.isUnlocked)
                   widget.isCompleted
-                      ? const Icon(
-                          Icons.health_and_safety,
-                          color: Colors.white,
-                          size: 35,
-                        )
+                      ? '${widget.progress.toInt()}%'
+                          .text
+                          .bold
+                          .size(18)
+                          .white
+                          .make()
                       : '${widget.progress}%'.text.bold.size(18).white.make()
               ],
             ),

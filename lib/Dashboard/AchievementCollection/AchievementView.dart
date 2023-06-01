@@ -187,7 +187,7 @@ class AchievementCompleteCard extends StatelessWidget {
               alignment: Alignment.center,
               children: [
                 Blur(
-                  blur: 20,
+                  blur: 10,
                   child: Container(
                     margin: const EdgeInsets.only(top: 40),
                     color: Colors.white24,
@@ -278,7 +278,7 @@ class AchievementCompleteCard extends StatelessWidget {
                 ),
                 if (!isOpen)
                   Blur(
-                    blur: 10,
+                    blur: 5,
                     child: Container(
                       color: Colors.transparent,
                     ),

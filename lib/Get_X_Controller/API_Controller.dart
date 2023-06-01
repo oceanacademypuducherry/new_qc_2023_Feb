@@ -52,16 +52,19 @@ class APIController extends GetxController {
     return isSbu;
   }
 
-  Future<bool> makeSubscribe() async {
+  Future<bool> makeSubscribe({String? paymentId}) async {
     String email = storage.read('email') ?? "";
     if (email.isEmpty) {
       return false;
     }
 
-    Dio().post('$apiUrl/user/make/subscribed', data: {"email": email}).then(
-        (value) {
+    Dio().post('$apiUrl/user/make/subscribed',
+        data: {"email": email, "paymentId": paymentId}).then((value) {
+      print('============make subscrive');
+      print(value);
       isSubscribed(true);
       storage.write('isSubscribed', true);
+      storage.write('paymentId', paymentId!);
       return true;
     }).catchError((error) {
       storage.write('isSubscribed', false);
@@ -214,7 +217,12 @@ class APIController extends GetxController {
 
       var res = await Dio().post('$apiUrl/user/set/data_collection', data: {
         "email": userData['email'],
-        "data": {...userData, ...data, "isSubscribed": isSubscribed ?? false}
+        "data": {
+          ...userData, ...data,
+
+          // "isSubscribed": isSubscribed
+          "isSubscribed": false
+        }
       });
       print("================Success==================");
       Map resData = res.data;

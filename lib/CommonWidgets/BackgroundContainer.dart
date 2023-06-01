@@ -56,12 +56,22 @@ class BackgroundContainer extends StatelessWidget {
   BottomNavController bottomNavController = Get.find<BottomNavController>();
 
   List<List<String>> iconPath = [
-    ['assets/images/navbar/home.svg', 'assets/images/navbar/a_home.svg'],
-    ['assets/images/navbar/mission.svg', 'assets/images/navbar/a_mission.svg'],
-    ['assets/images/navbar/journal.svg', 'assets/images/navbar/a_journal.svg'],
-    ['assets/images/navbar/craving.svg', 'assets/images/navbar/a_craving.svg'],
-    ['assets/images/navbar/more.svg', 'assets/images/navbar/a_more.svg'],
+    ['assets/images/n/home.png', 'assets/images/n/a_home.png'],
+    ['assets/images/n/mission.png', 'assets/images/n/a_mission.png'],
+    ['assets/images/n/journal.png', 'assets/images/n/a_journal.png'],
+    ['assets/images/n/craving.png', 'assets/images/n/a_craving.png'],
+    ['assets/images/n/more.png', 'assets/images/n/a_more.png'],
   ];
+
+  // List<List<String>> iconPath = [
+  //   ['assets/images/navbar/f.svg', 'assets/images/navbar/a_home.svg'],
+  //   ['assets/images/navbar/home.svg', 'assets/images/navbar/a_mission.svg'],
+  //
+  //   ['assets/images/navbar/mission.svg', 'assets/images/navbar/a_journal.svg'],
+  //   ['assets/images/navbar/home.svg', 'assets/images/navbar/a_craving.svg'],
+  //   ['assets/images/navbar/home.svg', 'assets/images/navbar/a_more.svg'],
+  //   // ['assets/images/navbar/more.svg', 'assets/images/navbar/more.svg'],
+  // ];
 
   List<Widget> pages = [Dashboard(), Missions(), Journal(), Craving(), More()];
 
@@ -210,7 +220,7 @@ class QCBottomNavItem extends StatelessWidget {
       child: GestureDetector(
         onTap: onPressed,
         child: Image(
-          image: Svg(
+          image: AssetImage(
             input ? icon[1] : icon[0],
             //size: Size(60, 60),
           ),

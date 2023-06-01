@@ -1,5 +1,7 @@
 // ignore_for_file: file_names
 
+import 'package:SFM/CommonWidgets/color_filter.dart';
+import 'package:SFM/Get_X_Controller/API_Controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:SFM/CommonWidgets/BackgroundContainer.dart';
@@ -12,6 +14,7 @@ class BreathCards extends StatelessWidget {
 
   String aboutBreath =
       "Breathing and relaxation techniques are practices that can help individuals manage stress, anxiety, and other negative emotions. These techniques involve taking deep, slow breaths and focusing on relaxing the body and calming the mind. Here are some common breathing and relaxation techniques";
+  final APIController _api = Get.find<APIController>();
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +91,7 @@ class BreathCards extends StatelessWidget {
                     bgColor: const Color(0xffFFF4E4),
                     animationSrc:
                         "assets/Rive/breath_animation/4-7-8_breath.riv",
+                    isSubscribed: _api.isSubscribed.value,
                   ),
                   BreathCard(
                     src: 'assets/images/breath/breath_test.png',
@@ -97,6 +101,7 @@ class BreathCards extends StatelessWidget {
                     color: const Color(0xff0A9999),
                     bgColor: const Color(0xffFBDBDB),
                     animationSrc: "assets/Rive/breath_animation/box_breath.riv",
+                    isSubscribed: _api.isSubscribed.value,
                   ),
                 ],
               ),
@@ -118,7 +123,8 @@ class BreathCard extends StatelessWidget {
       this.color = Colors.black26,
       this.onPressed,
       this.animationSrc = "assets/Rive/breath_animation/box_breath.riv",
-      this.bgColor = Colors.grey})
+      this.bgColor = Colors.grey,
+      this.isSubscribed = true})
       : super(key: key);
   String title;
   String subtitle;
@@ -127,19 +133,24 @@ class BreathCard extends StatelessWidget {
   Color bgColor;
   VoidCallback? onPressed;
   String animationSrc;
+  bool isSubscribed;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(
-            BreathPlayer(
-              color: color,
-              title: title,
-              srcPath: animationSrc,
-              subtitle: subtitle,
-            ),
-            transition: Transition.cupertino);
+        if (isSubscribed) {
+          Get.to(
+              BreathPlayer(
+                color: color,
+                title: title,
+                srcPath: animationSrc,
+                subtitle: subtitle,
+              ),
+              transition: Transition.cupertino);
+        } else {
+          Get.snackbar('Locked', "You nee to unlock Premium version");
+        }
       },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -157,47 +168,45 @@ class BreathCard extends StatelessWidget {
                   spreadRadius: 0,
                   blurRadius: 15)
             ]),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: Stack(
+          alignment: Alignment.center,
           children: [
-            Image(
-              image: AssetImage(src),
-              width: context.screenWidth / 6,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ColorFiltered(
+                  colorFilter: isSubscribed ? normalFilter : grayScale,
+                  child: Opacity(
+                    opacity: isSubscribed ? 1 : 0.2,
+                    child: Image(
+                      image: AssetImage(src),
+                      width: context.screenWidth / 6,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Opacity(
+                  opacity: isSubscribed ? 1 : 0.2,
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      // color:color,
+                      color: Colors.grey[600],
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 10),
-            Text(
-              title,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-                // color:color,
+            if (!isSubscribed)
+              Icon(
+                Icons.lock,
+                size: 50,
                 color: Colors.grey[600],
-              ),
-              textAlign: TextAlign.center,
-            ),
-            // Column(
-            //
-            //   crossAxisAlignment: CrossAxisAlignment.stretch,
-            //   children: [
-            //     Text(
-            //       title,
-            //       style: TextStyle(
-            //         fontWeight: FontWeight.bold,
-            //         fontSize: 16,
-            //         // color:color,
-            //         color: Colors.grey[600],
-            //       ),
-            //     ),
-            //     // Text(
-            //     //   subtitle,
-            //     //   style: TextStyle(
-            //     //       fontSize: 13,
-            //     //       color: Colors.grey[400],
-            //     //       fontWeight: FontWeight.w500),
-            //     // )
-            //   ],
-            // )
+              )
           ],
         ),
       ),
