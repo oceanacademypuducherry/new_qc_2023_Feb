@@ -101,13 +101,11 @@ class UserStatusController extends GetxController {
 
     if (data != null) {
       List dateList = data["quiteDate"] ?? [DateTime.now().toString()];
-      print(dateList);
+      userData(data);
+
       print('read sesion------------------------------');
 
       startTimer(dateList[dateList.length - 1]);
-      userData(data);
-      print(data["username"]);
-      print(storage.read('username'));
     }
   }
 

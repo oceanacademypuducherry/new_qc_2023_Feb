@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:SFM/CommonWidgets/BackButton.dart';
@@ -169,9 +169,18 @@ class BackgroundContainer extends StatelessWidget {
               child: Container(
                 width: context.screenWidth,
                 alignment: Alignment.bottomCenter,
-                height: context.screenHeight / 9,
-                color: appbarColor,
-                padding: EdgeInsets.symmetric(vertical: 10),
+                height: 80,
+                decoration: BoxDecoration(
+                    // color: appbarColor ?? QCDashColor.odd,
+                    gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        stops: [0.8, 1],
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          appbarColor ?? QCDashColor.odd,
+                          QCDashColor.odd.withOpacity(0.0)
+                        ])),
+                padding: EdgeInsets.symmetric(vertical: 15),
                 child: Stack(
                   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   alignment: Alignment.center,

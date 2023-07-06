@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+
 import 'package:get/get.dart';
 import 'package:SFM/CommonWidgets/BackButton.dart';
 import 'package:SFM/CommonWidgets/QC_Colors.dart';

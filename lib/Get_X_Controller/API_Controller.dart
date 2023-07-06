@@ -3,6 +3,7 @@ import 'package:SFM/Get_X_Controller/JournalController.dart';
 import 'package:SFM/Get_X_Controller/MissionController.dart';
 import 'package:SFM/Get_X_Controller/UserStatusController.dart';
 import 'package:SFM/Get_X_Controller/cravings_controller.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -118,9 +119,11 @@ class APIController extends GetxController {
         "username": uname.toString(),
       });
       print("=================oAuth===Success==================");
-
+      FirebaseFirestore fs = FirebaseFirestore.instance;
+      final fs_res = await fs.collection("Users").doc(email.toString()).get();
+      final fs_data = fs_res.data() ?? {};
       Map data = res.data;
-      if (data['isNewUser']) {
+      if (!fs_data.containsKey('quiteDate')) {
         userInfo({"username": uname.toString(), "email": email.toString()});
         userEmail(email.toString());
         username(uname.toString());

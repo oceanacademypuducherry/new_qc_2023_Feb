@@ -55,6 +55,7 @@ class CravingsController extends GetxController {
   void resetCravings() async {
     cravingsData([]);
     userData["cravings"] = cravingsData;
+    // ignore: invalid_use_of_protected_member
     await storage.write('userData', userData.value);
     await storage.write('cravings', cravingsData);
     try {

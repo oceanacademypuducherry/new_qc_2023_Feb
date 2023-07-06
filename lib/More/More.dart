@@ -3,11 +3,12 @@ import 'package:SFM/Get_X_Controller/cravings_controller.dart';
 import 'package:SFM/More/about_sfm.dart';
 import 'package:SFM/More/feedback_page.dart';
 import 'package:SFM/More/profile_view.dart';
+import 'package:SFM/MyExtention/string_extention.dart';
 import 'package:SFM/Payment/payment.dart';
-import 'package:SFM/practice/payment_model.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:SFM/CommonWidgets/BackgroundContainer.dart';
@@ -71,7 +72,7 @@ class More extends StatelessWidget {
         // onCancel: (){},
         onConfirm: () {
           userStatus.stopTimer(runTimer: false);
-          List dates = userStatus.userData["quiteDate"];
+          List dates = userStatus.userData["quiteDate"] ?? [];
           _dataCollectionController.setQuitDate(dates);
           _bottomNavController.startPage();
           _cravingsController.resetCravings();
@@ -150,6 +151,7 @@ class More extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 "${userStatus.userData['username']}"
+                                    .toTitleCase()
                                     .text
                                     .bold
                                     .color(Color(0xff656565))
@@ -199,26 +201,7 @@ class More extends StatelessWidget {
                             ProfileItem(
                                 label: "Unlock Premium",
                                 onPressed: () {
-                                  // Get.to(() => PaymentModel());
-                                  // return;
-                                  BorderRadius br = const BorderRadius.only(
-                                      topLeft: Radius.circular(30),
-                                      topRight: Radius.circular(30));
-                                  showModalBottomSheet<void>(
-                                      context: context,
-                                      // constraints: BoxConstraints(
-                                      //     minHeight: 200,
-                                      //     maxHeight:
-                                      //         context.screenHeight / 1.2),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: br,
-                                      ),
-                                      builder: (BuildContext context) {
-                                        return ClipRRect(
-                                          borderRadius: br,
-                                          child: Payment(),
-                                        );
-                                      });
+                                  Payment.unlock_premium(context);
                                 }),
                             const SizedBox(height: 80)
                           ],

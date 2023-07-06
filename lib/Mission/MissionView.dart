@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:SFM/CommonWidgets/BackgroundContainer.dart';
@@ -8,6 +8,7 @@ import 'package:SFM/Get_X_Controller/MissionController.dart';
 import 'package:SFM/Journal/Journal/textfield.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+// ignore: must_be_immutable
 class MissionView extends StatefulWidget {
   MissionView({Key? key, this.missionIndex = 0}) : super(key: key);
   int missionIndex;
@@ -74,16 +75,15 @@ class _MissionViewState extends State<MissionView> {
                     Hero(
                       tag: "mission_${widget.missionIndex}",
                       child: Image(
-                        image: Svg(arguments['missionVector'],
-                            size: Size(
-                              sw / 1.8,
-                              sw / 1.8,
-                            )),
+                        image: AssetImage(arguments['missionVector']),
+                        height: sw / 1.8,
+                        width: sw / 1.8,
                       ),
                     ),
                     SizedBox(height: sh / 35),
                     "${arguments['title']}"
                         .text
+                        .center
                         .fontFamily('Roboto')
                         .color(const Color(0xff515151))
                         .size(sh / 40)

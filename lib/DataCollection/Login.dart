@@ -1,3 +1,5 @@
+import 'package:SFM/practice/error_test.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -68,6 +70,7 @@ class _LoginState extends State<Login> {
       OverlayEntry loading = await loadingController.overlayLoading();
       Overlay.of(context).insert(loading);
       String page = await googleOAuth();
+
       if (page == "newUser") {
         Get.to(() => QuitDatePicker(),
             arguments: "isRegister",
@@ -82,6 +85,7 @@ class _LoginState extends State<Login> {
       }
       loading.remove();
     } else {
+      // Get.to(() => ErrorTest(errorText: errorText));
       print("oauth else working");
       checkInternetConnection();
     }

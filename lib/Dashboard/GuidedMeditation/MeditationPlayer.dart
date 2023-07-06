@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:flutter_svg/svg.dart';
+
 import 'package:SFM/CommonWidgets/BackButton.dart';
 import 'package:SFM/CommonWidgets/BackgroundContainer.dart';
 import 'package:SFM/CommonWidgets/QC_Colors.dart';
@@ -10,6 +11,7 @@ import 'package:SFM/Dashboard/GuidedMeditation/MisicView.dart';
 import 'package:pausable_timer/pausable_timer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+// ignore: must_be_immutable
 class MeditationPlayer extends StatefulWidget {
   MeditationPlayer(
       {Key? key,
@@ -19,10 +21,10 @@ class MeditationPlayer extends StatefulWidget {
       this.title = "Title"})
       : super(key: key);
 
-  String imagePath;
-  String musicPath;
+  final String imagePath;
+  final String musicPath;
   Color color;
-  String title;
+  final String title;
 
   @override
   State<MeditationPlayer> createState() => _MeditationPlayerState();
@@ -94,6 +96,7 @@ class _MeditationPlayerState extends State<MeditationPlayer>
           // ),
           darkMode: false,
           transparentOpacity: 0.8,
+          title: "Meditation",
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 0),
             child: Column(
@@ -108,11 +111,17 @@ class _MeditationPlayerState extends State<MeditationPlayer>
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(width / 1.5),
                       border: Border.all(color: widget.color, width: 4)),
-                  child: Image(
-                    image: Svg(widget.imagePath,
-                        size: Size(
-                            context.screenWidth / 3, context.screenWidth / 3)),
+                  child: SvgPicture.asset(
+                    widget.imagePath,
+                    width: context.screenWidth / 3,
+                    // height: context.screenHeight / 5,
                   ),
+
+                  // Image(
+                  //   image: Svg(widget.imagePath,
+                  //       size: Size(
+                  //           context.screenWidth / 3, context.screenWidth / 3)),
+                  // ),
                 ),
 
                 Container(
@@ -383,14 +392,22 @@ class _AmbientCardState extends State<AmbientCard> {
                 ],
               ),
             ),
-            Image(
-                image: Svg(
+            SvgPicture.asset(
               widget.src,
-              size: Size(50, 50),
+              height: 50,
+              width: 50,
               color: isPlay
                   ? Color(0xff55A6D3)
                   : Color(0xff55A6D3).withOpacity(0.3),
-            )),
+            ),
+            // Image(
+            //     image: Svg(
+            //   widget.src,
+            //   size: Size(50, 50),
+            //   color: isPlay
+            //       ? Color(0xff55A6D3)
+            //       : Color(0xff55A6D3).withOpacity(0.3),
+            // )),
             SliderTheme(
                 data: SliderThemeData(
                     trackHeight: 3,

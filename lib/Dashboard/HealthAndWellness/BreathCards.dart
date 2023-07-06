@@ -8,6 +8,8 @@ import 'package:SFM/CommonWidgets/BackgroundContainer.dart';
 import 'package:SFM/Dashboard/HealthAndWellness/BreathPlayer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../CommonWidgets/my_snacbar.dart';
+
 // ignore: must_be_immutable
 class BreathCards extends StatelessWidget {
   BreathCards({Key? key}) : super(key: key);
@@ -149,7 +151,11 @@ class BreathCard extends StatelessWidget {
               ),
               transition: Transition.cupertino);
         } else {
-          Get.snackbar('Locked', "You nee to unlock Premium version");
+          mySnackBar(context,
+              title: "Locked",
+              subtitle: "You nee to unlock Premium version",
+              isUnlock: true);
+          // Get.snackbar('Locked', "You nee to unlock Premium version");
         }
       },
       child: Container(

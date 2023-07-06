@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:blur/blur.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:get/get.dart';

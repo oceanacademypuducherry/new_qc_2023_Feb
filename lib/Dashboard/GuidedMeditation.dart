@@ -11,6 +11,7 @@ class GuidedMeditation extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        print('ffffffffffffffff');
         // Get.to(MusicView(), transition: Transition.cupertino);
         Get.to(() => MeditationView(), transition: Transition.cupertino);
       },

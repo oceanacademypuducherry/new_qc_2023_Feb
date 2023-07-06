@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:SFM/CommonWidgets/BackButton.dart';
 import 'package:SFM/CommonWidgets/BackgroundContainer.dart';
@@ -8,17 +9,20 @@ import 'package:velocity_x/velocity_x.dart';
 
 // ignore: must_be_immutable
 class AffirmationView extends StatelessWidget {
-  AffirmationView({Key? key, this.dataList}) : super(key: key);
+  AffirmationView({Key? key, this.dataList, this.title = "Affirmation"})
+      : super(key: key);
 
   List<String>? dataList;
 
   final controller = PageController(initialPage: 55);
+  final String title;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BackgroundContainer(
           isAppbar: true,
+          title: title,
           action: Icon(
             FontAwesomeIcons.ellipsisVertical,
             color: Colors.black.withOpacity(0.5),
@@ -49,9 +53,11 @@ class AffirmationView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Image(
-            image: Svg('assets/images/iam.svg'),
-          ),
+          SvgPicture.asset('assets/images/iam.svg'),
+          // const Image(
+          //   image: Svg('assets/images/iam.svg'),
+          // ),
+          SizedBox(height: 15),
           Container(
             width: context.screenWidth / 1.1,
             child: Text(

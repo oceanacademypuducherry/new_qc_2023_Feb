@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+
 import 'package:get/get.dart';
 import 'package:SFM/CommonWidgets/DashboardWidgets/DashboardTitle.dart';
 import 'package:SFM/CommonWidgets/QC_Colors.dart';
@@ -13,74 +13,74 @@ class MoneySaved extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: QCDashColor.odd,
-      padding: EdgeInsets.symmetric(vertical: 20),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          // GestureDetector(
-          //   onTap: () {
-          //     Get.to(() => MoneySavedInfo(), transition: Transition.cupertino);
-          //   },
-          //   child: DashboardTitle(
-          //     title: 'Money Saved',
-          //   ),
-          // ),
+    return GestureDetector(
+      onTap: () {
+        Get.to(() => MoneySavedInfo(), transition: Transition.cupertino);
+      },
+      child: Container(
+        color: QCDashColor.odd,
+        padding: EdgeInsets.symmetric(vertical: 20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // GestureDetector(
+            //   onTap: () {
+            //     Get.to(() => MoneySavedInfo(), transition: Transition.cupertino);
+            //   },
+            //   child: DashboardTitle(
+            //     title: 'Money Saved',
+            //   ),
+            // ),
 
-          GestureDetector(
-              onTap: () {
-                Get.to(() => MoneySavedInfo(),
-                    transition: Transition.cupertino);
-              },
-              child: Container(
-                width: context.screenWidth,
-                height: 180,
-                // color: Colors.yellow,
-                padding: EdgeInsets.symmetric(vertical: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Image.asset('assets/images/money.png'),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    DashboardTitle(
-                      title: 'Money Saved',
-                    ),
-                  ],
-                ),
-              )),
+            Container(
+              width: context.screenWidth,
+              height: 180,
+              // color: Colors.yellow,
+              padding: EdgeInsets.symmetric(vertical: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset('assets/images/money.png'),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  DashboardTitle(
+                    title: 'Money Saved',
+                  ),
+                ],
+              ),
+            ),
 
-          // SingleChildScrollView(
-          //   scrollDirection: Axis.horizontal,
-          //   child: Obx(() => Row(
-          //         children: [
-          //           MoneyCard(
-          //             clipArt:
-          //                 Image(image: Svg('assets/images/dashboard/cash.svg')),
-          //             // clipArt: Image.asset('assets/images/dashboard/cash.png'),
-          //             title: "total Savings",
-          //             amount: double.parse(_userState
-          //                 .moneyViewer(
-          //                     type: _userState.totalSmokeFreeTime['days'])
-          //                 .toString()),
-          //             color: QCMoneyColor.totalSaving,
-          //             bgColor: QCMoneyColor.totalSavingBg,
-          //           ),
-          //           MoneyCard(
-          //             clipArt: Image.asset('assets/images/dashboard/coin.png'),
-          //             title: "Weekly Savings",
-          //             amount: double.parse(
-          //                 _userState.moneyViewer(type: 7).toString()),
-          //             color: QCMoneyColor.weeklySaving,
-          //             bgColor: QCMoneyColor.weeklySavingBg,
-          //           ),
-          //         ],
-          //       )),
-          // )
-        ],
+            // SingleChildScrollView(
+            //   scrollDirection: Axis.horizontal,
+            //   child: Obx(() => Row(
+            //         children: [
+            //           MoneyCard(
+            //             clipArt:
+            //                 Image(image: Svg('assets/images/dashboard/cash.svg')),
+            //             // clipArt: Image.asset('assets/images/dashboard/cash.png'),
+            //             title: "total Savings",
+            //             amount: double.parse(_userState
+            //                 .moneyViewer(
+            //                     type: _userState.totalSmokeFreeTime['days'])
+            //                 .toString()),
+            //             color: QCMoneyColor.totalSaving,
+            //             bgColor: QCMoneyColor.totalSavingBg,
+            //           ),
+            //           MoneyCard(
+            //             clipArt: Image.asset('assets/images/dashboard/coin.png'),
+            //             title: "Weekly Savings",
+            //             amount: double.parse(
+            //                 _userState.moneyViewer(type: 7).toString()),
+            //             color: QCMoneyColor.weeklySaving,
+            //             bgColor: QCMoneyColor.weeklySavingBg,
+            //           ),
+            //         ],
+            //       )),
+            // )
+          ],
+        ),
       ),
     );
   }
@@ -101,6 +101,7 @@ class MoneyCard extends StatelessWidget {
   String title;
   Color? color;
   Color? bgColor;
+
   String money(num money) {
     String val = money.numCurrency;
     return val.substring(0, val.length - 3);

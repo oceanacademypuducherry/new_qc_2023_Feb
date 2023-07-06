@@ -1,7 +1,8 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+
 import 'package:SFM/CommonWidgets/BackgroundContainer.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class MusicView extends StatelessWidget {
@@ -159,14 +160,20 @@ class _MusicCardState extends State<MusicCard> {
                 ],
               ),
             ),
-            Image(
-                image: Svg(
+
+            SvgPicture.asset(
               widget.src,
-              size: Size(80, 80),
-              color: isPlay
-                  ? Color(0xff55A6D3)
-                  : Color(0xff55A6D3).withOpacity(0.3),
-            )),
+              height: 80,
+              width: 80,
+            ),
+            // Image(
+            //     image: Svg(
+            //   widget.src,
+            //   size: Size(80, 80),
+            //   color: isPlay
+            //       ? Color(0xff55A6D3)
+            //       : Color(0xff55A6D3).withOpacity(0.3),
+            // )),
             Slider.adaptive(
                 activeColor: Color(0xff55A6D3),
                 inactiveColor: Colors.grey[350],

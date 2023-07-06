@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:SFM/CommonWidgets/QC_Colors.dart';
+import 'package:SFM/CommonWidgets/my_snacbar.dart';
 import 'package:SFM/Get_X_Controller/API_Controller.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -65,8 +66,12 @@ class _HealthImprovementBigCardState extends State<HealthImprovementBigCard> {
     });
   }
 
-  makePurchase() {
-    Get.snackbar("Service Locked", "Unlock Premium Service");
+  makePurchase(BuildContext context) {
+    // Get.snackbar("Service Locked", "Unlock Premium Service");
+    mySnackBar(context,
+        title: "Service Locked",
+        subtitle: "Unlock Premium Service",
+        isUnlock: true);
   }
 
   @override
@@ -130,7 +135,9 @@ class _HealthImprovementBigCardState extends State<HealthImprovementBigCard> {
                                 : const SizedBox(),
                           )
                         : GestureDetector(
-                            onTap: makePurchase,
+                            onTap: () {
+                              makePurchase(context);
+                            },
                             child: Opacity(
                                 opacity: 0.7,
                                 child:

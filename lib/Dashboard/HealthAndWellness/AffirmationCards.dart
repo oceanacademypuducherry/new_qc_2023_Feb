@@ -77,6 +77,7 @@ class AffirmationCards extends StatelessWidget {
       onTap: () {
         Get.to(() => AffirmationView(
               dataList: affirmations,
+              title: title.toString(),
             ));
       },
       child: Container(

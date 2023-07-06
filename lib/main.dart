@@ -51,6 +51,7 @@ void main() async {
   );
 }
 
+// ignore: must_be_immutable
 class MainRun extends StatelessWidget {
   MainRun({Key? key}) : super(key: key);
 

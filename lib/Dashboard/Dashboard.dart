@@ -39,7 +39,7 @@ class _DashboardState extends State<Dashboard> {
 
   relapse() async {
     userStatus.stopTimer(runTimer: false);
-    List dates = userStatus.userData["quiteDate"];
+    List dates = userStatus.userData["quiteDate"] ?? [];
     _dataCollectionController.setQuitDate(dates);
     _bottomNavController.startPage();
     await storage.write('isPending', true);

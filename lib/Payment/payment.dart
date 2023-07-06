@@ -10,6 +10,29 @@ import '../Get_X_Controller/UserStatusController.dart';
 class Payment extends StatefulWidget {
   const Payment({Key? key}) : super(key: key);
 
+  static unlock_premium(BuildContext context) {
+    // Get.to(() => PaymentModel());
+    // return;
+    BorderRadius br = const BorderRadius.only(
+        topLeft: Radius.circular(30), topRight: Radius.circular(30));
+    showModalBottomSheet<void>(
+        context: context,
+        useSafeArea: true,
+        isScrollControlled: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: br,
+        ),
+        constraints: BoxConstraints(maxHeight: context.screenHeight / 1.3),
+        enableDrag: true,
+        backgroundColor: Colors.blue,
+        builder: (BuildContext context) {
+          return ClipRRect(
+            borderRadius: br,
+            child: Payment(),
+          );
+        });
+  }
+
   @override
   State<Payment> createState() => _PaymentState();
 }
@@ -65,6 +88,17 @@ class _PaymentState extends State<Payment> {
   BorderRadius br = const BorderRadius.only(
       topLeft: Radius.circular(30), topRight: Radius.circular(30));
 
+  List<Widget> fetuers = [
+    FeaturesLable(title: 'All Mission'),
+    const SizedBox(height: 10),
+    FeaturesLable(title: 'All Health improvements'),
+    const SizedBox(height: 10),
+    FeaturesLable(title: 'All Meditation'),
+    const SizedBox(height: 10),
+    FeaturesLable(title: 'All Breathing'),
+    const SizedBox(height: 10),
+  ];
+
   @override
   Widget build(BuildContext context) {
     TextStyle ts = TextStyle(
@@ -73,131 +107,134 @@ class _PaymentState extends State<Payment> {
       color: Color(0xff5F5F5F),
     );
 
-    return Container(
-      height: context.screenHeight / 1.8,
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      decoration: BoxDecoration(color: Colors.white, borderRadius: br),
-      child: Column(
-        children: [
-          Container(
-            height: 150,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                /// Logo
-                SizedBox(
-                  height: context.screenWidth / 5,
-                  width: context.screenWidth / 5,
-                  child: Image.asset('assets/images/logo.png'),
-                ),
-                SizedBox(width: 20),
-
-                /// price content
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Premium', style: ts),
-                    Container(
-                      height: 50,
-                      child: Row(
-                        children: [
-                          Column(
-                            children: [
-                              SizedBox(height: 4),
-                              Text('₹', style: ts),
-                              Spacer()
-                            ],
-                          ),
-                          Text('3999',
-                              style: ts.copyWith(
-                                fontSize: context.screenWidth / 11,
-                                color: Color(0xff538A85),
-                              )),
-                          Column(
-                            children: [
-                              Spacer(),
-                              Text('/user', style: ts),
-                              SizedBox(height: 4),
-                            ],
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          SizedBox(
-            width: context.screenWidth,
-            child: const Divider(
-              thickness: 1.5,
-            ),
-          ),
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return Scaffold(
+      body: Container(
+        height: context.screenHeight / 1.2,
+        padding: EdgeInsets.symmetric(horizontal: 20),
+        decoration: BoxDecoration(color: Colors.white, borderRadius: br),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              // height: context.screenHeight / 8,
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  FeaturesLable(title: 'All Mission'),
-                  const SizedBox(height: 10),
-                  FeaturesLable(title: 'all Health improvements'),
-                  const SizedBox(height: 10),
-                  FeaturesLable(title: 'all Meditation'),
-                  const SizedBox(height: 10),
-                  FeaturesLable(title: 'all Breathing'),
-                  const SizedBox(height: 10),
+                  /// Logo
+                  SizedBox(
+                    height: context.screenWidth / 5,
+                    width: context.screenWidth / 5,
+                    child: Image.asset('assets/images/logo.png'),
+                  ),
+                  SizedBox(width: 20),
+
+                  /// price content
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Premium', style: ts),
+                      Container(
+                        height: context.screenHeight / 20,
+                        child: Row(
+                          children: [
+                            Column(
+                              children: [
+                                SizedBox(height: 4),
+                                Text('₹', style: ts),
+                                Spacer()
+                              ],
+                            ),
+                            Text('1499',
+                                style: ts.copyWith(
+                                  fontSize: context.screenWidth / 11,
+                                  color: Color(0xff538A85),
+                                )),
+                            Column(
+                              children: [
+                                Spacer(),
+                                Text('/user', style: ts),
+                                SizedBox(height: 4),
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ],
               ),
             ),
-          ),
-
-          /// button
-          GestureDetector(
-            onTap: () {
-              String email = userStatus.userData["email"] ?? "sample@gmail.com";
-              var options = {
-                'key': 'rzp_test_RS4jiFO7EVU6MY',
-                'amount': 100,
-                //in the smallest currency sub-unit.
-                'name': 'Smoke free mind.',
-                // 'order_id':
-                //     'order_EMBFqjDHEEn80l', // Generate order_id using Orders API
-                'description': 'Smoke free mind Premium',
-                'timeout': 300,
-                // in seconds
-                'prefill': {
-                  'contact': '',
-                  'email': email,
-                }
-              };
-              _razorpay.open(options);
-            },
-            child: Container(
-              height: 60,
+            // const SizedBox(
+            //   height: 5,
+            // ),
+            SizedBox(
               width: context.screenWidth,
-              decoration: BoxDecoration(
-                color: const Color(0xff538A85),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              margin: const EdgeInsets.symmetric(vertical: 10),
-              alignment: Alignment.center,
-              child: const Text(
-                "Unlock All features",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 23,
-                    fontWeight: FontWeight.w500),
+              child: const Divider(
+                thickness: 1.5,
               ),
             ),
-          )
-        ],
+            Spacer(),
+            // ...fetuers,
+            Container(
+              // constraints: BoxConstraints(
+              //         maxHeight: MediaQuery.of(context).size.height * 0.50) /
+              //     1.3,
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ...fetuers,
+
+                    /// button
+                    GestureDetector(
+                      onTap: () {
+                        String email =
+                            userStatus.userData["email"] ?? "sample@gmail.com";
+                        var options = {
+                          'key': 'rzp_test_RS4jiFO7EVU6MY',
+                          'amount': 100,
+                          //in the smallest currency sub-unit.
+                          'name': 'Smoke free mind.',
+                          // 'order_id':
+                          //     'order_EMBFqjDHEEn80l', // Generate order_id using Orders API
+                          'description': 'Smoke free mind Premium',
+                          'timeout': 300,
+                          // in seconds
+                          'prefill': {
+                            'contact': '',
+                            'email': email,
+                          }
+                        };
+                        _razorpay.open(options);
+                      },
+                      child: Container(
+                        height: 60,
+                        width: context.screenWidth,
+                        decoration: BoxDecoration(
+                          color: const Color(0xff538A85),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        alignment: Alignment.center,
+                        child: const Text(
+                          "Unlock All features",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 23,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
 
@@ -240,29 +277,29 @@ class FeaturesLable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-        decoration: BoxDecoration(
-          color: Colors.grey.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Row(
-          children: [
-            const Icon(
-              Icons.done,
-              color: Color(0xff538A85),
-            ),
-            const SizedBox(width: 10),
-            Text(
-              title,
-              style: const TextStyle(
-                  fontSize: 20,
-                  color: Color(0xff538A85),
-                  fontWeight: FontWeight.w500),
-            ),
-          ],
-        ),
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      constraints: BoxConstraints(maxHeight: 50),
+      height: 50,
+      decoration: BoxDecoration(
+        color: Colors.grey.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        children: [
+          const Icon(
+            Icons.done,
+            color: Color(0xff538A85),
+          ),
+          const SizedBox(width: 10),
+          Text(
+            title,
+            style: const TextStyle(
+                fontSize: 20,
+                color: Color(0xff538A85),
+                fontWeight: FontWeight.w500),
+          ),
+        ],
       ),
     );
   }

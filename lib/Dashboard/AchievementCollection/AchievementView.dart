@@ -19,6 +19,8 @@ import 'package:share_plus/share_plus.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../CommonWidgets/my_snacbar.dart';
+
 class AchievementView extends StatefulWidget {
   const AchievementView({Key? key}) : super(key: key);
 
@@ -122,6 +124,7 @@ class _AchievementViewState extends State<AchievementView> {
   }
 }
 
+// ignore: must_be_immutable
 class AchievementCompleteCard extends StatelessWidget {
   AchievementCompleteCard(
       {Key? key,
@@ -173,8 +176,9 @@ class AchievementCompleteCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () =>
-          isOpen ? _viewAchievement(context) : Get.snackbar("Locked", title),
+      onTap: () => isOpen
+          ? _viewAchievement(context)
+          : mySnackBar(context, title: "Locked", subtitle: title),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: AspectRatio(
@@ -310,6 +314,7 @@ class AchievementCompleteCard extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class ScreenshotCard extends StatefulWidget {
   ScreenshotCard(
       {Key? key,
@@ -511,13 +516,13 @@ class _ScreenshotCardState extends State<ScreenshotCard> {
                       right: 10,
                       bottom: 10,
                       child: IconButton(
-                        icon: const Icon(Icons.share),
-                        color: Colors.blue,
+                        icon: const Icon(FontAwesomeIcons.share),
+                        color: Colors.grey,
                         onPressed: () {
                           _takeshot();
                         },
                       )),
-                if (false)
+                if (true)
                   ConfettiWidget(
                     confettiController: widget.confettiController!,
                     emissionFrequency: 0.4,
@@ -530,7 +535,7 @@ class _ScreenshotCardState extends State<ScreenshotCard> {
                       Color(0xffFE94D7),
                       Color(0xffFF6060),
                       Color(0xff31D6FA),
-                      Color(0xff3ACBA0),
+                      Color(0xff3975ef),
                     ],
                   ),
               ],
@@ -542,168 +547,169 @@ class _ScreenshotCardState extends State<ScreenshotCard> {
   }
 }
 
-/// TODO: not use remove the down below
-
-class AchievementCompleteCardList extends StatelessWidget {
-  AchievementCompleteCardList(
-      {Key? key,
-      this.color = Colors.green,
-      this.title = "Title",
-      this.isOpen = false,
-      this.iconData = Icons.ac_unit_rounded})
-      : super(key: key);
-  Color color = Colors.green;
-  String title = "title";
-  bool isOpen = false;
-  IconData iconData;
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(10),
-      child: Container(
-        // height: 100,
-        // width: 100,
-        color: Colors.white,
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Positioned(
-              child: Blur(
-                blur: 20,
-                child: Container(
-                  margin:
-                      EdgeInsets.only(top: 40, right: context.screenWidth / 2),
-                  color: Colors.white24,
-                  child: Center(
-                    child: Container(
-                      height: 50,
-                      width: 60,
-                      decoration: BoxDecoration(
-                        color: color,
-                        borderRadius: BorderRadius.circular(60),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              // color: Colors.red,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                      margin: const EdgeInsets.only(bottom: 0),
-                      // color: Colors.blue,
-                      height: 250,
-                      width: 140,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: Center(
-                              child: Transform.rotate(
-                                angle: -math.pi / 4,
-                                child: ClipRRect(
-                                  child: Stack(
-                                    alignment: Alignment.center,
-                                    children: [
-                                      Container(
-                                        height: context.screenWidth / 3.7,
-                                        width: context.screenWidth / 3.7,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white.withOpacity(0.1),
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          border: Border.all(
-                                              color: Colors.white, width: 3),
-                                          boxShadow: [
-                                            BoxShadow(
-                                                color: Colors.black
-                                                    .withOpacity(0.4),
-                                                offset: const Offset(-5, 5),
-                                                blurRadius: 3,
-                                                inset: true),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            height: 50,
-                            width: 50,
-                            decoration: BoxDecoration(
-                                color: color.withOpacity(0.8),
-                                border: Border.all(
-                                  width: 3,
-                                  color: Colors.black.withOpacity(0.1),
-                                ),
-                                borderRadius: BorderRadius.circular(50)),
-                            child: Icon(
-                              iconData,
-                              size: context.screenWidth / 15,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      )),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      'Title'.text.color(color).bold.size(20).make(),
-                      const SizedBox(height: 5),
-                      title.text
-                          .color(const Color(0xff7E7E7E))
-                          .medium
-                          .minFontSize(15)
-                          .align(TextAlign.left)
-                          .overflow(TextOverflow.ellipsis)
-                          .maxLines(3)
-                          .make()
-                          .box
-                          .width(150)
-                          .makeCentered(),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            if (!isOpen)
-              Blur(
-                blur: 10,
-                child: Container(
-                  color: Colors.transparent,
-                ),
-              ),
-            if (!isOpen)
-              Container(
-                height: 60,
-                width: 60,
-                decoration: BoxDecoration(
-                    color: color.withOpacity(0.8),
-                    borderRadius: BorderRadius.circular(60)),
-                child: const Center(
-                  child: Icon(
-                    Icons.lock,
-                    size: 20,
-                    color: Colors.white,
-                  ),
-                ),
-              )
-          ],
-        ),
-      ),
-    );
-  }
-}
+//
+// /// TODO: not use remove the down below
+// // ignore: must_be_immutable, must_be_immutable
+// class AchievementCompleteCardList extends StatelessWidget {
+//   AchievementCompleteCardList(
+//       {Key? key,
+//       this.color = Colors.green,
+//       this.title = "Title",
+//       this.isOpen = false,
+//       this.iconData = Icons.ac_unit_rounded})
+//       : super(key: key);
+//   Color color = Colors.green;
+//   String title = "title";
+//   bool isOpen = false;
+//   IconData iconData;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return ClipRRect(
+//       borderRadius: BorderRadius.circular(10),
+//       child: Container(
+//         // height: 100,
+//         // width: 100,
+//         color: Colors.white,
+//         child: Stack(
+//           alignment: Alignment.center,
+//           children: [
+//             Positioned(
+//               child: Blur(
+//                 blur: 20,
+//                 child: Container(
+//                   margin:
+//                       EdgeInsets.only(top: 40, right: context.screenWidth / 2),
+//                   color: Colors.white24,
+//                   child: Center(
+//                     child: Container(
+//                       height: 50,
+//                       width: 60,
+//                       decoration: BoxDecoration(
+//                         color: color,
+//                         borderRadius: BorderRadius.circular(60),
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//             ),
+//             Container(
+//               // color: Colors.red,
+//               child: Row(
+//                 crossAxisAlignment: CrossAxisAlignment.center,
+//                 mainAxisAlignment: MainAxisAlignment.start,
+//                 children: [
+//                   Container(
+//                       margin: const EdgeInsets.only(bottom: 0),
+//                       // color: Colors.blue,
+//                       height: 250,
+//                       width: 140,
+//                       child: Stack(
+//                         alignment: Alignment.center,
+//                         children: [
+//                           ClipRRect(
+//                             borderRadius: BorderRadius.circular(10),
+//                             child: Center(
+//                               child: Transform.rotate(
+//                                 angle: -math.pi / 4,
+//                                 child: ClipRRect(
+//                                   child: Stack(
+//                                     alignment: Alignment.center,
+//                                     children: [
+//                                       Container(
+//                                         height: context.screenWidth / 3.7,
+//                                         width: context.screenWidth / 3.7,
+//                                         decoration: BoxDecoration(
+//                                           color: Colors.white.withOpacity(0.1),
+//                                           borderRadius:
+//                                               BorderRadius.circular(20),
+//                                           border: Border.all(
+//                                               color: Colors.white, width: 3),
+//                                           boxShadow: [
+//                                             BoxShadow(
+//                                                 color: Colors.black
+//                                                     .withOpacity(0.4),
+//                                                 offset: const Offset(-5, 5),
+//                                                 blurRadius: 3,
+//                                                 inset: true),
+//                                           ],
+//                                         ),
+//                                       ),
+//                                     ],
+//                                   ),
+//                                 ),
+//                               ),
+//                             ),
+//                           ),
+//                           Container(
+//                             height: 50,
+//                             width: 50,
+//                             decoration: BoxDecoration(
+//                                 color: color.withOpacity(0.8),
+//                                 border: Border.all(
+//                                   width: 3,
+//                                   color: Colors.black.withOpacity(0.1),
+//                                 ),
+//                                 borderRadius: BorderRadius.circular(50)),
+//                             child: Icon(
+//                               iconData,
+//                               size: context.screenWidth / 15,
+//                               color: Colors.white,
+//                             ),
+//                           ),
+//                         ],
+//                       )),
+//                   Column(
+//                     crossAxisAlignment: CrossAxisAlignment.start,
+//                     mainAxisAlignment: MainAxisAlignment.center,
+//                     children: [
+//                       'Title'.text.color(color).bold.size(20).make(),
+//                       const SizedBox(height: 5),
+//                       title.text
+//                           .color(const Color(0xff7E7E7E))
+//                           .medium
+//                           .minFontSize(15)
+//                           .align(TextAlign.left)
+//                           .overflow(TextOverflow.ellipsis)
+//                           .maxLines(3)
+//                           .make()
+//                           .box
+//                           .width(150)
+//                           .makeCentered(),
+//                     ],
+//                   ),
+//                 ],
+//               ),
+//             ),
+//             if (!isOpen)
+//               Blur(
+//                 blur: 10,
+//                 child: Container(
+//                   color: Colors.transparent,
+//                 ),
+//               ),
+//             if (!isOpen)
+//               Container(
+//                 height: 60,
+//                 width: 60,
+//                 decoration: BoxDecoration(
+//                     color: color.withOpacity(0.8),
+//                     borderRadius: BorderRadius.circular(60)),
+//                 child: const Center(
+//                   child: Icon(
+//                     Icons.lock,
+//                     size: 20,
+//                     color: Colors.white,
+//                   ),
+//                 ),
+//               )
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 // class AchievementScreenshotCard extends StatelessWidget {
 //   AchievementScreenshotCard(

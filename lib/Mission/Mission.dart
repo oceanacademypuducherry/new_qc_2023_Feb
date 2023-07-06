@@ -1,8 +1,9 @@
 import 'package:SFM/CommonWidgets/PurchaseMadel.dart';
 import 'package:SFM/CommonWidgets/QC_Colors.dart';
+import 'package:SFM/CommonWidgets/my_snacbar.dart';
 import 'package:SFM/Get_X_Controller/API_Controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:SFM/CommonWidgets/BackgroundContainer.dart';
@@ -83,6 +84,8 @@ class MissionTail extends StatelessWidget {
   int currentDayCount;
   int missionIndex;
 
+  static bool isSnack = false;
+
   Icon buildIcon(BuildContext context,
       {bool isComplete = false, int missionOpenDay = 365}) {
     if (isComplete) {
@@ -123,18 +126,19 @@ class MissionTail extends StatelessWidget {
                 Container(
                   width: context.screenWidth,
                   height: context.screenHeight / 10,
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   color: Colors.white60,
                   child: Row(
                     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
                         height: context.screenHeight / 10,
+                        margin: EdgeInsets.only(right: 10),
                         child: Hero(
                           tag: "mission_$missionIndex",
                           child: Image(
-                            image: Svg(missionData!['missionVector'] ??
-                                'assets/images/mission/plant.svg'),
+                            image: AssetImage(missionData!['missionVector'] ??
+                                'assets/images/mission/plant.png'),
                           ),
                         ),
                       ),
@@ -145,7 +149,7 @@ class MissionTail extends StatelessWidget {
                             .ellipsis
                             .fontFamily('Roboto')
                             .color(const Color(0xff515151))
-                            .size(context.screenHeight / 40)
+                            .size(context.screenHeight / 50)
                             .make(),
                       ),
                       Container(
@@ -159,7 +163,7 @@ class MissionTail extends StatelessWidget {
                 ),
                 Container(
                   width: context.screenWidth,
-                  height: context.screenHeight / 10,
+                  height: context.screenHeight / 15,
                   color: _api.isSubscribed.value || missionIndex <= 7
                       ? Colors.transparent
                       : Colors.white.withOpacity(0.6),
@@ -168,23 +172,44 @@ class MissionTail extends StatelessWidget {
             ),
             onTap: () async {
               if (missionData!['openDay'] > currentDayCount) {
-                Get.snackbar(
-                  'Mission Locked',
-                  "Mission Unlocked soon",
-                  isDismissible: true,
-                );
-                return;
-              } else if (!_api.isSubscribed.value && missionIndex > 7) {
-                Get.snackbar("Service Locked", "Unlock Premium Service");
+                // if (!MissionTail.isSnack) {
+
+                //
+                //   MissionTail.isSnack = true;
+                //
+                //   await Future.delayed(Duration(seconds: 2));
+                //
+                //   MissionTail.isSnack = false;
+                // }
+                mySnackBar(context,
+                    title: 'Mission Locked', subtitle: "Mission Unlocked soon");
 
                 return;
+              } else if (!_api.isSubscribed.value && missionIndex > 7) {
+                // if (!MissionTail.isSnack) {
+
+                //
+                //   MissionTail.isSnack = true;
+                //
+                //   await Future.delayed(Duration(seconds: 2));
+                //
+                //   MissionTail.isSnack = false;
+                // }
+                mySnackBar(context,
+                    title: 'Service Locked',
+                    subtitle: "Unlock Premium Service",
+                    isUnlock: true);
+
+                return;
+              } else {
+                print(missionData);
+                Get.to(
+                    () => MissionView(
+                          missionIndex: missionIndex,
+                        ),
+                    arguments: missionData,
+                    transition: Transition.cupertino);
               }
-              Get.to(
-                  () => MissionView(
-                        missionIndex: missionIndex,
-                      ),
-                  arguments: missionData,
-                  transition: Transition.cupertino);
             },
           ),
         ),
