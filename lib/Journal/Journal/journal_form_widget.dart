@@ -95,7 +95,7 @@ class _JournalFormWidgetState extends State<JournalFormWidget> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(5),
                 child: Material(
-                  color: Colors.white.withOpacity(0.3),
+                  color: Colors.white.withOpacity(0.5),
                   child: 'Save'
                       .text
                       .color(QCColors.chipSelectedBg)

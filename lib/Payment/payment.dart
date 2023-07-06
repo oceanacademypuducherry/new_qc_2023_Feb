@@ -22,7 +22,7 @@ class Payment extends StatefulWidget {
         shape: RoundedRectangleBorder(
           borderRadius: br,
         ),
-        constraints: BoxConstraints(maxHeight: context.screenHeight / 1.3),
+        constraints: BoxConstraints(maxHeight: context.screenHeight / 1.6),
         enableDrag: true,
         backgroundColor: Colors.blue,
         builder: (BuildContext context) {
@@ -109,14 +109,14 @@ class _PaymentState extends State<Payment> {
 
     return Scaffold(
       body: Container(
-        height: context.screenHeight / 1.2,
+        // height: context.screenHeight / 1.2,
         padding: EdgeInsets.symmetric(horizontal: 20),
         decoration: BoxDecoration(color: Colors.white, borderRadius: br),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-              // height: context.screenHeight / 8,
+              height: context.screenHeight / 8,
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
