@@ -42,13 +42,13 @@ class MeditationView extends StatelessWidget {
                         color: Color(0xffBC7BF2),
                         onPressed: () {
                           Get.to(
-                              MeditationPlayer(
-                                color: Color(0xffBC7BF2),
-                                imagePath:
-                                    'assets/images/meditation/happy_b.svg',
-                                title: "Happiness",
-                                musicPath: "sounds/happy.mp3",
-                              ),
+                              () => MeditationPlayer(
+                                    color: Color(0xffBC7BF2),
+                                    imagePath:
+                                        'assets/images/meditation/happy_b.svg',
+                                    title: "Happiness",
+                                    musicPath: "sounds/happy.mp3",
+                                  ),
                               transition: Transition.cupertino);
                         },
                       ),
@@ -58,13 +58,13 @@ class MeditationView extends StatelessWidget {
                         color: Color(0xffF9AF61),
                         onPressed: () {
                           Get.to(
-                              MeditationPlayer(
-                                color: Color(0xffBC7BF2),
-                                imagePath:
-                                    'assets/images/meditation/focus_b.svg',
-                                title: "Focus",
-                                musicPath: "sounds/happy.mp3",
-                              ),
+                              () => MeditationPlayer(
+                                    color: Color(0xffBC7BF2),
+                                    imagePath:
+                                        'assets/images/meditation/focus_b.svg',
+                                    title: "Focus",
+                                    musicPath: "sounds/happy.mp3",
+                                  ),
                               transition: Transition.cupertino);
                         },
                       ),

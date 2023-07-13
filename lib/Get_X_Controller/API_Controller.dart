@@ -1,3 +1,4 @@
+import 'package:SFM/CommonWidgets/my_snacbar.dart';
 import 'package:SFM/Get_X_Controller/AchievementController.dart';
 import 'package:SFM/Get_X_Controller/JournalController.dart';
 import 'package:SFM/Get_X_Controller/MissionController.dart';
@@ -5,6 +6,8 @@ import 'package:SFM/Get_X_Controller/UserStatusController.dart';
 import 'package:SFM/Get_X_Controller/cravings_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -30,6 +33,8 @@ class APIController extends GetxController {
 
   String apiUrl =
       "https://us-central1-quit-smoking-ffce6.cloudfunctions.net/app";
+
+  get actionCodeSettings => null;
 
   Future<bool> checkSubscribe() async {
     bool isSbu = false;
@@ -199,9 +204,23 @@ class APIController extends GetxController {
 
       print("===========login=====Success==================");
       return true;
-    } catch (e) {
+    } on DioException catch (e) {
       print("================ERROR==================");
-      print(e.toString());
+      print(e.response);
+      print(e.response!.statusCode);
+
+      if (e.response != null) {
+        int? er = e.response!.statusCode;
+
+        if (er == 302) {
+          Get.snackbar(
+            'Authentication Error',
+            "${e.response!.data['code']}",
+            isDismissible: true,
+          );
+          return false;
+        }
+      }
 
       Get.snackbar(
         'Error',
@@ -210,6 +229,20 @@ class APIController extends GetxController {
       );
       print("================ERROR==================");
       return false;
+    }
+  }
+
+  dynamic forgetPassword(BuildContext context, {email}) async {
+    try {
+      FirebaseAuth auth = FirebaseAuth.instance;
+      dynamic testing = auth.sendPasswordResetEmail(email: email);
+      mySnackBar(context,
+          title: "Reset Password",
+          subtitle: "Password reset link has been sent ");
+      print(testing);
+    } catch (e) {
+      print(e);
+      mySnackBar(context, title: "Reset Password", subtitle: "Error");
     }
   }
 

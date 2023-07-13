@@ -22,7 +22,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../CommonWidgets/my_snacbar.dart';
 
 class AchievementView extends StatefulWidget {
-  const AchievementView({Key? key}) : super(key: key);
+  const AchievementView(this.category, {Key? key}) : super(key: key);
+  final String category;
 
   @override
   State<AchievementView> createState() => _AchievementViewState();
@@ -34,6 +35,7 @@ class _AchievementViewState extends State<AchievementView> {
   UserStatusController userController = Get.find<UserStatusController>();
   AchievementController achievementController =
       Get.find<AchievementController>();
+  ScrollController scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +59,13 @@ class _AchievementViewState extends State<AchievementView> {
                         context.screenWidth / (context.screenHeight / 1.8),
                     shrinkWrap: true,
                     scrollDirection: Axis.vertical,
-                    controller: ScrollController(keepScrollOffset: false),
-                    children: achievementController.achievementData
-                        .map<Widget>((element) {
+                    controller: scrollController,
+                    children: [
+                      for (Map i in achievementController.achievementData)
+                        if (i['category'] == widget.category) i,
+                      for (Map j in achievementController.achievementData)
+                        if (j['category'] != widget.category) j
+                    ].map<Widget>((element) {
                       IconData iconData = Icons.ac_unit_outlined;
                       Color color = Colors.green;
                       bool unlockValue = false;

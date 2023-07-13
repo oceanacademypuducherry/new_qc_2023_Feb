@@ -43,8 +43,9 @@ class SmokeTimer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  '${timerData.showTimes[0]['value']}'
+                  '${'0' * (2 - timerData.showTimes[0]['value'].toString().length)}${timerData.showTimes[0]['value']}'
                       .text
                       .size(20)
                       .white
@@ -55,7 +56,7 @@ class SmokeTimer extends StatelessWidget {
               ),
               Column(
                 children: [
-                  '${timerData.showTimes[1]['value']}'
+                  '${'0' * (2 - timerData.showTimes[1]['value'].toString().length)}${timerData.showTimes[1]['value']}'
                       .text
                       .size(20)
                       .white
@@ -66,7 +67,7 @@ class SmokeTimer extends StatelessWidget {
               ),
               Column(
                 children: [
-                  '${timerData.showTimes[2]['value']}'
+                  '${'0' * (2 - timerData.showTimes[2]['value'].toString().length)}${timerData.showTimes[2]['value']}'
                       .text
                       .size(20)
                       .white

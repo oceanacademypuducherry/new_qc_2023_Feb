@@ -7,9 +7,14 @@ import 'package:SFM/Dashboard/MoneySavedCollection/MoneySavedInfo.dart';
 import 'package:SFM/Get_X_Controller/UserStatusController.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../Get_X_Controller/AchievementController.dart';
+
 class MoneySaved extends StatelessWidget {
   MoneySaved({Key? key}) : super(key: key);
-  UserStatusController _userState = Get.find<UserStatusController>();
+
+  AchievementController achievementController =
+      Get.find<AchievementController>();
+  UserStatusController userStatus = Get.find<UserStatusController>();
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +36,7 @@ class MoneySaved extends StatelessWidget {
             //     title: 'Money Saved',
             //   ),
             // ),
+            DashboardTitle(title: 'Money Saved'),
 
             Container(
               width: context.screenWidth,
@@ -41,12 +47,80 @@ class MoneySaved extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image.asset('assets/images/money.png'),
+                  // Image.asset('assets/images/money.png'),
+                  Expanded(
+                      flex: 1,
+                      child: Image.asset('assets/images/money_saved.png')),
+
+                  Expanded(
+                    child: Obx(() {
+                      double monthly = achievementController.dayOfCost * 30;
+                      double yearly =
+                          achievementController.dayOfCost.value * 365;
+                      double totalAmount = achievementController.dayOfCost *
+                          userStatus.totalSmokeFreeTime['days']!;
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Total Savings").text.size(18).make(),
+                              (totalAmount.toString().lowerCamelCase != 'nan'
+                                      ? "₹${totalAmount.toStringAsFixed(2)}"
+                                      : "0.0")
+                                  .text
+                                  .fontFamily('Ubuntu')
+                                  .color(Colors.green)
+                                  .size(context.screenWidth / 15)
+                                  .bold
+                                  .make()
+                            ],
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: context.screenWidth / 15),
+                            margin: EdgeInsets.only(top: 10),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    'Monthly '
+                                        .text
+                                        .size(15)
+                                        .fontFamily('Montserrat')
+                                        .make(),
+                                    '₹${monthly.toStringAsFixed(0)}'
+                                        .text
+                                        .size(15)
+                                        .fontFamily('Montserrat')
+                                        .color(Colors.green)
+                                        .make(),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    'Yearly '.text.size(15).make(),
+                                    '₹${yearly.toStringAsFixed(0)}'
+                                        .text
+                                        .size(15)
+                                        .color(Colors.green)
+                                        .make(),
+                                  ],
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      );
+                    }),
+                  ),
                   const SizedBox(
                     width: 20,
-                  ),
-                  DashboardTitle(
-                    title: 'Money Saved',
                   ),
                 ],
               ),

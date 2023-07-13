@@ -297,12 +297,13 @@ class _SignupState extends State<Signup> {
                                       TextSpan(
                                           text: "Already have an account?   ",
                                           style: TextStyle(
-                                              color:
-                                                  QCColors.secondaryTexColor)),
+                                              color: QCColors.secondaryTexColor,
+                                              fontSize: 18)),
                                       TextSpan(
                                         text: 'Login',
                                         style: TextStyle(
-                                            color: QCColors.inputTextColor),
+                                            color: QCColors.inputTextColor,
+                                            fontSize: 18),
                                       )
                                     ]),
                                   ),

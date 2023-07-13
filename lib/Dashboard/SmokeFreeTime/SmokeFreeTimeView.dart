@@ -70,7 +70,7 @@ class _SmokeFreeTimeViewState extends State<SmokeFreeTimeView> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    if (stateMachineController != null) stateMachineController.dispose();
+    stateMachineController.dispose();
   }
 
   @override
@@ -127,8 +127,18 @@ class _SmokeFreeTimeViewState extends State<SmokeFreeTimeView> {
         margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         width: context.screenWidth / 2,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            Container(
+              width: 50,
+              child: Text(
+                "${'0' * (2 - userstatus.smokeFreeTime["$time"].toString().length)}${userstatus.smokeFreeTime["$time"].toString()}",
+                style: const TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.teal),
+              ),
+            ),
             Text(
               "$time",
               style: const TextStyle(
@@ -136,13 +146,6 @@ class _SmokeFreeTimeViewState extends State<SmokeFreeTimeView> {
                   fontWeight: FontWeight.w500,
                   color: Colors.teal),
             ),
-            Text(
-              userstatus.smokeFreeTime["$time"].toString(),
-              style: const TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.teal),
-            )
           ],
         ),
       ),

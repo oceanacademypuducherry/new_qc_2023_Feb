@@ -191,7 +191,11 @@ class _LoginState extends State<Login> {
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       TextButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            apiController.forgetPassword(
+                                                context,
+                                                email: _emailController.text);
+                                          },
                                           child: Text(
                                             'Forgot Password',
                                             style: TextStyle(
@@ -313,7 +317,6 @@ class _LoginState extends State<Login> {
                                       splashColor: Colors.white30,
                                       colorBrightness: Brightness.light,
                                       child: RichText(
-                                        strutStyle: StrutStyle(fontSize: 18),
                                         text: TextSpan(children: [
                                           TextSpan(
                                               text: "Not a Member?   ",

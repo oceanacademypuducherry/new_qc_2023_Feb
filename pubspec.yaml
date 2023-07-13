@@ -43,7 +43,7 @@ dependencies:
   flutter_inset_box_shadow: ^1.0.8
   #  flutter_svg_provider: ^1.0.3
   dropdown_button2: ^2.1.0
-  audioplayers: ^4.0.1
+  audioplayers: ^4.1.0
   pausable_timer: ^2.0.0
   syncfusion_flutter_charts: ^21.1.39
   confetti: ^0.7.0
