@@ -12,6 +12,7 @@ import 'package:velocity_x/velocity_x.dart';
 
 import '../../CommonWidgets/my_snacbar.dart';
 import '../../Get_X_Controller/API_Controller.dart';
+import 'NewMeditationPlayer.dart';
 
 class MeditationView extends StatelessWidget {
   MeditationView({Key? key}) : super(key: key);
@@ -41,15 +42,16 @@ class MeditationView extends StatelessWidget {
                         title: "Happiness",
                         color: Color(0xffBC7BF2),
                         onPressed: () {
-                          Get.to(
-                              () => MeditationPlayer(
-                                    color: Color(0xffBC7BF2),
-                                    imagePath:
-                                        'assets/images/meditation/happy_b.svg',
-                                    title: "Happiness",
-                                    musicPath: "sounds/happy.mp3",
-                                  ),
-                              transition: Transition.cupertino);
+                          Get.to(() => NewMeditationPlayer(songIndex: 0));
+                          // Get.to(
+                          //     () => MeditationPlayer(
+                          //           color: Color(0xffBC7BF2),
+                          //           imagePath:
+                          //               'assets/images/meditation/happy_b.svg',
+                          //           title: "Happiness",
+                          //           musicPath: "sounds/happy.mp3",
+                          //         ),
+                          //     transition: Transition.cupertino);
                         },
                       ),
                       MeditationCard(
@@ -57,53 +59,58 @@ class MeditationView extends StatelessWidget {
                         title: "Focus",
                         color: Color(0xffF9AF61),
                         onPressed: () {
-                          Get.to(
-                              () => MeditationPlayer(
-                                    color: Color(0xffBC7BF2),
-                                    imagePath:
-                                        'assets/images/meditation/focus_b.svg',
-                                    title: "Focus",
-                                    musicPath: "sounds/happy.mp3",
-                                  ),
-                              transition: Transition.cupertino);
+                          Get.to(() => NewMeditationPlayer(songIndex: 1));
+                          // Get.to(
+                          //     () => MeditationPlayer(
+                          //           color: Color(0xffBC7BF2),
+                          //           imagePath:
+                          //               'assets/images/meditation/focus_b.svg',
+                          //           title: "Focus",
+                          //           musicPath: "sounds/happy.mp3",
+                          //         ),
+                          //     transition: Transition.cupertino);
                         },
                       ),
                       MeditationCard(
-                        imagePath: 'assets/images/meditation/sleep.svg',
-                        title: "Sleep",
-                        color: Color(0xffE788D7),
-                        isUnlock: _api.isSubscribed.value,
-                        lockImage: 'assets/images/meditation/sleep_g.png',
-                        onPressed: () {
-                          Get.to(
-                              MeditationPlayer(
-                                color: Color(0xffBC7BF2),
-                                imagePath:
-                                    'assets/images/meditation/sleep_b.svg',
-                                title: "Sleep",
-                                musicPath: "sounds/sleep.mp3",
-                              ),
-                              transition: Transition.cupertino);
-                        },
-                      ),
+                          imagePath: 'assets/images/meditation/sleep.svg',
+                          title: "Sleep",
+                          color: Color(0xffE788D7),
+                          isUnlock: _api.isSubscribed.value,
+                          lockImage: 'assets/images/meditation/sleep_g.png',
+                          onPressed: () {
+                            Get.to(() => NewMeditationPlayer(songIndex: 2));
+                          }
+                          //   Get.to(
+                          //       MeditationPlayer(
+                          //         color: Color(0xffBC7BF2),
+                          //         imagePath:
+                          //             'assets/images/meditation/sleep_b.svg',
+                          //         title: "Sleep",
+                          //         musicPath: "sounds/sleep.mp3",
+                          //       ),
+                          //       transition: Transition.cupertino);
+                          // },
+                          ),
                       MeditationCard(
-                        imagePath: 'assets/images/meditation/relax.svg',
-                        title: "Relax",
-                        isUnlock: _api.isSubscribed.value,
-                        color: Color(0xff33c577),
-                        lockImage: 'assets/images/meditation/relax_g.png',
-                        onPressed: () {
-                          Get.to(
-                              MeditationPlayer(
-                                color: Color(0xffBC7BF2),
-                                imagePath:
-                                    'assets/images/meditation/relax_b.svg',
-                                title: "Relax",
-                                musicPath: "sounds/happy.mp3",
-                              ),
-                              transition: Transition.cupertino);
-                        },
-                      ),
+                          imagePath: 'assets/images/meditation/relax.svg',
+                          title: "Relax",
+                          isUnlock: _api.isSubscribed.value,
+                          color: Color(0xff33c577),
+                          lockImage: 'assets/images/meditation/relax_g.png',
+                          onPressed: () {
+                            Get.to(() => NewMeditationPlayer(songIndex: 3));
+                          }
+                          //   Get.to(
+                          //       MeditationPlayer(
+                          //         color: Color(0xffBC7BF2),
+                          //         imagePath:
+                          //             'assets/images/meditation/relax_b.svg',
+                          //         title: "Relax",
+                          //         musicPath: "sounds/happy.mp3",
+                          //       ),
+                          //       transition: Transition.cupertino);
+                          // },
+                          ),
                       MeditationCard(
                         imagePath: 'assets/images/meditation/music.svg',
                         title: "Custom Ambient",

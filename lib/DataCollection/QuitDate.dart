@@ -8,9 +8,22 @@ import 'package:SFM/DataCollection/CigaretteInfo.dart';
 import 'package:SFM/Get_X_Controller/DataCollectionController.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-class QuitDatePicker extends StatelessWidget {
+class QuitDatePicker extends StatefulWidget {
   QuitDatePicker({Key? key}) : super(key: key);
+
+  @override
+  State<QuitDatePicker> createState() => _QuitDatePickerState();
+}
+
+class _QuitDatePickerState extends State<QuitDatePicker> {
   DataCollectionController _dcc = Get.find<DataCollectionController>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _dcc.tempQuitDate(DateTime.now().toString());
+  }
 
   @override
   Widget build(BuildContext context) {

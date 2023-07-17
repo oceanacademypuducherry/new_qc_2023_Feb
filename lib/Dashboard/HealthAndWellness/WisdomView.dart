@@ -15,9 +15,9 @@ class WisdomView extends StatefulWidget {
 class _WisdomViewState extends State<WisdomView> {
   PageController pageController = PageController();
   List<String> bgImg = [
-    'assets/images/wisdom/w_bg.png',
+    'assets/images/wisdom/w_bg1.png',
+    'assets/images/wisdom/w_bg3.png',
     'assets/images/wisdom/w_bg2.png',
-    'assets/images/wisdom/w_bg3.png'
   ];
   int bgIndex = 0;
 
@@ -34,11 +34,9 @@ class _WisdomViewState extends State<WisdomView> {
         child: PageView(
           controller: pageController,
           onPageChanged: (val) {
-            print(val);
             setState(() {
               setState(() {
                 bgIndex = val % bgImg.length;
-                print(bgIndex);
               });
             });
           },

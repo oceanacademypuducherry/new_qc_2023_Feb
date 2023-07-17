@@ -38,7 +38,7 @@ class _MeditationPlayerState extends State<MeditationPlayer>
   AudioPlayer audioPlayer = AudioPlayer();
 
   bool isPlay = false;
-  bool isScreenTouch = true;
+
   bool isAmbient = false;
   int meditateDuration = 1;
   late Timer timer;
@@ -302,12 +302,12 @@ class AmbientCard extends StatefulWidget {
       this.musicPath = "sounds/bird1.wav",
       this.src = "assets/images/music/wave.svg",
       this.title = "Music Name",
-      this.playable = false})
+      this.playable = true})
       : super(key: key);
   String musicPath;
   String src;
   String title;
-  bool playable = false;
+  bool playable;
 
   @override
   State<AmbientCard> createState() => _AmbientCardState();
@@ -334,6 +334,8 @@ class _AmbientCardState extends State<AmbientCard> {
     audioPlayer.stop();
   }
 
+  Color maincolor = Color(0xff55A6D3);
+  Color secondColor = Color(0xff456B74);
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -354,15 +356,13 @@ class _AmbientCardState extends State<AmbientCard> {
         print(value);
       },
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
         // height: context.screenWidth / 2.5,
-        width: context.screenWidth / 4,
+        width: context.screenWidth / 4.5,
         decoration: BoxDecoration(
-            color: Color(0xff55A6D3).withOpacity(0.05),
+            color: maincolor.withOpacity(0.1),
             border: Border.all(
-                color: isPlay
-                    ? Color(0xff81C5EB)
-                    : Color(0xff81C5EB).withOpacity(0.3),
+                color: isPlay ? maincolor : secondColor.withOpacity(0.3),
                 width: 3),
             borderRadius: BorderRadius.circular(10)),
         child: Column(
@@ -384,9 +384,8 @@ class _AmbientCardState extends State<AmbientCard> {
                     width: 6,
                     margin: EdgeInsets.only(right: 5),
                     decoration: BoxDecoration(
-                        color: isPlay
-                            ? Color(0xff55A6D3)
-                            : Color(0xff55A6D3).withOpacity(0.3),
+                        color:
+                            isPlay ? maincolor : secondColor.withOpacity(0.3),
                         borderRadius: BorderRadius.circular(10)),
                   ),
                 ],
@@ -396,9 +395,7 @@ class _AmbientCardState extends State<AmbientCard> {
               widget.src,
               height: 50,
               width: 50,
-              color: isPlay
-                  ? Color(0xff55A6D3)
-                  : Color(0xff55A6D3).withOpacity(0.3),
+              color: isPlay ? maincolor : secondColor.withOpacity(0.3),
             ),
             // Image(
             //     image: Svg(
@@ -410,13 +407,15 @@ class _AmbientCardState extends State<AmbientCard> {
             // )),
             SliderTheme(
                 data: SliderThemeData(
-                    trackHeight: 3,
+                    trackHeight: 1,
                     trackShape: CustomTrackShape(),
-                    thumbShape: RoundSliderThumbShape(enabledThumbRadius: 7)),
+                    thumbShape: RoundSliderThumbShape(enabledThumbRadius: 5)),
                 child: Slider.adaptive(
-                    activeColor: Color(0xff81C5EB),
-                    thumbColor: Color(0xff81C5EB),
-                    inactiveColor: Color(0xff81C5EB).withOpacity(0.2),
+                    activeColor:
+                        isPlay ? maincolor : secondColor.withOpacity(0.3),
+                    thumbColor:
+                        isPlay ? maincolor : secondColor.withOpacity(0.3),
+                    inactiveColor: secondColor.withOpacity(0.3),
                     min: 0,
                     max: 1,
                     value: volume,

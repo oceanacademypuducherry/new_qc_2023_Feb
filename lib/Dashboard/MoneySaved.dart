@@ -66,9 +66,10 @@ class MoneySaved extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text("Total Savings").text.size(18).make(),
-                              (totalAmount.toString().lowerCamelCase != 'nan'
+                              (totalAmount.toString().lowerCamelCase != 'nan' &&
+                                          totalAmount > 0
                                       ? "₹${totalAmount.toStringAsFixed(2)}"
-                                      : "0.0")
+                                      : "₹0.0")
                                   .text
                                   .fontFamily('Ubuntu')
                                   .color(Colors.green)

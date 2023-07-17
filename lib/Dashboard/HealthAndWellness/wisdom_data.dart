@@ -1,6 +1,7 @@
 List<String> wisdomData = [
   "All the suffering, stress and addiction comes from not realizing you already are what you are looking for. \n-Jon Kabat-Zinn-",
   "The secret of getting ahead is getting started. \n-Mark Twain-",
+  "I used to be a chain smoker, but I realized that it was taking a toll on my health. I decided to quit smoking for the sake of my family and my fans.\n- actor Rajinikanth",
   "It is in your moments of decision that your destiny is shaped. \n-Tony Robbins-",
   "Believe you can and you’re halfway there. \n-Theodore Roosevelt-",
   "The surest way not to fail is to determine to succeed. \n-Richard Brinsley Sheridan-",
@@ -25,7 +26,6 @@ List<String> wisdomData = [
   "Quitting smoking is a sign of strength, not weakness.\n- Anonymous",
   "The first step towards quitting smoking is to believe that you can do it.\n- Anonymous",
   "Quitting smoking is hard, but not quitting could be harder.\n- Anonymous",
-  "I used to be a chain smoker, but I realized that it was taking a toll on my health. I decided to quit smoking for the sake of my family and my fans.\n- actor Rajinikanth",
   "Quitting smoking is not easy, but it's necessary. It's one of the best things you can do for your health.",
   "Smoking is not just harmful to you, but also to the people around you. I didn't want to be the cause of anyone's suffering.",
   "I feel much better now that I have quit smoking. I have more energy, and I can focus better.",
