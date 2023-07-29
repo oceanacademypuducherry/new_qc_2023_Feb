@@ -24,7 +24,7 @@ class BackgroundContainer extends StatelessWidget {
       {Key? key,
       required this.child,
       this.bg,
-      this.transparentOpacity = 0.4,
+      this.transparentOpacity = 0.5,
       this.backButtonChild,
       this.isDashboard = false,
       this.isAppbar = false,
@@ -177,7 +177,8 @@ class BackgroundContainer extends StatelessWidget {
                         stops: [0.8, 1],
                         end: Alignment.bottomCenter,
                         colors: [
-                          appbarColor ?? QCDashColor.odd,
+                          appbarColor ??
+                              QCDashColor.odd.withOpacity(transparentOpacity),
                           QCDashColor.odd.withOpacity(0.0)
                         ])),
                 padding: EdgeInsets.symmetric(vertical: 15),

@@ -22,7 +22,7 @@ class BreathCards extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BackgroundContainer(
-        title: "Breath and Realex",
+        title: "Breath and Relax",
         isAppbar: true,
         //  bg: Container(
         // decoration: BoxDecoration(
@@ -97,10 +97,10 @@ class BreathCards extends StatelessWidget {
                   ),
                   BreathCard(
                     src: 'assets/images/breath/breath_test.png',
-                    title: "Breath Hoalding Test",
+                    title: "Breath Holding Test",
                     subtitle:
-                        "It has lots of benefits of holding your breath temporarily. It can help  reduce levels of stress and anxiety,  brain cell protection, improved lung capacity, and strengthen diaphragm. it's safe to hold your breath for a minute or two.",
-                    color: const Color(0xff0A9999),
+                        "It has lots of benefits of holding your breath temporarily. It can help  reduce levels of stress and anxiety,  brain cell protection, improved lung capacity, and strengthen diaphragm. It's safe to hold your breath for a minute or two.",
+                    color: const Color(0xffF44752),
                     bgColor: const Color(0xffFBDBDB),
                     animationSrc: "assets/Rive/breath_animation/box_breath.riv",
                     isSubscribed: _api.isSubscribed.value,

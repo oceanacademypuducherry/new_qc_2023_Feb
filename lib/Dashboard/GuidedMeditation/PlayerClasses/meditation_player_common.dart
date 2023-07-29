@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class MeditationDisplay extends StatelessWidget {
-  MeditationDisplay({super.key, required this.title});
-  String title;
+  const MeditationDisplay({super.key, required this.title, this.image});
+  final String title;
+  final String? image;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class MeditationDisplay extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             color: Colors.white30,
           ),
-          child: Image(image: AssetImage('assets/images/logo.png')),
+          child: Image(image: AssetImage(image ?? 'assets/images/logo.png')),
         ),
         const SizedBox(height: 10),
         Opacity(

@@ -82,14 +82,13 @@ class _SmokeFreeTimeState extends State<SmokeFreeTime> {
                     // height: context.screenHeight / 2.5,
                     // width: context.screenWidth,
                     child: Rive(
-                      artboard: artboard!,
-
-                      fit: BoxFit.cover,
-                    ))
+                    artboard: artboard!,
+                    fit: BoxFit.cover,
+                  ))
                 : Image.asset('assets/images/hill.png'),
           ),
           Positioned(
-            top:  (context.screenWidth /100)*77,
+            top: (context.screenWidth / 100) * 77,
             child: GestureDetector(
                 onTap: () {
                   Get.to(() => SmokeFreeTimeView(),

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:SFM/Get_X_Controller/AchievementController.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/animation.dart';
 import 'package:get/get.dart';
@@ -7,6 +8,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:SFM/Dashboard/Dashboard.dart';
 import 'package:SFM/DataCollection/QuitDate.dart';
+
+AchievementController achievementController = Get.find<AchievementController>();
 
 class DataCollectionController extends GetxController {
   GetStorage storage = GetStorage();
@@ -40,8 +43,10 @@ class DataCollectionController extends GetxController {
     storage.write('quiteDate', quiteDate);
   }
 
-  void addCigaretteInfo(info) {
+  void addCigaretteInfo(info) async {
     cigaretteInfo(info);
+    await storage.write('cigaretteInfo', info);
+    achievementController.loadAchievement();
   }
 
   void addReasonList(List<String> reasons) {

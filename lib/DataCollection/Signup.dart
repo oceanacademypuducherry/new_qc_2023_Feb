@@ -15,6 +15,9 @@ import 'package:SFM/Get_X_Controller/API_Controller.dart';
 import 'package:SFM/Get_X_Controller/DataCollectionController.dart';
 import 'package:SFM/Get_X_Controller/Loading_contoller.dart';
 
+import 'o_auth_widgets.dart';
+import 'verification_screen.dart';
+
 class Signup extends StatefulWidget {
   Signup({Key? key}) : super(key: key);
 
@@ -120,6 +123,11 @@ class _SignupState extends State<Signup> {
     }
   }
 
+  bool usernameValidate(String str) {
+    RegExp username = RegExp(r'^[a-zA-Z\s_]{3,20}$');
+    return username.hasMatch(str);
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -173,17 +181,17 @@ class _SignupState extends State<Signup> {
                                 onPressed: () async {
                                   if (_emailController.text.isEmail) {
                                     _emailValidate = true;
-                                    //TODO: check password from DB
-                                    print(_usernameController.text.length < 3);
-                                    if (_usernameController.text.length < 3) {
+
+                                    if (usernameValidate(
+                                        _usernameController.text)) {
+                                      setState(() {
+                                        _nameValidate = true;
+                                      });
+                                    } else {
                                       setState(() {
                                         _nameValidate = false;
                                       });
                                       return;
-                                    } else {
-                                      setState(() {
-                                        _nameValidate = true;
-                                      });
                                     }
 
                                     if (_passwordController.text.length < 6) {
@@ -212,10 +220,7 @@ class _SignupState extends State<Signup> {
 
                                       if (isSigned) {
                                         loading.remove();
-                                        Get.to(() => QuitDatePicker(),
-                                            arguments: "isRegister",
-                                            transition: Transition.rightToLeft,
-                                            curve: Curves.easeInOut);
+                                        Get.to(() => VerificationScreen());
                                       } else {
                                         loading.remove();
                                       }
@@ -249,38 +254,7 @@ class _SignupState extends State<Signup> {
                                 Colors.white10
                               ])),
                             ),
-                            Container(
-                              margin: const EdgeInsets.symmetric(vertical: 10),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  NextButton(
-                                    onPressed: oauthFunction,
-                                    child: Image.asset(
-                                      'assets/images/oauth/g.png',
-                                      height: 25,
-                                      width: 25,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 20),
-                                  NextButton(
-                                    child: Image.asset(
-                                      'assets/images/oauth/apple.png',
-                                      height: 25,
-                                      width: 25,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 20),
-                                  NextButton(
-                                    child: Image.asset(
-                                      'assets/images/oauth/fb.png',
-                                      height: 25,
-                                      width: 25,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
+                            OAUthWidgets(onPressed: oauthFunction),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [

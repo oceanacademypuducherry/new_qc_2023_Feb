@@ -3,19 +3,17 @@ import 'package:SFM/Dashboard/GuidedMeditation/PlayerClasses/meditation_player_c
 import 'package:SFM/Dashboard/GuidedMeditation/PlayerClasses/meditation_playlist.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:rxdart/rxdart.dart';
 
-import 'PlayerClasses/ambiant_card.dart';
-import 'PlayerClasses/meditation_player_controls.dart';
+import '../Dashboard/GuidedMeditation/PlayerClasses/ambiant_card.dart';
+import '../Dashboard/GuidedMeditation/PlayerClasses/meditation_player_controls.dart';
 
 class MeditationJustAudioPlayer extends StatefulWidget {
-  const MeditationJustAudioPlayer(
-      {super.key, required this.audioPath, required this.audioData});
-  final String audioPath;
+  const MeditationJustAudioPlayer({super.key, required this.audioData});
+
   final AudioSource audioData;
 
   @override
@@ -41,8 +39,9 @@ class _MeditationJustAudioPlayerState extends State<MeditationJustAudioPlayer> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // _audioPlayer = AudioPlayer()..setAsset(widget.audioPath);
+
     _audioPlayer = AudioPlayer()..setAudioSource(widget.audioData);
+
     _init();
   }
 

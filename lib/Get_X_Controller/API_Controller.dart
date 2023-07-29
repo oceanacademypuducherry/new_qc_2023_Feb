@@ -4,12 +4,14 @@ import 'package:SFM/Get_X_Controller/JournalController.dart';
 import 'package:SFM/Get_X_Controller/MissionController.dart';
 import 'package:SFM/Get_X_Controller/UserStatusController.dart';
 import 'package:SFM/Get_X_Controller/cravings_controller.dart';
+import 'package:SFM/Get_X_Controller/fa_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 MissionController _missionController = Get.find<MissionController>();
@@ -82,28 +84,31 @@ class APIController extends GetxController {
 
   Future<bool> signUp({email, password, uname}) async {
     try {
-      var response = await Dio().post('$apiUrl/user/signup', data: {
-        "email": email.toString(),
-        "username": uname.toString(),
-        "password": password.toString()
-      });
+      // var response = await Dio().post('$apiUrl/user/signup', data: {
+      //   "email": email.toString(),
+      //   "username": uname.toString(),
+      //   "password": password.toString()
+      // });
+      bool isCreated = await FAController.instance
+          .createUser(email: email, password: password, uname: uname);
       print("================Success==================");
+      if (isCreated) {
+        userInfo({"username": uname.toString(), "email": email.toString()});
+        userEmail(email.toString());
+        username(uname.toString());
+        await storage.write("userData", {
+          "username": uname.toString(),
+          "email": email.toString(),
+          "userInfo": {"username": uname.toString(), "email": email.toString()}
+        });
+        await storage.write("email", email.toString());
+        await storage.write("username", uname.toString());
+        await storage.write("isLogged", true);
+        // await storage.write("isPending", true);
 
-      userInfo({"username": uname.toString(), "email": email.toString()});
-      userEmail(email.toString());
-      username(uname.toString());
-      await storage.write("userData", {
-        "username": uname.toString(),
-        "email": email.toString(),
-        "userInfo": {"username": uname.toString(), "email": email.toString()}
-      });
-      await storage.write("email", email.toString());
-      await storage.write("username", uname.toString());
-      await storage.write("isLogged", true);
-      await storage.write("isPending", true);
-
-      print("================Success==================");
-      return true;
+        print("================Success==================");
+        return true;
+      }
     } catch (e) {
       print("================ERROR==================");
       print(e);
@@ -113,8 +118,8 @@ class APIController extends GetxController {
         isDismissible: true,
       );
       print("================ERROR==================");
-      return false;
     }
+    return false;
   }
 
   Future<String> oauth({email, uname}) async {
@@ -309,14 +314,13 @@ class APIController extends GetxController {
     await updateMissionData();
     dynamic userData = await storage.read('userData');
     try {
-      print(userData['email']);
       if (userData != null) {
         await Dio().post('$apiUrl/user/set/backup',
             data: {"email": userData['email'], "data": userData});
 
         print('backup Completed.....');
       } else {
-        print('Something went Wrong');
+        print('Something went Wrong for backup...');
       }
     } catch (e) {
       print(e);
@@ -328,7 +332,6 @@ class APIController extends GetxController {
     dynamic userData = await storage.read('userData');
     dynamic missionData = await Dio()
         .post('$apiUrl/mission/get', data: {"email": userData['email']});
-    print(missionData.data.runtimeType);
     userData.update("missions", (value) => missionData.data);
     await storage.write('userData', userData);
     await storage.write('missions', missionData.data);
@@ -337,6 +340,7 @@ class APIController extends GetxController {
   void missionCompleted({String? email, missionData}) async {
     await Dio().post('$apiUrl/mission/set',
         data: {"email": email!, 'data': missionData});
+    updateMissionData();
   }
 
   ///  journal control

@@ -11,6 +11,8 @@ import 'package:SFM/Dashboard/GuidedMeditation/MisicView.dart';
 import 'package:pausable_timer/pausable_timer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import 'PlayerClasses/ambiant_card.dart';
+
 // ignore: must_be_immutable
 class MeditationPlayer extends StatefulWidget {
   MeditationPlayer(
@@ -249,37 +251,31 @@ class _MeditationPlayerState extends State<MeditationPlayer>
                       child: Wrap(
                         children: [
                           AmbientCard(
-                            playable: isAmbient,
                             musicPath: "sounds/bird1.wav",
                             src: "assets/images/music/rain.svg",
                             title: "Rain",
                           ),
                           AmbientCard(
-                            playable: isAmbient,
                             musicPath: "sounds/bird2.wav",
                             src: "assets/images/music/wave.svg",
                             title: "Wave",
                           ),
                           AmbientCard(
-                            playable: isAmbient,
                             musicPath: "sounds/jungle1.wav",
                             src: "assets/images/music/thunder.svg",
                             title: "Thunder",
                           ),
                           AmbientCard(
-                            playable: isAmbient,
                             musicPath: "sounds/jungle2.wav",
                             src: "assets/images/music/wind.svg",
                             title: "Wind",
                           ),
                           AmbientCard(
-                            playable: isAmbient,
                             musicPath: "sounds/rain1.wav",
                             src: "assets/images/music/forest.svg",
                             title: "Forest",
                           ),
                           AmbientCard(
-                            playable: isAmbient,
                             musicPath: "sounds/rain2.wav",
                             src: "assets/images/music/fire.svg",
                             title: "Fire",
@@ -293,159 +289,5 @@ class _MeditationPlayerState extends State<MeditationPlayer>
             ),
           )),
     );
-  }
-}
-
-class AmbientCard extends StatefulWidget {
-  AmbientCard(
-      {Key? key,
-      this.musicPath = "sounds/bird1.wav",
-      this.src = "assets/images/music/wave.svg",
-      this.title = "Music Name",
-      this.playable = true})
-      : super(key: key);
-  String musicPath;
-  String src;
-  String title;
-  bool playable;
-
-  @override
-  State<AmbientCard> createState() => _AmbientCardState();
-}
-
-class _AmbientCardState extends State<AmbientCard> {
-  double volume = 0.5;
-  AudioPlayer audioPlayer = AudioPlayer();
-
-  bool isPlay = false;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    // audioPlayer.setSource(AssetSource('sounds/bird1.wav'));
-    audioPlayer.setReleaseMode(ReleaseMode.loop);
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    audioPlayer.stop();
-  }
-
-  Color maincolor = Color(0xff55A6D3);
-  Color secondColor = Color(0xff456B74);
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        if (widget.playable) {
-          if (isPlay) {
-            audioPlayer.stop();
-          } else {
-            audioPlayer.play(AssetSource(widget.musicPath));
-            // audioPlayer.resume();
-          }
-          setState(() {
-            isPlay = !isPlay;
-          });
-        }
-      },
-      onVerticalDragDown: (value) {
-        print(value);
-      },
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-        // height: context.screenWidth / 2.5,
-        width: context.screenWidth / 4.5,
-        decoration: BoxDecoration(
-            color: maincolor.withOpacity(0.1),
-            border: Border.all(
-                color: isPlay ? maincolor : secondColor.withOpacity(0.3),
-                width: 3),
-            borderRadius: BorderRadius.circular(10)),
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 0, vertical: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(),
-                  // widget.title.text
-                  //     .size(10)
-                  //     .color(Color(0xff55A6D3))
-                  //     .bold
-                  //     .make(),
-                  Container(
-                    height: 6,
-                    width: 6,
-                    margin: EdgeInsets.only(right: 5),
-                    decoration: BoxDecoration(
-                        color:
-                            isPlay ? maincolor : secondColor.withOpacity(0.3),
-                        borderRadius: BorderRadius.circular(10)),
-                  ),
-                ],
-              ),
-            ),
-            SvgPicture.asset(
-              widget.src,
-              height: 50,
-              width: 50,
-              color: isPlay ? maincolor : secondColor.withOpacity(0.3),
-            ),
-            // Image(
-            //     image: Svg(
-            //   widget.src,
-            //   size: Size(50, 50),
-            //   color: isPlay
-            //       ? Color(0xff55A6D3)
-            //       : Color(0xff55A6D3).withOpacity(0.3),
-            // )),
-            SliderTheme(
-                data: SliderThemeData(
-                    trackHeight: 1,
-                    trackShape: CustomTrackShape(),
-                    thumbShape: RoundSliderThumbShape(enabledThumbRadius: 5)),
-                child: Slider.adaptive(
-                    activeColor:
-                        isPlay ? maincolor : secondColor.withOpacity(0.3),
-                    thumbColor:
-                        isPlay ? maincolor : secondColor.withOpacity(0.3),
-                    inactiveColor: secondColor.withOpacity(0.3),
-                    min: 0,
-                    max: 1,
-                    value: volume,
-                    onChanged: (value) {
-                      setState(() {
-                        audioPlayer.setVolume(value);
-                        volume = value;
-                        // widget.audioPlayer!.setVolume(value);
-                      });
-                    }))
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class CustomTrackShape extends RoundedRectSliderTrackShape {
-  @override
-  Rect getPreferredRect({
-    required RenderBox parentBox,
-    Offset offset = Offset.zero,
-    required SliderThemeData sliderTheme,
-    bool isEnabled = false,
-    bool isDiscrete = false,
-  }) {
-    final trackHeight = sliderTheme.trackHeight;
-    final trackLeft = offset.dx;
-    final trackTop = offset.dy + (parentBox.size.height - trackHeight!) / 2;
-    final trackWidth = parentBox.size.width;
-    return Rect.fromLTWH(trackLeft + 5, trackTop, trackWidth - 10, trackHeight);
   }
 }

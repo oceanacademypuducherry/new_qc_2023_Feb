@@ -6,6 +6,7 @@ import 'package:SFM/CommonWidgets/BackgroundContainer.dart';
 import 'package:SFM/CommonWidgets/QC_Colors.dart';
 import 'package:SFM/Get_X_Controller/MissionController.dart';
 import 'package:SFM/Journal/Journal/textfield.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 // ignore: must_be_immutable
@@ -23,24 +24,40 @@ class _MissionViewState extends State<MissionView> {
   MissionController _missionController = Get.find<MissionController>();
 
   dynamic arguments = Get.arguments;
+  int maxLine = 1;
+  int lenOfBreak = 45;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _comments = TextEditingController();
+    if (arguments['comments'] != null && arguments['comments'].trim() != "") {
+      print(arguments['comments']);
+      _comments.text = arguments['comments'];
+      getMaxLine();
+      print('========');
+    }
+  }
+
+  getMaxLine() {
+    int lineCount = _comments.text.split('\n').length;
+    for (String i in _comments.text.split('\n')) {
+      if (i.length < lenOfBreak && lineCount > 0) {
+        lineCount--;
+      }
+    }
+    print(_comments.text.length);
+    int ml = (_comments.text.length ~/ lenOfBreak) + (1 + lineCount);
+    setState(() {
+      maxLine = ml;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     double sw = context.screenWidth;
     double sh = context.screenHeight;
-
-    if (arguments['comments'] != null && arguments['comments'].trim() != "") {
-      print(arguments['comments']);
-      _comments.text = arguments['comments'];
-      print('========');
-    }
 
     return Scaffold(
       body: BackgroundContainer(
@@ -111,8 +128,13 @@ class _MissionViewState extends State<MissionView> {
                   hasIcon: false,
                   autofocus: false,
                   hintText: "Comments",
-                  maxLines: 2,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: maxLine,
                   label: "",
+                  onChanged: (val) {
+                    print(val);
+                    getMaxLine();
+                  },
                 ),
               ),
               SizedBox(
@@ -130,15 +152,40 @@ class _MissionViewState extends State<MissionView> {
                         .box
                         .height(50)
                         .makeCentered()
-                        .onInkTap(() {
+                        .onInkTap(() async {
                       Map missionData = Map.from(arguments);
                       missionData.addAll(
                           {"isComplete": true, "comments": _comments.text});
                       print(missionData);
-                      _missionController.missionUpdate(
-                          widget.missionIndex - 1, missionData);
+                      bool result =
+                          await InternetConnectionChecker().hasConnection;
+                      if (result) {
+                        // ignore: use_build_context_synchronously
+                        _missionController.missionUpdate(
+                            context, widget.missionIndex - 1, missionData);
 
-                      Get.back();
+                        Get.back();
+                      } else {
+                        // ignore: use_build_context_synchronously
+                        showDialog(
+                            context: context,
+                            builder: (_) {
+                              return AlertDialog(
+                                content:
+                                    Text("Make sure your Internet Connection"),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text("Close"))
+                                ],
+                                // backgroundColor: Colors.transparent,
+                                elevation: 0,
+                                // contentPadding: EdgeInsets.zero,
+                              );
+                            });
+                      }
                     }),
                   ),
                 ),

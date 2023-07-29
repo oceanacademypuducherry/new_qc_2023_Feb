@@ -108,7 +108,7 @@ class _BreathPlayerState extends State<BreathPlayer> {
     return Scaffold(
       body: SafeArea(
         child: BackgroundContainer(
-          transparentOpacity: 0.4,
+          transparentOpacity: 0,
           isAppbar: true,
           darkMode: false,
           child: Container(

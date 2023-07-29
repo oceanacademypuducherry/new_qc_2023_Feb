@@ -55,6 +55,8 @@ class MoneySaved extends StatelessWidget {
                   Expanded(
                     child: Obx(() {
                       double monthly = achievementController.dayOfCost * 30;
+                      // double monthly = achievementController.getDayOfCost(30);
+
                       double yearly =
                           achievementController.dayOfCost.value * 365;
                       double totalAmount = achievementController.dayOfCost *

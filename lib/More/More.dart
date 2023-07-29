@@ -5,6 +5,7 @@ import 'package:SFM/More/feedback_page.dart';
 import 'package:SFM/More/profile_view.dart';
 import 'package:SFM/MyExtention/string_extention.dart';
 import 'package:SFM/Payment/payment.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -51,6 +52,7 @@ class More extends StatelessWidget {
         onConfirm: () {
           storage.erase();
           userStatus.stopTimer(runTimer: false);
+          FirebaseAuth.instance.signOut();
           Get.to(() => Login(), transition: Transition.rightToLeft);
           _bottomNavController.startPage();
         });
@@ -129,14 +131,15 @@ class More extends StatelessWidget {
                       Container(
                         height: 65,
                         width: 65,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(40),
-                            border: Border.all(
-                                color: const Color(0xff686868).withOpacity(0.2),
-                                width: 2)),
+                        decoration: const BoxDecoration(
+                            // color: Colors.white,
+                            // borderRadius: BorderRadius.circular(40),
+                            // border: Border.all(
+                            //     color: const Color(0xff686868).withOpacity(0.2),
+                            //     width: 2),
+                            ),
                         child: Image.asset(
-                          'assets/images/badges/b1.png',
+                          'assets/images/badges/b2.png',
                           width: 50,
                           height: 50,
                           fit: BoxFit.contain,

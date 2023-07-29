@@ -1,8 +1,8 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 import 'package:SFM/CommonWidgets/BackgroundContainer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class MusicView extends StatelessWidget {
@@ -25,12 +25,12 @@ class MusicView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         MusicCard(
-                          musicPath: "sounds/bird1.wav",
+                          musicPath: "assets/sounds/bird1.wav",
                           src: "assets/images/music/rain.svg",
                           title: "Rain",
                         ),
                         MusicCard(
-                          musicPath: "sounds/bird2.wav",
+                          musicPath: "assets/sounds/bird2.wav",
                           src: "assets/images/music/wave.svg",
                           title: "Wave",
                         ),
@@ -40,12 +40,12 @@ class MusicView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         MusicCard(
-                          musicPath: "sounds/jungle1.wav",
+                          musicPath: "assets/sounds/jungle1.wav",
                           src: "assets/images/music/thunder.svg",
                           title: "Thunder",
                         ),
                         MusicCard(
-                          musicPath: "sounds/jungle2.wav",
+                          musicPath: "assets/sounds/jungle2.wav",
                           src: "assets/images/music/wind.svg",
                           title: "Wind",
                         ),
@@ -55,12 +55,12 @@ class MusicView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         MusicCard(
-                          musicPath: "sounds/rain1.wav",
+                          musicPath: "assets/sounds/rain1.wav",
                           src: "assets/images/music/forest.svg",
                           title: "Forest",
                         ),
                         MusicCard(
-                          musicPath: "sounds/rain2.wav",
+                          musicPath: "assets/sounds/rain2.wav",
                           src: "assets/images/music/fire.svg",
                           title: "Fire",
                         ),
@@ -84,7 +84,7 @@ class MusicCard extends StatefulWidget {
       this.src = "assets/images/music/wave.svg",
       this.title = "Music Name"})
       : super(key: key);
-  String musicPath;
+  final String musicPath;
   String src;
   String title;
 
@@ -94,7 +94,7 @@ class MusicCard extends StatefulWidget {
 
 class _MusicCardState extends State<MusicCard> {
   double volume = 0.5;
-  AudioPlayer audioPlayer = AudioPlayer();
+  late AudioPlayer audioPlayer;
 
   bool isPlay = false;
 
@@ -102,8 +102,13 @@ class _MusicCardState extends State<MusicCard> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // audioPlayer.setSource(AssetSource('sounds/bird1.wav'));
-    audioPlayer.setReleaseMode(ReleaseMode.loop);
+
+    audioPlayer = AudioPlayer()..setAsset(widget.musicPath);
+    _init();
+  }
+
+  Future<void> _init() async {
+    await audioPlayer.setLoopMode(LoopMode.one);
   }
 
   @override
@@ -115,81 +120,76 @@ class _MusicCardState extends State<MusicCard> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        if (isPlay) {
-          audioPlayer.stop();
-        } else {
-          audioPlayer.play(AssetSource(widget.musicPath));
-          // audioPlayer.resume();
-        }
-        setState(() {
-          isPlay = !isPlay;
-        });
-      },
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        // height: context.screenWidth / 2.5,
-        width: context.screenWidth / 2.8,
-        decoration: BoxDecoration(
-            color: Color(0xff55A6D3).withOpacity(0.05),
-            border: Border.all(
-                color: isPlay
-                    ? Color(0xff55A6D3)
-                    : Color(0xff55A6D3).withOpacity(0.3),
-                width: 3),
-            borderRadius: BorderRadius.circular(10)),
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return StreamBuilder<PlayerState>(
+        stream: audioPlayer.playerStateStream,
+        builder: (context, snapshot) {
+          final playerState = snapshot.data;
+          final playing = playerState?.playing;
+          VoidCallback action;
+          if (!(playing ?? true)) {
+            action = audioPlayer.play;
+          } else {
+            action = audioPlayer.pause;
+          }
+          return GestureDetector(
+            onTap: () {
+              action();
+            },
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+// height: context.screenWidth / 2.5,
+              width: context.screenWidth / 2.8,
+              decoration: BoxDecoration(
+                  color: Color(0xff55A6D3).withOpacity(0.05),
+                  border: Border.all(
+                      color: playing ?? false
+                          ? Color(0xff55A6D3)
+                          : Color(0xff55A6D3).withOpacity(0.3),
+                      width: 3),
+                  borderRadius: BorderRadius.circular(10)),
+              child: Column(
                 children: [
-                  SizedBox(),
-                  widget.title.text.color(Color(0xff55A6D3)).bold.make(),
                   Container(
-                    height: 12,
-                    width: 12,
-                    decoration: BoxDecoration(
-                        color: isPlay
-                            ? Color(0xff55A6D3)
-                            : Color(0xff55A6D3).withOpacity(0.3),
-                        borderRadius: BorderRadius.circular(10)),
+                    padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(),
+                        widget.title.text.color(Color(0xff55A6D3)).bold.make(),
+                        Container(
+                          height: 12,
+                          width: 12,
+                          decoration: BoxDecoration(
+                              color: playing ?? false
+                                  ? Color(0xff55A6D3)
+                                  : Color(0xff55A6D3).withOpacity(0.3),
+                              borderRadius: BorderRadius.circular(10)),
+                        ),
+                      ],
+                    ),
                   ),
+                  SvgPicture.asset(
+                    widget.src,
+                    height: 80,
+                    width: 80,
+                  ),
+                  Slider.adaptive(
+                      activeColor: Color(0xff55A6D3),
+                      inactiveColor: Colors.grey[350],
+                      min: 0,
+                      max: 1,
+                      value: volume,
+                      onChanged: (value) {
+                        setState(() {
+                          audioPlayer.setVolume(value);
+                          volume = value;
+// widget.audioPlayer!.setVolume(value);
+                        });
+                      })
                 ],
               ),
             ),
-
-            SvgPicture.asset(
-              widget.src,
-              height: 80,
-              width: 80,
-            ),
-            // Image(
-            //     image: Svg(
-            //   widget.src,
-            //   size: Size(80, 80),
-            //   color: isPlay
-            //       ? Color(0xff55A6D3)
-            //       : Color(0xff55A6D3).withOpacity(0.3),
-            // )),
-            Slider.adaptive(
-                activeColor: Color(0xff55A6D3),
-                inactiveColor: Colors.grey[350],
-                min: 0,
-                max: 1,
-                value: volume,
-                onChanged: (value) {
-                  setState(() {
-                    audioPlayer.setVolume(value);
-                    volume = value;
-                    // widget.audioPlayer!.setVolume(value);
-                  });
-                })
-          ],
-        ),
-      ),
-    );
+          );
+        });
   }
 }

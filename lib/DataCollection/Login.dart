@@ -1,3 +1,4 @@
+import 'package:SFM/DataCollection/o_auth_widgets.dart';
 import 'package:SFM/practice/error_test.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -21,6 +22,7 @@ import 'package:SFM/Get_X_Controller/DataCollectionController.dart';
 import 'package:SFM/Get_X_Controller/Loading_contoller.dart';
 
 import 'package:SFM/Get_X_Controller/UserStatusController.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -262,7 +264,7 @@ class _LoginState extends State<Login> {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Container(
-                                  height: 10,
+                                  height: 5,
                                   width: MediaQuery.of(context).size.width - 50,
                                   decoration: const BoxDecoration(
                                       gradient: LinearGradient(colors: [
@@ -271,40 +273,7 @@ class _LoginState extends State<Login> {
                                     Colors.white10
                                   ])),
                                 ),
-                                if (true)
-                                  Container(
-                                    margin: EdgeInsets.symmetric(vertical: 10),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        NextButton(
-                                          onPressed: oauthFunction,
-                                          child: Image.asset(
-                                            'assets/images/oauth/g.png',
-                                            height: 25,
-                                            width: 25,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 20),
-                                        NextButton(
-                                          child: Image.asset(
-                                            'assets/images/oauth/apple.png',
-                                            height: 25,
-                                            width: 25,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 20),
-                                        NextButton(
-                                          child: Image.asset(
-                                            'assets/images/oauth/fb.png',
-                                            height: 25,
-                                            width: 25,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
+                                OAUthWidgets(onPressed: oauthFunction),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [

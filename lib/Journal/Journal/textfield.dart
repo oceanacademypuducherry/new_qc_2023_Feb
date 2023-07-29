@@ -16,6 +16,7 @@ class CustomTextField extends StatefulWidget {
     this.obscureText = false,
     this.errorText,
     this.hasIcon = true,
+    this.onChanged,
     this.maxLines = 1,
     this.padding = EdgeInsets.zero,
   }) : super(key: key);
@@ -31,6 +32,7 @@ class CustomTextField extends StatefulWidget {
   EdgeInsets padding;
   bool hasIcon = true;
   int maxLines;
+  ValueChanged? onChanged;
   dynamic errorText;
 
   @override
@@ -67,6 +69,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                       obscureText: isShow,
                       keyboardType: widget.keyboardType,
                       maxLines: widget.maxLines,
+                      onChanged: widget.onChanged,
                       decoration: InputDecoration(
                         // enabled: true,
                         hintText: widget.hintText,

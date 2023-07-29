@@ -1,3 +1,4 @@
+import 'package:SFM/Dashboard/GuidedMeditation/PlayerClasses/meditation_playlist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -12,7 +13,7 @@ import 'package:velocity_x/velocity_x.dart';
 
 import '../../CommonWidgets/my_snacbar.dart';
 import '../../Get_X_Controller/API_Controller.dart';
-import 'NewMeditationPlayer.dart';
+import '../../practice/meditation_just_audio_player.dart';
 
 class MeditationView extends StatelessWidget {
   MeditationView({Key? key}) : super(key: key);
@@ -42,7 +43,10 @@ class MeditationView extends StatelessWidget {
                         title: "Happiness",
                         color: Color(0xffBC7BF2),
                         onPressed: () {
-                          Get.to(() => NewMeditationPlayer(songIndex: 0));
+                          Get.to(() => MeditationJustAudioPlayer(
+                                audioData: meditationPlayList[0],
+                              ));
+                          // Get.to(() => NewMeditationPlayer(songIndex: 0));
                           // Get.to(
                           //     () => MeditationPlayer(
                           //           color: Color(0xffBC7BF2),
@@ -59,7 +63,10 @@ class MeditationView extends StatelessWidget {
                         title: "Focus",
                         color: Color(0xffF9AF61),
                         onPressed: () {
-                          Get.to(() => NewMeditationPlayer(songIndex: 1));
+                          Get.to(() => MeditationJustAudioPlayer(
+                                audioData: meditationPlayList[1],
+                              ));
+
                           // Get.to(
                           //     () => MeditationPlayer(
                           //           color: Color(0xffBC7BF2),
@@ -78,7 +85,9 @@ class MeditationView extends StatelessWidget {
                           isUnlock: _api.isSubscribed.value,
                           lockImage: 'assets/images/meditation/sleep_g.png',
                           onPressed: () {
-                            Get.to(() => NewMeditationPlayer(songIndex: 2));
+                            Get.to(() => MeditationJustAudioPlayer(
+                                  audioData: meditationPlayList[2],
+                                ));
                           }
                           //   Get.to(
                           //       MeditationPlayer(
@@ -98,7 +107,9 @@ class MeditationView extends StatelessWidget {
                           color: Color(0xff33c577),
                           lockImage: 'assets/images/meditation/relax_g.png',
                           onPressed: () {
-                            Get.to(() => NewMeditationPlayer(songIndex: 3));
+                            Get.to(() => MeditationJustAudioPlayer(
+                                  audioData: meditationPlayList[3],
+                                ));
                           }
                           //   Get.to(
                           //       MeditationPlayer(

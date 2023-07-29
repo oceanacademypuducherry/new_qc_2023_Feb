@@ -88,9 +88,12 @@ class _SmokeFreeTimeViewState extends State<SmokeFreeTimeView> {
                       height: context.screenHeight,
                       width: context.screenWidth,
                       child: Transform(
-                        transform: Matrix4.translationValues(-180, 20, 0),
+                        transform: Matrix4.translationValues(
+                            (context.screenWidth / 2.4) * -1,
+                            (context.screenHeight / 50),
+                            0),
                         child: Transform.scale(
-                          scale: 0.9,
+                          scale: 0.8,
                           child: Rive(
                             artboard: artboard!,
                             useArtboardSize: true,

@@ -1,9 +1,10 @@
 import 'package:SFM/Get_X_Controller/API_Controller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-
 APIController _apiController = Get.find<APIController>();
+
 class MissionController extends GetxController {
   GetStorage storage = GetStorage();
   final missionData = [].obs;
@@ -16,16 +17,15 @@ class MissionController extends GetxController {
     }
   }
 
-  missionUpdate(missionIndex, data) async {
+  missionUpdate(BuildContext context, missionIndex, data) async {
     Map userData = await storage.read('userData');
     missionData[missionIndex] = data;
     Get.snackbar("Mission Completed", data['title']);
     userData.update("missions", (value) => missionData);
     await storage.write('userData', userData);
     await storage.write('missions', missionData);
-    _apiController.missionCompleted(email: userData['email'],missionData: missionData);
-
-
+    _apiController.missionCompleted(
+        email: userData['email'], missionData: missionData);
   }
 
   /// TODO: mission

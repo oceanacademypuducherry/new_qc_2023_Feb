@@ -43,6 +43,7 @@ class AchievementController extends GetxController {
 
   loadAchievement() async {
     dynamic cigInfo = await storage.read('cigaretteInfo');
+    print(cigInfo);
 
     print('achievement loaded start ========>');
     if (cigInfo != null) {

@@ -16,7 +16,7 @@ class QuitDatePicker extends StatefulWidget {
 }
 
 class _QuitDatePickerState extends State<QuitDatePicker> {
-  DataCollectionController _dcc = Get.find<DataCollectionController>();
+  final DataCollectionController _dcc = Get.find<DataCollectionController>();
 
   @override
   void initState() {
@@ -42,7 +42,7 @@ class _QuitDatePickerState extends State<QuitDatePicker> {
                   children: [
                     Spacer(),
                     DataCollectionTitle(
-                      title: "When Your Plan to Start Your Quit Journey?",
+                      title: "When You Plan to Start Your Quit Journey?",
                       hasSubtitle: true,
                       subtitle: "Choose Your Desire Date here",
                     ),

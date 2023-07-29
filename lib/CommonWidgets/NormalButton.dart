@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:SFM/CommonWidgets/QC_Colors.dart';
 
 class NormalButton extends StatelessWidget {
-  NormalButton({Key? key, @required this.onPressed, this.buttonName = "Button"})
+  const NormalButton(
+      {Key? key, @required this.onPressed, this.buttonName = "Button"})
       : super(key: key);
 
-  VoidCallback? onPressed;
-  String buttonName;
+  final VoidCallback? onPressed;
+  final String buttonName;
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +17,8 @@ class NormalButton extends StatelessWidget {
       child: MaterialButton(
         color: QCColors.inputTextColor,
         onPressed: onPressed,
-        child: Container(
-          height: screenHeight / 15,
+        child: SizedBox(
+          height: screenHeight / 17,
           child: Center(
             child: Text(
               buttonName,
