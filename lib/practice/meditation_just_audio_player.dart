@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 import '../Dashboard/GuidedMeditation/PlayerClasses/ambiant_card.dart';
 import '../Dashboard/GuidedMeditation/PlayerClasses/meditation_player_controls.dart';
@@ -34,20 +35,25 @@ class _MeditationJustAudioPlayerState extends State<MeditationJustAudioPlayer> {
               position: position,
               duration: duration ?? Duration.zero,
               bufferedPosition: bufferedPosition));
+  late ConcatenatingAudioSource _playList;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    _audioPlayer = AudioPlayer()..setAudioSource(widget.audioData);
-
+    // _audioPlayer = AudioPlayer()..setAsset(widget.audioPath);
+    _audioPlayer = AudioPlayer();
     _init();
   }
 
   Future<void> _init() async {
     await _audioPlayer.setLoopMode(LoopMode.one);
-    await _audioPlayer.setAudioSource(meditationPlayList);
+    List<AudioSource> otherData = List.of(meditationPlayList.filter((element) {
+      return element != widget.audioData;
+    }));
+    _playList =
+        ConcatenatingAudioSource(children: [widget.audioData, ...otherData]);
+    await _audioPlayer.setAudioSource(_playList);
   }
 
   @override
@@ -134,51 +140,51 @@ class _MeditationJustAudioPlayerState extends State<MeditationJustAudioPlayer> {
                 builder: (context, sn) {
                   final playerState = sn.data;
                   final playing = playerState?.playing;
-
-                  return AnimatedSize(
-                    duration: Duration(milliseconds: 200),
-                    curve: Curves.easeOut,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Container(
-                        height: (playing ?? true) && isAmbient ? null : 0,
-                        child: Wrap(
-                          children: [
-                            AmbientCard(
-                              musicPath: "assets/sounds/bird1.wav",
-                              src: "assets/images/music/rain.svg",
-                              title: "Rain",
-                            ),
-                            AmbientCard(
-                              musicPath: "assets/sounds/bird2.wav",
-                              src: "assets/images/music/wave.svg",
-                              title: "Wave",
-                            ),
-                            AmbientCard(
-                              musicPath: "assets/sounds/jungle1.wav",
-                              src: "assets/images/music/thunder.svg",
-                              title: "Thunder",
-                            ),
-                            AmbientCard(
-                              musicPath: "assets/sounds/jungle2.wav",
-                              src: "assets/images/music/wind.svg",
-                              title: "Wind",
-                            ),
-                            AmbientCard(
-                              musicPath: "assets/sounds/rain1.wav",
-                              src: "assets/images/music/forest.svg",
-                              title: "Forest",
-                            ),
-                            AmbientCard(
-                              musicPath: "assets/sounds/rain2.wav",
-                              src: "assets/images/music/fire.svg",
-                              title: "Fire",
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
+                  return Text("");
+                  // return AnimatedSize(
+                  //   duration: Duration(milliseconds: 200),
+                  //   curve: Curves.easeOut,
+                  //   child: SingleChildScrollView(
+                  //     scrollDirection: Axis.horizontal,
+                  //     child: Container(
+                  //       height: (playing ?? true) && isAmbient ? null : 0,
+                  //       child: Wrap(
+                  //         children: [
+                  //           AmbientCard(
+                  //             musicPath: "assets/sounds/bird1.wav",
+                  //             src: "assets/images/music/rain.svg",
+                  //             title: "Rain",
+                  //           ),
+                  //           AmbientCard(
+                  //             musicPath: "assets/sounds/bird2.wav",
+                  //             src: "assets/images/music/wave.svg",
+                  //             title: "Wave",
+                  //           ),
+                  //           AmbientCard(
+                  //             musicPath: "assets/sounds/jungle1.wav",
+                  //             src: "assets/images/music/thunder.svg",
+                  //             title: "Thunder",
+                  //           ),
+                  //           AmbientCard(
+                  //             musicPath: "assets/sounds/jungle2.wav",
+                  //             src: "assets/images/music/wind.svg",
+                  //             title: "Wind",
+                  //           ),
+                  //           AmbientCard(
+                  //             musicPath: "assets/sounds/rain1.wav",
+                  //             src: "assets/images/music/forest.svg",
+                  //             title: "Forest",
+                  //           ),
+                  //           AmbientCard(
+                  //             musicPath: "assets/sounds/rain2.wav",
+                  //             src: "assets/images/music/fire.svg",
+                  //             title: "Fire",
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
+                  // );
                 }),
             SizedBox(height: hs),
           ],

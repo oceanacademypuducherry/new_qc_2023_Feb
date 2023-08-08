@@ -5,7 +5,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:SFM/CommonWidgets/BackgroundContainer.dart';
 import 'package:SFM/CommonWidgets/QC_Colors.dart';
-import 'package:SFM/Dashboard/GuidedMeditation/MeditationPlayer.dart';
 
 import 'package:SFM/Dashboard/GuidedMeditation/MisicView.dart';
 
@@ -13,7 +12,7 @@ import 'package:velocity_x/velocity_x.dart';
 
 import '../../CommonWidgets/my_snacbar.dart';
 import '../../Get_X_Controller/API_Controller.dart';
-import '../../practice/meditation_just_audio_player.dart';
+import 'NewMeditationPlayer.dart';
 
 class MeditationView extends StatelessWidget {
   MeditationView({Key? key}) : super(key: key);

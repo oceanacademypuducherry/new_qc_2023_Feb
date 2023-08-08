@@ -9,7 +9,6 @@ import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:rive/rive.dart';
-import 'dart:ui' as ui;
 
 class HealthImprovementBigCard extends StatefulWidget {
   HealthImprovementBigCard({
@@ -22,13 +21,13 @@ class HealthImprovementBigCard extends StatefulWidget {
     this.progress = 0,
     this.isUnlocked = false,
   }) : super(key: key);
-  String title;
-  String? imagePath;
-  String description;
-  bool isCompleted;
-  String colorData;
-  double progress;
-  bool isUnlocked;
+  final String title;
+  final String? imagePath;
+  final String description;
+  final bool isCompleted;
+  final String colorData;
+  final double progress;
+  final bool isUnlocked;
 
   @override
   State<HealthImprovementBigCard> createState() =>

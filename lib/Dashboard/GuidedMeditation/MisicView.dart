@@ -40,7 +40,7 @@ class MusicView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         MusicCard(
-                          musicPath: "assets/sounds/jungle1.wav",
+                          musicPath: "assets/sounds/rain1.wav",
                           src: "assets/images/music/thunder.svg",
                           title: "Thunder",
                         ),
@@ -55,7 +55,7 @@ class MusicView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         MusicCard(
-                          musicPath: "assets/sounds/rain1.wav",
+                          musicPath: "assets/sounds/jungle1.wav",
                           src: "assets/images/music/forest.svg",
                           title: "Forest",
                         ),

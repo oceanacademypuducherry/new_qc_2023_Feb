@@ -8,14 +8,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 import 'PlayerClasses/ambiant_card.dart';
 import 'PlayerClasses/meditation_player_controls.dart';
 
 class MeditationJustAudioPlayer extends StatefulWidget {
-  const MeditationJustAudioPlayer(
-      {super.key, required this.audioPath, required this.audioData});
-  final String audioPath;
+  const MeditationJustAudioPlayer({super.key, required this.audioData});
+
   final AudioSource audioData;
 
   @override
@@ -36,19 +36,25 @@ class _MeditationJustAudioPlayerState extends State<MeditationJustAudioPlayer> {
               position: position,
               duration: duration ?? Duration.zero,
               bufferedPosition: bufferedPosition));
+  late ConcatenatingAudioSource _playList;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     // _audioPlayer = AudioPlayer()..setAsset(widget.audioPath);
-    _audioPlayer = AudioPlayer()..setAudioSource(widget.audioData);
+    _audioPlayer = AudioPlayer();
     _init();
   }
 
   Future<void> _init() async {
     await _audioPlayer.setLoopMode(LoopMode.one);
-    await _audioPlayer.setAudioSource(meditationPlayList);
+    List<AudioSource> otherData = List.of(meditationPlayList.filter((element) {
+      return element != widget.audioData;
+    }));
+    _playList =
+        ConcatenatingAudioSource(children: [widget.audioData, ...otherData]);
+    await _audioPlayer.setAudioSource(_playList);
   }
 
   @override
@@ -130,57 +136,56 @@ class _MeditationJustAudioPlayerState extends State<MeditationJustAudioPlayer> {
                 toggleAmbient: toggleAmbient,
                 isAmbient: isAmbient),
             SizedBox(height: hs),
-            StreamBuilder<PlayerState>(
-                stream: _audioPlayer.playerStateStream,
-                builder: (context, sn) {
-                  final playerState = sn.data;
-                  final playing = playerState?.playing;
-
-                  return AnimatedSize(
-                    duration: Duration(milliseconds: 200),
-                    curve: Curves.easeOut,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Container(
-                        height: (playing ?? true) && isAmbient ? null : 0,
-                        child: Wrap(
-                          children: [
-                            AmbientCard(
-                              musicPath: "assets/sounds/bird1.wav",
-                              src: "assets/images/music/rain.svg",
-                              title: "Rain",
-                            ),
-                            AmbientCard(
-                              musicPath: "assets/sounds/bird2.wav",
-                              src: "assets/images/music/wave.svg",
-                              title: "Wave",
-                            ),
-                            AmbientCard(
-                              musicPath: "assets/sounds/jungle1.wav",
-                              src: "assets/images/music/thunder.svg",
-                              title: "Thunder",
-                            ),
-                            AmbientCard(
-                              musicPath: "assets/sounds/jungle2.wav",
-                              src: "assets/images/music/wind.svg",
-                              title: "Wind",
-                            ),
-                            AmbientCard(
-                              musicPath: "assets/sounds/rain1.wav",
-                              src: "assets/images/music/forest.svg",
-                              title: "Forest",
-                            ),
-                            AmbientCard(
-                              musicPath: "assets/sounds/rain2.wav",
-                              src: "assets/images/music/fire.svg",
-                              title: "Fire",
-                            ),
-                          ],
-                        ),
+            AnimatedSize(
+              duration: Duration(milliseconds: 200),
+              curve: Curves.easeOut,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Container(
+                  height: isAmbient ? null : 0,
+                  child: Wrap(
+                    children: [
+                      AmbientCard(
+                        musicPath: "sounds/bird1.wav",
+                        src: "assets/images/music/rain.svg",
+                        title: "Rain",
+                        mainPlayer: _audioPlayer,
                       ),
-                    ),
-                  );
-                }),
+                      AmbientCard(
+                        musicPath: "sounds/bird2.wav",
+                        src: "assets/images/music/wave.svg",
+                        title: "Wave",
+                        mainPlayer: _audioPlayer,
+                      ),
+                      AmbientCard(
+                        musicPath: "sounds/rain1.wav",
+                        src: "assets/images/music/thunder.svg",
+                        title: "Thunder",
+                        mainPlayer: _audioPlayer,
+                      ),
+                      AmbientCard(
+                        musicPath: "sounds/jungle2.wav",
+                        src: "assets/images/music/wind.svg",
+                        title: "Wind",
+                        mainPlayer: _audioPlayer,
+                      ),
+                      AmbientCard(
+                        musicPath: "sounds/jungle1.wav",
+                        src: "assets/images/music/forest.svg",
+                        title: "Forest",
+                        mainPlayer: _audioPlayer,
+                      ),
+                      AmbientCard(
+                        musicPath: "sounds/rain2.wav",
+                        src: "assets/images/music/fire.svg",
+                        title: "Fire",
+                        mainPlayer: _audioPlayer,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
             SizedBox(height: hs),
           ],
         ),

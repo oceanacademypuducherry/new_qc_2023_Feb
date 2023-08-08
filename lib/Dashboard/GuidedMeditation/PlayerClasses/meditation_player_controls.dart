@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:just_audio/just_audio.dart';
 
+import 'meditation_playlist.dart';
+
 class MeditationPlayerControls extends StatelessWidget {
   const MeditationPlayerControls(
       {super.key,
@@ -51,6 +53,9 @@ class MeditationPlayerControls extends StatelessWidget {
             icon: Icon(FontAwesomeIcons.backwardStep),
             color: mainColor,
             onPressed: () async {
+              print(audioPlayer.audioSource?.sequence);
+              print(audioPlayer.sequence);
+              print('88888888');
               if (audioPlayer.loopMode == LoopMode.one) {
                 await audioPlayer.setLoopMode(LoopMode.all);
                 audioPlayer.seekToPrevious();

@@ -1,37 +1,31 @@
 import 'dart:io';
 
+import 'package:SFM/Get_X_Controller/API_Controller.dart';
 import 'package:SFM/Get_X_Controller/AchievementController.dart';
 import 'package:SFM/Get_X_Controller/BottomNavController.dart';
-import 'package:SFM/Get_X_Controller/app_info_controller.dart';
-import 'package:SFM/firebase_options.dart';
-
-import 'package:firebase_core/firebase_core.dart';
-
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-
-import 'package:SFM/Get_X_Controller/API_Controller.dart';
-
 import 'package:SFM/Get_X_Controller/DataCollectionController.dart';
 import 'package:SFM/Get_X_Controller/HealthImprovementController.dart';
 import 'package:SFM/Get_X_Controller/JournalController.dart';
 import 'package:SFM/Get_X_Controller/Loading_contoller.dart';
 import 'package:SFM/Get_X_Controller/MissionController.dart';
 import 'package:SFM/Get_X_Controller/UserStatusController.dart';
+import 'package:SFM/Get_X_Controller/app_info_controller.dart';
 import 'package:SFM/Get_X_Controller/cravings_controller.dart';
-import 'package:just_audio_background/just_audio_background.dart';
+import 'package:SFM/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import 'Dashboard/Dashboard.dart';
-import 'Dashboard/GuidedMeditation/MeditationView.dart';
 import 'DataCollection/Login.dart';
 import 'DataCollection/QuitDate.dart';
-import 'DataCollection/verification_screen.dart';
 import 'Get_X_Controller/fa_controller.dart';
 
 void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
+  //
   // await JustAudioBackground.init(
   //   androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
   //   androidNotificationChannelName: 'Audio playback',
@@ -44,6 +38,7 @@ void main() async {
   } else {
     await Firebase.initializeApp();
   }
+
   Get.put(FAController());
   Get.put(AppInfoController());
   Get.put(BottomNavController());

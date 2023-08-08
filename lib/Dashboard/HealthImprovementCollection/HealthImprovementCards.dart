@@ -5,35 +5,34 @@ import 'package:SFM/Get_X_Controller/UserStatusController.dart';
 class HealthImprovementCards extends StatelessWidget {
   HealthImprovementCards({Key? key}) : super(key: key);
 
-  UserStatusController userStatus = Get.find<UserStatusController>();
+  final UserStatusController userStatus = Get.find<UserStatusController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        child: Obx(() => Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  child: Column(
-                      children: userStatus.healthImprovements.map((data) {
-                    return Visibility(
-                        visible: true,
-                        child: Text(
-                          '${data}hhhhhhhhhhh',
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              child: Column(
+                  children: userStatus.healthImprovements.map((data) {
+                return Visibility(
+                    visible: true,
+                    child: Text(
+                      '${data}hhhhhhhhhhh',
 
-                          /// TODO:No need test
-                          style: TextStyle(
-                              color: !data['isFinish']
-                                  ? Colors.green
-                                  : Colors.yellow),
-                        ));
-                  }).toList()),
-                ),
-                Container()
-              ],
-            )),
+                      /// TODO:No need test
+                      style: TextStyle(
+                          color:
+                              !data['isFinish'] ? Colors.green : Colors.yellow),
+                    ));
+              }).toList()),
+            ),
+            Container()
+          ],
+        ),
       ),
     );
   }

@@ -1,8 +1,7 @@
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 
-ConcatenatingAudioSource meditationPlayList =
-    ConcatenatingAudioSource(children: <AudioSource>[
+List<AudioSource> meditationPlayList = [
   AudioSource.uri(
     Uri.parse('asset:///assets/sounds/happy.mp3'),
     tag: MediaItem(
@@ -39,4 +38,4 @@ ConcatenatingAudioSource meditationPlayList =
       artUri: Uri.tryParse('assets/images/yoga/cobra.png'),
     ),
   ),
-]);
+];

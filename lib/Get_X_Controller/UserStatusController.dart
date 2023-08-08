@@ -82,8 +82,6 @@ class UserStatusController extends GetxController {
     Timer.periodic(
       const Duration(seconds: 1),
       (tim) {
-        // print(tim);
-        // print(tim.runtimeType);
         if (timer.value) {
           return timeCounter(quitDate);
         } else {
@@ -157,6 +155,7 @@ class UserStatusController extends GetxController {
         'isFinish': 20 < totalMinutes,
         'description': '20 Minutes',
         "colorData": "0xffF8889C",
+        "timing": "minutes"
       },
       {
         'title': 'Oxygen Level',
@@ -165,6 +164,7 @@ class UserStatusController extends GetxController {
         'isFinish': 480 < totalMinutes,
         'description': '8 Hours',
         "colorData": "0xff01CFFF",
+        "timing": "minutes"
       },
       {
         'title': 'Carbon monoxide level',
@@ -173,6 +173,7 @@ class UserStatusController extends GetxController {
         'isFinish': 1440 < totalMinutes,
         'description': '24 Hours',
         "colorData": "0xff717171",
+        "timing": "minutes"
       },
       {
         'title': 'Nicotine expelled from body',
@@ -181,6 +182,7 @@ class UserStatusController extends GetxController {
         'isFinish': 2520 < totalMinutes,
         'description': '42 Hours',
         "colorData": "0xff717171",
+        "timing": "minutes"
       },
       {
         'title': 'Taste and smell',
@@ -189,6 +191,7 @@ class UserStatusController extends GetxController {
         'isFinish': 14400 < totalMinutes,
         'description': '10 Days',
         "colorData": "0xff717171",
+        "timing": "minutes"
       },
       {
         'title': 'Breathing',
@@ -197,6 +200,7 @@ class UserStatusController extends GetxController {
         'isFinish': 120960 < totalMinutes,
         'description': '12 Weeks',
         "colorData": "0xff717171",
+        "timing": "minutes"
       },
       {
         'title': 'Energy levels',
@@ -205,6 +209,7 @@ class UserStatusController extends GetxController {
         'isFinish': 273 < totalDays,
         'description': '9 Months',
         "colorData": "0xff717171",
+        "timing": "day"
       },
       {
         'title': 'Bed Breath',
@@ -213,6 +218,7 @@ class UserStatusController extends GetxController {
         'isFinish': 365 < totalDays,
         'description': '1 Years',
         "colorData": "0xff717171",
+        "timing": "day"
       },
       {
         'title': 'Tooth Stationing',
@@ -221,6 +227,7 @@ class UserStatusController extends GetxController {
         'isFinish': 1825 < totalDays,
         'description': '5 Years',
         "colorData": "0xff717171",
+        "timing": "day"
       },
       {
         'title': 'Cums and Teeth',
@@ -229,6 +236,7 @@ class UserStatusController extends GetxController {
         'isFinish': 3650 < totalDays,
         'description': '10 Years',
         "colorData": "0xff717171",
+        "timing": "day"
       },
       {
         'title': 'Circulation',
@@ -237,6 +245,7 @@ class UserStatusController extends GetxController {
         'isFinish': 5475 < totalDays,
         'description': '15 Years',
         "colorData": "0xff717171",
+        "timing": "day"
       },
       {
         'title': 'Gum texture',
@@ -245,6 +254,7 @@ class UserStatusController extends GetxController {
         'isFinish': 7300 < totalDays,
         'description': '20 Years',
         "colorData": "0xff717171",
+        "timing": "day"
       },
     ];
 
